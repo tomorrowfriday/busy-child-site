@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Work — Busy Child</title>
+<meta name="description" content="Four production platforms in fund administration, healthcare scheduling, and insurance claims — plus a consumer iOS product. Client names withheld; architecture and numbers published.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Martian+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">busy&#8203;child</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="work.html" aria-current="page">/work</a>
+      <a href="method.html">/method</a>
+      <a href="working-with-us.html">/working-with-us</a>
+      <a href="contact.html">/contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="section hero">
+    <div class="wrap">
+      <p class="marker">// selected work</p>
+      <h1>Four platforms in production, and one product of our own.</h1>
+      <p class="sub">We don't publish client names. What we can publish is the domain, the architecture, what shipped, and the numbers — which is most of what tells you whether we've built your shape of system before.</p>
+    </div>
+  </section>
+
+  <!-- ── fund administration ──────────────────────────────────────────── -->
+  <section class="section" id="fund-administration">
+    <div class="wrap">
+      <div class="case">
+        <div class="case-head">
+          <span class="domain">Investment fund administration</span>
+          <h2>End-to-end fundraise platform</h2>
+          <div class="figure">$4M+ / mo<small>transaction volume, across tens of thousands of investors</small></div>
+        </div>
+
+        <p>Operators run end-to-end fundraises — project setup, investor onboarding, e-signature, ACH funding and portfolio reporting — on one multi-tenant platform that replaces a stack of point SaaS tools. Investors complete accreditation, sign, link a bank account, and fund a commitment without ever leaving the portal.</p>
+
+        <h3>What we shipped</h3>
+        <ul class="shipped">
+          <li>ACH payment orchestration over Plaid and Dwolla, with webhook-driven reconciliation.</li>
+          <li>Batch e-signature envelopes with signature tracking and automated reminders.</li>
+          <li>Investor accreditation with expiry handling and a reminder cadence.</li>
+          <li>Multi-tenant organisations with parent/child hierarchy, custom domains and SSL.</li>
+          <li>Mandatory MFA on every account, and full-text search across investments and investors.</li>
+        </ul>
+
+        <div class="stack">
+          <span>React</span><span>Node.js</span><span>AWS Serverless</span><span>Plaid</span>
+          <span>Dwolla</span><span>DocuSign</span><span>Cognito</span><span>OpenSearch</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── workforce scheduling ─────────────────────────────────────────── -->
+  <section class="section" id="workforce-scheduling">
+    <div class="wrap">
+      <div class="case">
+        <div class="case-head">
+          <span class="domain">Healthcare workforce scheduling</span>
+          <h2>Native iOS &amp; Android shift platform</h2>
+          <div class="figure">iOS + Android<small>native apps over a real-time GraphQL gateway</small></div>
+        </div>
+
+        <p>Built for a national US staffing operator. Facility managers build and balance schedules from the web; nurses pick up open shifts and swap them from native iOS and Android apps, with changes propagating live through a real-time GraphQL gateway.</p>
+
+        <h3>What we shipped</h3>
+        <ul class="shipped">
+          <li>Schedule construction and balancing tools for facility managers.</li>
+          <li>Open-shift pickup and shift swapping from native mobile, with live state.</li>
+          <li>A real-time GraphQL gateway fronting the scheduling services.</li>
+          <li>Two native codebases — Swift and Kotlin — maintained in production, not a wrapper.</li>
+        </ul>
+
+        <div class="stack">
+          <span>GraphQL</span><span>React</span><span>Swift</span><span>Kotlin</span>
+          <span>MongoDB</span><span>Redis</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── provider scheduling ──────────────────────────────────────────── -->
+  <section class="section" id="provider-scheduling">
+    <div class="wrap">
+      <div class="case">
+        <div class="case-head">
+          <span class="domain">Float-pool provider scheduling</span>
+          <h2>Event-driven shift cascade</h2>
+          <div class="figure">Kafka · Kubernetes<small>delivered as an npm-published UI library</small></div>
+        </div>
+
+        <p>For a national healthcare staffing business. Shift offers cascade through configurable provider pools on an event-driven backbone, and the interface ships as an embeddable component library that host applications consume directly rather than a standalone app.</p>
+
+        <h3>What we shipped</h3>
+        <ul class="shipped">
+          <li>Configurable provider pools with rule-driven offer cascade.</li>
+          <li>An event-driven core on Kafka, deployed to Kubernetes.</li>
+          <li>An embeddable UI library, versioned and published to npm for host applications.</li>
+          <li>Typed contracts between the services and every consuming front end.</li>
+        </ul>
+
+        <div class="stack">
+          <span>TypeScript</span><span>Next.js</span><span>Fastify</span><span>Kafka</span>
+          <span>PostgreSQL</span><span>Kubernetes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── claims management ────────────────────────────────────────────── -->
+  <section class="section" id="claims-management">
+    <div class="wrap">
+      <div class="case">
+        <div class="case-head">
+          <span class="domain">Insurance claims management</span>
+          <h2>Bilingual multi-location claims portal</h2>
+          <div class="figure">$1M / yr<small>saved after deployment</small></div>
+        </div>
+
+        <p>A multi-location staffing agency ran employee insurance claims out of fragile Excel spreadsheets — manual, inconsistent, and opaque to leadership. We replaced it with a single portal that standardises intake across every location and gives the executive team live visibility into where each claim stands.</p>
+
+        <h3>What we shipped</h3>
+        <ul class="shipped">
+          <li>Multi-role RBAC across owners, managers and supervisors, with per-location permissions.</li>
+          <li>List and board views, filterable across locations by status, assignee, tag and period.</li>
+          <li>An append-only activity log on every claim, for audit and compliance review.</li>
+          <li>Bilingual EN/ES PDF reports — Accident, Injury, Modified Duty — for carrier submission, both languages from one template.</li>
+          <li>Scheduled email reminders driven by due dates, statuses and custom rules.</li>
+          <li>Per-company configurable statuses, tags, document types and categories.</li>
+        </ul>
+
+        <div class="note">
+          <span class="tag">Outcome</span>
+          <p>One portal replaced a spreadsheet-and-email workflow across every location — and gave the CEO a live view of where each claim stands.</p>
+        </div>
+
+        <div class="stack">
+          <span>React</span><span>Node.js</span><span>AWS Lambda</span><span>DynamoDB</span>
+          <span>Cognito</span><span>S3</span><span>i18next</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── our own product ──────────────────────────────────────────────── -->
+  <section class="section" id="mines">
+    <div class="wrap">
+      <div class="case">
+        <div class="case-head">
+          <span class="domain">Consumer mobile — iOS &amp; visionOS</span>
+          <h2>Mines — Classic Bomb Puzzle</h2>
+          <div class="figure">4.6 ★<small>App Store rating</small></div>
+        </div>
+
+        <p>Enterprise platforms are our core, but we sweat consumer polish too. Mines is a clean, ad-free Minesweeper for iPhone, iPad and Apple Vision, with global rankings, best-time tracking, win streaks and six languages.</p>
+
+        <p>It is also the one thing on this site you can go and use yourself. Everything above is behind a client NDA; this is ours, it is public, and it is the same team.</p>
+
+        <div class="stack"><span>Swift</span><span>iOS</span><span>visionOS</span></div>
+
+        <!-- TODO: paste the App Store URL into the href below, then delete this comment. -->
+        <div class="cta">
+          <a class="button ghost" href="https://apps.apple.com/">Find Mines on the App Store</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="marker">// next</p>
+      <h2>Building something in this territory?</h2>
+      <p class="lead">Send a brief and you'll hear back the same business day.</p>
+      <div class="cta">
+        <a class="button" href="contact.html">Send a brief</a>
+        <a class="button ghost" href="method.html">How we build it</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="col">
+      <a class="wordmark" href="index.html">busy&#8203;child</a>
+      <span class="meta">Production web &amp; mobile platforms</span>
+    </div>
+    <div class="col">
+      <a href="work.html">/work</a>
+      <a href="method.html">/method</a>
+      <a href="working-with-us.html">/working-with-us</a>
+      <a href="contact.html">/contact</a>
+    </div>
+    <div class="col">
+      <a href="https://www.upwork.com/agencies/busy-child/">Upwork</a>
+      <span class="meta">Same-business-day reply</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

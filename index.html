@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Busy Child — production web &amp; mobile platforms</title>
+<meta name="description" content="A senior engineering team that designs, builds, and maintains production web and mobile software. Spec-driven, serverless-first, 100% test coverage. The partner who scopes your project is the one who ships it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Martian+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">busy&#8203;child</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="work.html">/work</a>
+      <a href="method.html">/method</a>
+      <a href="working-with-us.html">/working-with-us</a>
+      <a href="contact.html">/contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- 01 · statement ─────────────────────────────────────────────────── -->
+  <section class="section hero">
+    <div class="wrap">
+      <div class="sectors">
+        <span>Fund administration</span><span>Healthcare</span><span>Insurance</span><span>Consumer mobile</span>
+      </div>
+      <h1>We build the platforms your business runs on — and ship them ourselves.</h1>
+      <p class="sub">A senior engineering team that designs, builds, and maintains production web and mobile software for enterprises. Spec-driven, serverless-first, 100% test coverage. The partner who scopes your project is the one who ships it.</p>
+      <div class="cta">
+        <a class="button" href="contact.html">Send a brief</a>
+        <a class="button ghost" href="work.html">See the work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · four literals ─────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="literals">
+        <div class="literal"><b>15+</b><span>years shipping production systems</span></div>
+        <div class="literal"><b>$4M+</b><span>monthly transaction volume on one platform</span></div>
+        <div class="literal"><b>100%</b><span>test coverage, enforced as a build failure</span></div>
+        <div class="literal"><b>Senior</b><span>only — no juniors learning on you</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · the specimen ──────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <p class="marker">// how we know it works</p>
+      <h2>The test assertions live in the specification.</h2>
+      <p class="lead">A scenario is written the way a product owner would state it — in a document a non-engineer can read and check. The compiler turns it into an executable test that runs against a real database on every change.</p>
+
+      <div class="compile">
+        <div class="specimen">
+<pre><span class="c">### 4. Platform activity is not returned to another organization user</span>
+
+<span class="k">- Role:</span>       USER2
+<span class="k">- Operation:</span>  IndexActivities
+<span class="k">- Assertions:</span>
+    - result does not include item where <span class="s">`id`</span> equals <span class="s">`activityId`</span></pre>
+        </div>
+
+        <div class="arrow">│
+└─▶ compiles to ──────────────────────────────────────────────</div>
+
+        <div class="specimen reveal">
+<pre><span class="f">it</span>(<span class="s">'Platform activity is not returned to another organization user'</span>, <span class="k">async</span> () <span class="k">=&gt;</span> {
+  <span class="k">const</span> result = <span class="k">await</span> t.<span class="f">request</span>(<span class="s">'IndexActivities'</span>, {}, t.<span class="f">USER2</span>());
+  t.<span class="f">ensureNoItem</span>(result <span class="k">as</span> Record&lt;string, unknown&gt;[], { id: t.<span class="f">get</span>(context, <span class="s">'activityId'</span>) });
+});</pre>
+        </div>
+      </div>
+
+      <p class="caption">An agent cannot make a failing test pass by weakening the assertion — the assertion isn't in the test file. Changing what is verified means changing the specification, which is a reviewed diff.</p>
+      <p><a href="method.html">How the whole pipeline works →</a></p>
+    </div>
+  </section>
+
+  <!-- 04 · four platforms ────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <p class="marker">// selected work</p>
+      <h2>Four platforms, in production.</h2>
+      <p>Client names are withheld. What we can publish is the domain, the architecture, and the numbers.</p>
+
+      <div class="projects">
+
+        <article class="project">
+          <span class="domain">Investment fund administration</span>
+          <h3>End-to-end fundraise platform</h3>
+          <div class="metric">$4M+ / mo<small>across tens of thousands of investors</small></div>
+          <p>Accreditation, document signing, ACH funding and portfolio reporting in one multi-tenant system, replacing a stack of point SaaS tools.</p>
+          <div class="stack"><span>React</span><span>Node.js</span><span>AWS Serverless</span><span>Plaid</span><span>Dwolla</span><span>DocuSign</span></div>
+        </article>
+
+        <article class="project">
+          <span class="domain">Healthcare workforce scheduling</span>
+          <h3>Native iOS &amp; Android shift platform</h3>
+          <div class="metric">iOS + Android<small>native apps over a real-time GraphQL gateway</small></div>
+          <p>Built for a national US staffing operator. Facility managers build and balance schedules; nurses pick up open shifts and swap from native apps.</p>
+          <div class="stack"><span>GraphQL</span><span>React</span><span>Swift</span><span>Kotlin</span><span>MongoDB</span><span>Redis</span></div>
+        </article>
+
+        <article class="project">
+          <span class="domain">Float-pool provider scheduling</span>
+          <h3>Event-driven shift cascade</h3>
+          <div class="metric">Kafka · Kubernetes<small>shipped as an npm-published UI library</small></div>
+          <p>For a national healthcare staffing business. Shift offers cascade through configurable provider pools, delivered as an embeddable UI consumed by host applications.</p>
+          <div class="stack"><span>TypeScript</span><span>Next.js</span><span>Fastify</span><span>Kafka</span><span>PostgreSQL</span><span>Kubernetes</span></div>
+        </article>
+
+        <article class="project">
+          <span class="domain">Insurance claims management</span>
+          <h3>Bilingual multi-location claims portal</h3>
+          <div class="metric">$1M / yr<small>saved after deployment</small></div>
+          <p>Replaced fragile spreadsheet workflows across every location of a multi-location staffing agency with RBAC, audit logs, and EN/ES PDF reports for carrier submission.</p>
+          <div class="stack"><span>React</span><span>Node.js</span><span>AWS Lambda</span><span>DynamoDB</span><span>Cognito</span></div>
+        </article>
+
+      </div>
+
+      <p><a href="work.html">Read the work in detail →</a></p>
+    </div>
+  </section>
+
+  <!-- 05 · the gates ─────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <p class="marker">// what stops it shipping broken</p>
+      <h2>Every change runs the same stack of gates.</h2>
+      <p class="lead">These are build failures, not review comments. Nothing reaches production by being waved through.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Gate</th><th>Catches</th></tr></thead>
+          <tbody>
+            <tr><td class="gate"><code>composer validate</code></td><td>Broken spec — before any code exists</td></tr>
+            <tr><td class="gate">Spec coverage</td><td>An operation no scenario exercises end to end</td></tr>
+            <tr><td class="gate"><code>tsc</code></td><td>Drift between operation I/O and document shape</td></tr>
+            <tr><td class="gate">ESLint</td><td>Style, documentation, complexity</td></tr>
+            <tr><td class="gate">Generated unit tests</td><td>Per-operation security, schema shape, <code>before</code> logic</td></tr>
+            <tr><td class="gate">Generated scenario tests</td><td>End-to-end behaviour against a real database, multi-role, multi-tenant</td></tr>
+            <tr><td class="gate">Coverage threshold</td><td>Any untested line, branch, or function — set at <span class="lit">100%</span></td></tr>
+            <tr><td class="gate">Runtime output validation</td><td>A response that doesn't match its declared schema — in production</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caption">That last row is the unusual one. Output schemas are enforced at request time, not only in CI — a service that returns something it never promised fails loudly rather than shipping malformed data downstream.</p>
+    </div>
+  </section>
+
+  <!-- 06 · six refusals ──────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <p class="marker">// how we work</p>
+      <h2>Six promises that keep clients with us.</h2>
+
+      <div class="refusals">
+        <div class="refusal"><h3>No pitch-and-switch.</h3><p>The senior partner who scopes your project is on it until it ships.</p></div>
+        <div class="refusal"><h3>No account managers.</h3><p>You talk directly to the people building your software.</p></div>
+        <div class="refusal"><h3>No juniors learning on you.</h3><p>We stay small on purpose. Senior people, or we don't take it.</p></div>
+        <div class="refusal"><h3>No surprise invoices.</h3><p>We'd rather lose a margin than lose your trust.</p></div>
+        <div class="refusal"><h3>No theater.</h3><p>Short meetings, written decisions, working software.</p></div>
+        <div class="refusal"><h3>No vibecoding.</h3><p>AI is a tool to ship faster — never a shortcut past review.</p></div>
+      </div>
+
+      <p><a href="working-with-us.html">What an engagement looks like →</a></p>
+    </div>
+  </section>
+
+  <!-- 07 · send a brief ──────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <p class="marker">// let's build it</p>
+      <h2>Send a brief — you'll hear back the same business day.</h2>
+      <p class="lead">Tell us what you're building and what it has to do. That's the only thing we need to start a useful conversation.</p>
+      <div class="cta">
+        <a class="button" href="contact.html">Send a brief</a>
+        <a class="button ghost" href="https://www.upwork.com/agencies/busy-child/">Hire us on Upwork</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="col">
+      <a class="wordmark" href="index.html">busy&#8203;child</a>
+      <span class="meta">Production web &amp; mobile platforms</span>
+    </div>
+    <div class="col">
+      <a href="work.html">/work</a>
+      <a href="method.html">/method</a>
+      <a href="working-with-us.html">/working-with-us</a>
+      <a href="contact.html">/contact</a>
+    </div>
+    <div class="col">
+      <a href="https://www.upwork.com/agencies/busy-child/">Upwork</a>
+      <span class="meta">Same-business-day reply</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// The single motion moment on the site: the compiled test arrives after the spec.
+(function () {
+  var targets = document.querySelectorAll('.reveal');
+  if (!targets.length) return;
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || !('IntersectionObserver' in window)) {
+    targets.forEach(function (el) { el.classList.add('seen'); });
+    return;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      setTimeout(function () { el.classList.add('seen'); }, 260);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.25 });
+
+  targets.forEach(function (el) { observer.observe(el); });
+})();
+</script>
+
+</body>
+</html>

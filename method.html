@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Method — Busy Child</title>
+<meta name="description" content="DOS: we compile a written specification into a running API service. Roughly 60% of a finished service is generated deterministically and never edited by anyone — human or model.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Martian+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">busy&#8203;child</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="work.html">/work</a>
+      <a href="method.html" aria-current="page">/method</a>
+      <a href="working-with-us.html">/working-with-us</a>
+      <a href="contact.html">/contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="section hero">
+    <div class="wrap">
+      <p class="marker">// DOS · spec-driven code generation</p>
+      <h1>We compile a written specification into a running service.</h1>
+      <p class="sub">The spec is a plain-English Markdown document. A compiler turns it into TypeScript operations, schemas and both test suites. Coding agents write the functions that remain. Roughly <span class="lit">60%</span> of a finished service is generated deterministically and never edited by anyone — human or model.</p>
+      <p class="sub">This is not prompt-and-check. The high-volume, error-prone parts of an API service — input validation, output schemas, permission wiring, pagination, CRUD, test scaffolding — come out of a deterministic compiler, so they cannot drift from the spec. Agents work on the remainder, and the gates decide what ships.</p>
+    </div>
+  </section>
+
+  <!-- ── the pipeline ─────────────────────────────────────────────────── -->
+  <section class="section" id="pipeline">
+    <div class="wrap">
+      <p class="marker">// the pipeline</p>
+      <h2>One path for a change, and no side door.</h2>
+
+      <div class="diagram">
+<pre>  <b>spec/</b>                   <b>composer</b>                 <b>gates</b>
+  ┌─────────────┐        ┌─────────────┐       ┌────────────────────────┐
+  │ documents   │        │  validate   │       │ tsc · eslint           │
+  │ operations  │ ─────▶ │  build      │ ────▶ │ unit · scenario        │ ───▶ <span class="s">ship</span>
+  │ permissions │        └──────┬──────┘       │ coverage <span class="n">100%</span>          │
+  │ scenarios   │               │              │ runtime output check   │
+  └─────────────┘               │              └───────────┬────────────┘
+  <span class="c">plain English</span>                │                          │
+  <span class="c">human-approved</span>               ▼                          │
+                       ┌──────────────────┐               │
+                       │ <span class="n">~60%</span> generated  │               │
+                       │ <span class="n">~40%</span> by agent    │ ◀──── repair ─┘
+                       └──────────────────┘</pre>
+      </div>
+
+      <div class="steps">
+        <div class="step"><span class="i">01</span><h3>Specification</h3>
+          <p>Work starts as a cross-linked wiki in <code>docs/spec/</code> describing every document, operation, permission and test scenario in plain English. It is the design source of truth: when spec and code disagree, the spec wins. Agents help draft it; an engineer approves it; a product or operations lead can read it without reading code.</p></div>
+        <div class="step"><span class="i">02</span><h3>Validation</h3>
+          <p><code>composer validate</code> checks the spec's internal consistency — every type reference resolves, every operation's input and output attributes exist on its document, every scenario names a real operation and a real role.</p></div>
+        <div class="step"><span class="i">03</span><h3>Compilation</h3>
+          <p><code>composer build</code> generates the service: operations, schemas, validation, permission wiring, pagination, CRUD, and both test suites.</p></div>
+        <div class="step"><span class="i">04</span><h3>Generation</h3>
+          <p>Coding agents write what the compiler cannot infer — business helpers, document methods, security policy. By this point that has been reduced to a set of small, isolated, individually described functions.</p></div>
+        <div class="step"><span class="i">05</span><h3>Verification</h3>
+          <p>Every change runs the full stack of gates. Nothing merges by being waved through.</p></div>
+        <div class="step"><span class="i">06</span><h3>Repair</h3>
+          <p>When a gate fails, the agent gets the failure and works it until the checks pass. No human babysitting the retry cycle.</p></div>
+        <div class="step"><span class="i">07</span><h3>Judgment</h3>
+          <p>Where a failure raises a question the gates can't settle, an engineer decides. Engineer time goes to specs and judgment calls, not line-by-line review of generated code.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── why the agent's part is easy ─────────────────────────────────── -->
+  <section class="section" id="why-it-works">
+    <div class="wrap">
+      <p class="marker">// the question everyone asks first</p>
+      <h2>Why is your AI-written code better than ours?</h2>
+      <p class="lead">The honest answer isn't a better model or a cleverer prompt. It's that the hard part was settled by a compiler before the model was asked anything.</p>
+
+      <p>An agent told to "build an activities service" is being asked to make a hundred coupled decisions at once — naming, structure, validation, error handling, tenancy, tests — with nothing to check itself against until the whole thing exists. That is the hardest possible shape of task to hand a model, and it's what ad-hoc prompting does. It's also why quality depends on who was driving.</p>
+
+      <p>Here the compiler has already made those decisions. What's left isn't a service. It's a set of individual functions, each arriving with:</p>
+
+      <ul class="dash">
+        <li>A <strong>fixed signature</strong>, because the call site is already generated.</li>
+        <li>A <strong>one-sentence description of its job</strong>, taken from the spec that declared it.</li>
+        <li><strong>Types on both sides</strong>, generated from the same schemas, so a wrong shape is a compile error.</li>
+        <li>A <strong>unit test already written</strong>, asserting it's invoked where the spec said it would be.</li>
+      </ul>
+
+      <p>Here is a real example, complete. The spec declared a <code>before</code> step reading <em>"Ensures that specified operation has a template,"</em> and this is the entire unit of work the agent was handed:</p>
+
+      <div class="specimen">
+<pre><span class="c">/** Validates that a template exists for the specified operation ID. */</span>
+<span class="k">const</span> <span class="f">validateOperationId</span> = <span class="k">async</span> (context: Context, parameters: <span class="k">unknown</span>): Promise&lt;<span class="k">void</span>&gt; =&gt; {
+  <span class="k">const</span> operationId = <span class="f">got</span>(parameters, <span class="s">'mutation.operationId'</span>) <span class="k">as</span> <span class="k">string</span>;
+
+  <span class="k">if</span> (!config.<span class="f">has</span>(<span class="s">`templates.${operationId}`</span>)) {
+    <span class="k">throw new</span> <span class="f">InvalidParametersError</span>(<span class="s">`Template for operation ID "${operationId}" is not found`</span>);
+  }
+};</pre>
+      </div>
+
+      <p class="caption">Thirteen lines, one responsibility, nothing to get architecturally wrong. Most agent-written units in our services are this size; the largest are well under a hundred lines. Work decomposed this far is close to the easiest thing current models do — and it's verified immediately, not after integration.</p>
+    </div>
+  </section>
+
+  <!-- ── the gates ────────────────────────────────────────────────────── -->
+  <section class="section" id="gates">
+    <div class="wrap">
+      <p class="marker">// verification</p>
+      <h2>Eight gates. Build failures, not review comments.</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Gate</th><th>Catches</th></tr></thead>
+          <tbody>
+            <tr><td class="gate"><code>composer validate</code></td><td>Broken spec — before any code exists</td></tr>
+            <tr><td class="gate">Spec coverage</td><td>An operation no scenario exercises end to end</td></tr>
+            <tr><td class="gate"><code>tsc</code></td><td>Drift between operation I/O and document shape</td></tr>
+            <tr><td class="gate">ESLint</td><td>Style, documentation, complexity</td></tr>
+            <tr><td class="gate">Generated unit tests</td><td>Per-operation security, schema shape, <code>before</code> logic</td></tr>
+            <tr><td class="gate">Generated scenario tests</td><td>End-to-end behaviour against a real database, multi-role, multi-tenant</td></tr>
+            <tr><td class="gate">Coverage threshold</td><td>Any untested line, branch, or function — set at <span class="lit">100%</span></td></tr>
+            <tr><td class="gate">Runtime output validation</td><td>A response that doesn't match its declared schema — in production</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caption">The last row is worth pausing on. Output schemas are enforced at request time, not only in CI. A service that returns something it never promised fails loudly rather than shipping malformed data downstream.</p>
+    </div>
+  </section>
+
+  <!-- ── tests from the spec ──────────────────────────────────────────── -->
+  <section class="section" id="tests">
+    <div class="wrap">
+      <p class="marker">// why the tests can be trusted</p>
+      <h2>The assertion doesn't live in the test file.</h2>
+      <p class="lead">Tests are compiled from the spec, not written alongside the code. An agent cannot make a failing test pass by weakening the assertion. To change what is verified, it has to change the specification — which is a reviewed diff in a document a human approved.</p>
+
+      <div class="compile">
+        <div class="specimen">
+<pre><span class="c">### 4. Platform activity is not returned to another organization user</span>
+
+<span class="k">- Role:</span>       USER2
+<span class="k">- Operation:</span>  IndexActivities
+<span class="k">- Assertions:</span>
+    - result does not include item where <span class="s">`id`</span> equals <span class="s">`activityId`</span></pre>
+        </div>
+
+        <div class="arrow">│
+└─▶ compiles to ──────────────────────────────────────────────</div>
+
+        <div class="specimen">
+<pre><span class="f">it</span>(<span class="s">'Platform activity is not returned to another organization user'</span>, <span class="k">async</span> () <span class="k">=&gt;</span> {
+  <span class="k">const</span> result = <span class="k">await</span> t.<span class="f">request</span>(<span class="s">'IndexActivities'</span>, {}, t.<span class="f">USER2</span>());
+  t.<span class="f">ensureNoItem</span>(result <span class="k">as</span> Record&lt;string, unknown&gt;[], { id: t.<span class="f">get</span>(context, <span class="s">'activityId'</span>) });
+});</pre>
+        </div>
+      </div>
+
+      <p class="caption">The tenant-isolation guarantee is stated once, in a sentence a non-engineer can check, and enforced mechanically forever after. Test-weakening becomes visible instead of buried.</p>
+    </div>
+  </section>
+
+  <!-- ── the quality standard ─────────────────────────────────────────── -->
+  <section class="section" id="standard">
+    <div class="wrap">
+      <p class="marker">// the quality standard</p>
+      <h2>100% coverage, and a scenario for every operation.</h2>
+
+      <ul class="dash">
+        <li><strong>Two suites, two jobs.</strong> Unit tests cover every operation, helper and document method in isolation — operation tests are generated, asserting the security model, tags, mutation schema shape, output schema shape and each <code>before</code> step. Integration tests are compiled from spec scenarios and run end to end against a real database, across multiple roles and tenants.</li>
+        <li><strong>100% coverage on both.</strong> Statements, branches, functions and lines, enforced as a threshold. Under 100% and the build fails. The number is realistic here precisely because most of the code is generated and its tests are generated with it — full coverage isn't a heroic effort, it's the default state of a compiled service.</li>
+        <li><strong>Every operation is exercised by at least one scenario.</strong> The compiler checks both directions. An endpoint that nothing tests end to end is a failed build, not a gap somebody notices six months later.</li>
+      </ul>
+
+      <div class="note">
+        <span class="tag">Why this matters for procurement</span>
+        <p>Enterprise engineering standards almost always specify a coverage gate, and it is usually the requirement teams negotiate down — 80%, then 70%, then "new code only". A generated codebase doesn't need the negotiation. The gate is set at 100% on day one and stays there as the service grows, because growth means more generated code and more generated tests in the same proportion.</p>
+      </div>
+
+      <p>Code coverage alone wouldn't catch the gap the spec-coverage gate closes. An operation can reach 100% line coverage from unit tests while never having been called through the real stack — never authenticated, never hitting the database, never validated against a live tenant boundary. Requiring a scenario per operation closes that by construction.</p>
+    </div>
+  </section>
+
+  <!-- ── review ───────────────────────────────────────────────────────── -->
+  <section class="section" id="review">
+    <div class="wrap">
+      <p class="marker">// what code review becomes</p>
+      <h2>Review attention is a fixed budget. Most of it is normally spent badly.</h2>
+
+      <p>A four-hundred-line pull request contains maybe forty lines that genuinely required a human decision; the rest is wiring, validation, error plumbing and test scaffolding. Reviewers spend their sharpest attention on the mechanical parts, arrive at the consequential part fatigued, and approve it. It is why large diffs get "LGTM" and small ones get argued about.</p>
+
+      <p>Generation splits the diff cleanly in two.</p>
+
+      <ul class="dash">
+        <li><strong>The generated half isn't reviewed, because reviewing it is meaningless.</strong> It's a deterministic function of the spec, already checked by validation, the type system and both suites. That review time isn't spent better — it isn't spent at all.</li>
+        <li><strong>The other half gets the full budget.</strong> The spec diff, and a handful of small agent-written functions.</li>
+        <li><strong>Reviewing a spec is design review.</strong> Is this the right operation? Is it scoped to the right tenant? Should this caller have this permission? None of those are answerable by reading an implementation. And because it happens before the implementation exists, being wrong costs a document edit instead of a rewrite.</li>
+        <li><strong>It widens who can review.</strong> A spec diff is prose and structured English. The operations lead who actually knows how the domain is supposed to behave can read it and object — before the behaviour has been built.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── economics ────────────────────────────────────────────────────── -->
+  <section class="section" id="economics">
+    <div class="wrap">
+      <p class="marker">// the same design makes it cheaper</p>
+      <h2>Cost scales with the novel part of a service, not with its size.</h2>
+
+      <ul class="dash">
+        <li><strong>Most of the code costs no tokens.</strong> The generated 60% is emitted by a compiler in milliseconds. An agent never writes it, never reasons about it, never re-reads it for context.</li>
+        <li><strong>Regeneration is free.</strong> Change the spec, recompile, and the whole generated surface updates — tests included. An agent-writes-everything workflow re-pays the full bill on every refactor, and pays it again for the tests.</li>
+        <li><strong>Context stays small.</strong> Each task is one function with a fixed signature, so quality doesn't degrade as the codebase outgrows the context window.</li>
+        <li><strong>Cheaper models become viable.</strong> "Design a multi-tenant service" needs frontier reasoning. "Write this function with this signature" doesn't — small fast models handle it, and the gates catch it if they don't.</li>
+      </ul>
+
+      <p>Frontier capability gets spent on the spec instead, which is where those models are genuinely strongest: reasoning about how a domain decomposes, catching the error case nobody mentioned, turning a conversation with a domain expert into something precise. Expensive reasoning goes where judgment is required and volume is low; cheap execution goes where volume is high and the answer is already determined.</p>
+    </div>
+  </section>
+
+  <!-- ── the API description ──────────────────────────────────────────── -->
+  <section class="section" id="api">
+    <div class="wrap">
+      <p class="marker">// what comes with it</p>
+      <h2>A verified API description — and a typed client for free.</h2>
+
+      <p>Every service publishes its own OpenAPI description. That by itself is unremarkable. What matters is that this one is verified three independent ways: it validates against the OpenAPI meta-schema before publishing, so a malformed description is a startup failure; its schemas are the same objects the service validates requests and responses against at runtime, so there is no second copy to fall out of date; and the spec-coverage gate means no operation reaches it without an end-to-end test proving it behaves as described.</p>
+
+      <p>Which means the frontend gets its client for free. Standard off-the-shelf tooling turns a trustworthy description into TypeScript types for every request, response and model, TanStack Query hooks per operation, and a typed client that fails at compile time when the backend contract changes. No one writes an SDK and no one maintains one — a field renamed in the spec surfaces as a red squiggle in the web app before it ever surfaces as a bug.</p>
+
+      <ul class="dash">
+        <li><strong>MCP, automatically.</strong> The published description is loaded by our MCP server and exposed as tools, so every operation is callable by an MCP client without extra work.</li>
+        <li><strong>Deployment.</strong> CloudFormation generated from environment config, deployed via the AWS SDK. No Serverless Framework.</li>
+        <li><strong>Storage is pluggable.</strong> DynamoDB and PostgreSQL adapters implement the same document interface; the spec and generated code are identical either way.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── fit ──────────────────────────────────────────────────────────── -->
+  <section class="section" id="fit">
+    <div class="wrap">
+      <p class="marker">// where it applies</p>
+      <h2>And where it doesn't.</h2>
+
+      <ul class="dash">
+        <li><strong>Good fit.</strong> New API services. Consolidating logic scattered across ad-hoc endpoints. Systems where multi-tenant isolation and permission correctness matter. Integration surfaces that must be exercised repeatedly against real dependencies.</li>
+        <li><strong>Rewrites, with a caveat.</strong> Applying it to a legacy migration means specifying the target behaviour, generating the replacement, and using scenario tests as the parity harness. That's a rewrite behind a spec, not an in-place code transformation — effective, but a different shape of work than a codemod.</li>
+        <li><strong>Not a fit.</strong> CMS work, one-off site builds, backlog clearing. Those are ordinary engineering, and we do them as ordinary engineering. The platform doesn't build your frontend either — it supplies the typed client the frontend consumes, which is a smaller and more honest claim.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── engagement ───────────────────────────────────────────────────── -->
+  <section class="section" id="start">
+    <div class="wrap">
+      <p class="marker">// a sensible way to start</p>
+      <h2>One service, end to end, in a short fixed window.</h2>
+
+      <div class="steps">
+        <div class="step"><span class="i">01</span><h3>We write the spec with your team</h3><p>One or two working sessions.</p></div>
+        <div class="step"><span class="i">02</span><h3>Your team reviews the spec</h3><p>This is the decision point: a document, not a pull request.</p></div>
+        <div class="step"><span class="i">03</span><h3>We generate, implement and ship it</h3><p>Behind your existing gates.</p></div>
+        <div class="step"><span class="i">04</span><h3>Your engineers own it afterwards</h3><p>The spec is the handover artefact.</p></div>
+      </div>
+
+      <p>You end up with a working service and a concrete answer on whether spec-first suits how your team wants to work — before committing to retool around it.</p>
+
+      <div class="cta">
+        <a class="button" href="contact.html">Send a brief</a>
+        <a class="button ghost" href="working-with-us.html">How we work</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="col">
+      <a class="wordmark" href="index.html">busy&#8203;child</a>
+      <span class="meta">Production web &amp; mobile platforms</span>
+    </div>
+    <div class="col">
+      <a href="work.html">/work</a>
+      <a href="method.html">/method</a>
+      <a href="working-with-us.html">/working-with-us</a>
+      <a href="contact.html">/contact</a>
+    </div>
+    <div class="col">
+      <a href="https://www.upwork.com/agencies/busy-child/">Upwork</a>
+      <span class="meta">Same-business-day reply</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

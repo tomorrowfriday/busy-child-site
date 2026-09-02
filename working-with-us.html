@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Working with us — Busy Child</title>
+<meta name="description" content="Six promises that keep clients with us, what an engagement looks like, and the quality bar every service ships against.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Martian+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">busy&#8203;child</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="work.html">/work</a>
+      <a href="method.html">/method</a>
+      <a href="working-with-us.html" aria-current="page">/working-with-us</a>
+      <a href="contact.html">/contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="section hero">
+    <div class="wrap">
+      <p class="marker">// how we work</p>
+      <h1>Six promises that keep clients with us.</h1>
+      <p class="sub">Every one of them is a refusal. That's deliberate — a promise about what we won't do is harder to fake than a claim about what we will.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="refusals">
+        <div class="refusal"><h3>No pitch-and-switch.</h3><p>The senior partner who scopes your project is on it until it ships. You will not meet one team in the sales conversation and a different one on Monday.</p></div>
+        <div class="refusal"><h3>No account managers.</h3><p>You talk directly to the people building your software. Nothing gets relayed, summarised, or lost between you and the person writing the code.</p></div>
+        <div class="refusal"><h3>No juniors learning on you.</h3><p>We stay small on purpose. Senior people, or we don't take the work. Your project is not anybody's training exercise.</p></div>
+        <div class="refusal"><h3>No surprise invoices.</h3><p>We'd rather lose a margin than lose your trust. If something is going to cost more, you hear it before it's spent, not after.</p></div>
+        <div class="refusal"><h3>No theater.</h3><p>Short meetings, written decisions, working software. No status decks, no ceremony that exists to look like progress.</p></div>
+        <div class="refusal"><h3>No vibecoding.</h3><p>AI is a tool to ship faster — never a shortcut past review. Everything is verified by the same gates whether a person or a model wrote it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── the engagement ───────────────────────────────────────────────── -->
+  <section class="section" id="engagement">
+    <div class="wrap">
+      <p class="marker">// a sensible way to start</p>
+      <h2>One service, end to end, in a short fixed window.</h2>
+      <p class="lead">Rather than a long discovery phase or an open-ended retainer, the first engagement is scoped so you get a real answer quickly — and a working system either way.</p>
+
+      <div class="steps">
+        <div class="step"><span class="i">01</span><h3>We write the spec with your team</h3><p>One or two working sessions. Your domain expert talks, we write it down precisely, and the result is a document both sides can read.</p></div>
+        <div class="step"><span class="i">02</span><h3>You review the spec</h3><p>This is the decision point, and it's a document rather than a pull request. Being wrong here costs an edit, not a rewrite.</p></div>
+        <div class="step"><span class="i">03</span><h3>We generate, implement and ship it</h3><p>Behind your existing gates, on your infrastructure, in your process.</p></div>
+        <div class="step"><span class="i">04</span><h3>Your engineers own it afterwards</h3><p>The spec is the handover artefact. New people ramp on a readable document instead of reverse-engineering intent from handlers.</p></div>
+      </div>
+
+      <p>You end up with a working service and a concrete answer on whether a spec-first workflow suits how your team wants to work — before anyone commits to retooling around it.</p>
+    </div>
+  </section>
+
+  <!-- ── the bar ──────────────────────────────────────────────────────── -->
+  <section class="section" id="bar">
+    <div class="wrap">
+      <p class="marker">// the quality bar</p>
+      <h2>These are build failures, not review comments.</h2>
+
+      <ul class="dash">
+        <li>Two test suites: unit, and end-to-end integration against a real database.</li>
+        <li><span class="lit">100%</span> coverage enforced on both — statements, branches, functions and lines.</li>
+        <li>Every operation must be exercised by at least one end-to-end scenario, checked by the compiler.</li>
+        <li>Response schemas enforced at runtime, so the published API description can't drift from what the service actually returns.</li>
+      </ul>
+
+      <div class="note">
+        <span class="tag">Why we can hold the line at 100%</span>
+        <p>Because most of the code is generated and its tests are generated with it. Full coverage isn't a heroic effort by the team — it's the default state of a compiled service, and it stays there as the service grows.</p>
+      </div>
+
+      <p><a href="method.html">The method in full →</a></p>
+    </div>
+  </section>
+
+  <!-- ── the team argument ────────────────────────────────────────────── -->
+  <section class="section" id="team">
+    <div class="wrap">
+      <p class="marker">// what it means for your team</p>
+      <h2>Leverage, not headcount reduction.</h2>
+
+      <p>Backend teams usually grow because volume outpaces the people who can absorb it — more endpoints, more validation, more tests, more review, more knowledge stuck in one person's head. Headcount gets added to carry the volume, then more headcount to coordinate the first batch.</p>
+
+      <ul class="dash">
+        <li><strong>Engineers work at the level they were hired for.</strong> Specs, domain decisions and judgment calls, rather than writing a fifth CRUD endpoint by hand and reviewing a sixth.</li>
+        <li><strong>Standards stop depending on seniority.</strong> Conventions, security rules and quality bars are encoded in a generator applied to every service, rather than living in one senior engineer's head.</li>
+        <li><strong>New hires ramp on the spec, not the codebase.</strong> A cross-linked document describing what the system does, instead of reconstructing intent from five thousand lines of handlers.</li>
+        <li><strong>Throughput stops depending on one person.</strong> Verified output ships continuously instead of queueing behind whoever understands the system best.</li>
+        <li><strong>Agent capacity turns into parallel work, not review burden.</strong> Which is the usual failure mode of adding AI to a team — output goes up and the bottleneck just moves to review.</li>
+      </ul>
+
+      <div class="cta">
+        <a class="button" href="contact.html">Send a brief</a>
+        <a class="button ghost" href="work.html">See the work</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="col">
+      <a class="wordmark" href="index.html">busy&#8203;child</a>
+      <span class="meta">Production web &amp; mobile platforms</span>
+    </div>
+    <div class="col">
+      <a href="work.html">/work</a>
+      <a href="method.html">/method</a>
+      <a href="working-with-us.html">/working-with-us</a>
+      <a href="contact.html">/contact</a>
+    </div>
+    <div class="col">
+      <a href="https://www.upwork.com/agencies/busy-child/">Upwork</a>
+      <span class="meta">Same-business-day reply</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
