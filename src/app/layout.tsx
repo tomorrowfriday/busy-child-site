@@ -41,7 +41,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${mono.variable} ${display.variable}`}>
+    // `data-scroll-behavior` tells Next the smooth scroll is deliberate, so it
+    // suppresses it during route transitions rather than animating the jump to
+    // the top of each new page.
+    <html
+      lang="en"
+      className={`${mono.variable} ${display.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <head>
         {/*
           Scroll-reveal hides sections until JavaScript reveals them, which

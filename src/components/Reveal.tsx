@@ -1,18 +1,25 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 /**
  * Reveals elements marked `.reveal` as they scroll in, once each.
  *
- * Mounted once in the layout rather than wrapping every section in a component,
- * so the markup stays server-rendered and the whole page is readable with
- * JavaScript off — the CSS only hides `.reveal` when motion is welcome, and this
- * adds the class that shows it.
+ * Mounted once in the layout rather than wrapping every section, so the markup
+ * stays server-rendered and the page reads with JavaScript off (a `<noscript>`
+ * block in `<head>` restores what the CSS hides).
+ *
+ * It re-runs on every route change. The App Router keeps the layout mounted
+ * across client-side navigation and swaps only the page, so a mount-only
+ * effect would observe the first page's sections and never the next one's —
+ * leaving every section after the hero permanently at opacity 0.
  */
 export function Reveal() {
+  const pathname = usePathname();
+
   useEffect(() => {
-    const targets = document.querySelectorAll<HTMLElement>('.reveal');
+    const targets = document.querySelectorAll<HTMLElement>('.reveal:not(.is-in)');
     if (targets.length === 0) return;
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -34,7 +41,7 @@ export function Reveal() {
 
     targets.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   return null;
 }

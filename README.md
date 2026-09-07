@@ -128,6 +128,11 @@ logic behind them is pure and unit-tested — the components only animate what
 - **Nothing is hidden behind JavaScript.** Scroll-reveal hides sections with CSS, so a
   `<noscript>` block in `<head>` puts them back. Without it, a reader whose JavaScript
   failed would get a blank page below the hero.
+- **`Reveal` re-runs on every route change.** The App Router keeps the layout mounted
+  across client-side navigation and swaps only the page, so a mount-only effect observes
+  the first page's sections and never the next one's — leaving everything after the hero
+  stuck at opacity 0. It keys on `usePathname()`. If you add another layout-level effect
+  that touches page content, it needs the same treatment.
 - **No fake IDE chrome.** No window dots, no simulated tabs, no typing animation. The
   typography and the colour system are the design.
 - **Rules, not shadows.** Hairline borders, flat panels, no gradients.
