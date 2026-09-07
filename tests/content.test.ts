@@ -153,13 +153,25 @@ describe('outbound links', () => {
 });
 
 describe('launch blockers are visible', () => {
-  // These assert the placeholders still exist so nobody forgets they are
-  // placeholders. Replace the value and update the test in the same commit.
+  // Asserts the placeholder still exists so nobody forgets it is one.
+  // Replace the value and update the test in the same commit.
   it('flags the placeholder inbox', () => {
     expect(site.email).toBe('hello@busychild.com');
   });
+});
 
-  it('flags the placeholder App Store link', () => {
-    expect(ownProducts[0]?.externalUrl).toBe('https://apps.apple.com/');
+describe('the Mines listing', () => {
+  // Mines is the only thing on the site a stranger can click to verify, so the
+  // link matters more than it looks. It shipped as a bare apps.apple.com
+  // placeholder once; this pins the real listing.
+  it('points at the actual App Store listing', () => {
+    expect(ownProducts[0]?.externalUrl).toBe(
+      'https://apps.apple.com/us/app/mines-classic-bomb-puzzle/id1541036838',
+    );
+  });
+
+  it('is not the bare apps.apple.com placeholder', () => {
+    expect(ownProducts[0]?.externalUrl).not.toBe('https://apps.apple.com/');
+    expect(ownProducts[0]?.externalUrl).toMatch(/\/id\d+$/);
   });
 });

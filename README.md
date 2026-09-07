@@ -147,13 +147,10 @@ logic behind them is pure and unit-tested — the components only animate what
 
 ## Before launch — TODO
 
-Two placeholders. Both are asserted in `tests/content.test.ts` so they cannot be
-quietly forgotten — replace the value and update the test in the same commit.
+One placeholder left, asserted in `tests/content.test.ts` so it cannot be quietly
+forgotten — replace the value and update the test in the same commit.
 
 1. **The inbox.** `site.email` in `src/content/site.ts` is `hello@busychild.com`.
-2. **The Mines App Store URL.** `projects.ts` → `mines.externalUrl` points at
-   `https://apps.apple.com/`. Mines is the only thing on the site a stranger can click
-   to verify, so this link matters more than it looks.
 
 Also worth settling:
 

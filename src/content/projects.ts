@@ -105,8 +105,7 @@ export const projects: Project[] = validate(
       ],
       stack: ['Swift', 'iOS', 'visionOS'],
       named: true,
-      // TODO: replace with the real App Store listing before launch.
-      externalUrl: 'https://apps.apple.com/',
+      externalUrl: 'https://apps.apple.com/us/app/mines-classic-bomb-puzzle/id1541036838',
     },
   ],
   'content/projects.ts',
