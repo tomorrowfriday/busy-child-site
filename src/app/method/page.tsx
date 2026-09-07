@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { Link } from '@/components/Link';
 import { Footer, Masthead } from '@/components/Chrome';
-import { GateTable, Section, Specimen, Steps } from '@/components/Primitives';
-import { engagement } from '@/content/site';
+import { Section, Specimen, Steps } from '@/components/Primitives';
+import { GateRunner } from '@/components/GateRunner';
+import { Pipeline } from '@/components/Pipeline';
+import { engagement, gates } from '@/content/site';
 
 export const metadata: Metadata = {
   title: 'Method',
@@ -10,19 +12,6 @@ export const metadata: Metadata = {
     'DOS: we compile a written specification into a running API service. Roughly 60% of a finished service is generated deterministically and never edited by anyone — human or model.',
 };
 
-const PIPELINE = `  spec/                   composer                 gates
-  ┌─────────────┐        ┌─────────────┐       ┌────────────────────────┐
-  │ documents   │        │  validate   │       │ tsc · eslint           │
-  │ operations  │ ─────▶ │  build      │ ────▶ │ unit · scenario        │ ───▶ ship
-  │ permissions │        └──────┬──────┘       │ coverage 100%          │
-  │ scenarios   │               │              │ runtime output check   │
-  └─────────────┘               │              └───────────┬────────────┘
-  plain English                 │                          │
-  human-approved                ▼                          │
-                       ┌──────────────────┐                │
-                       │ ~60% generated   │                │
-                       │ ~40% by agent    │ ◀──── repair ──┘
-                       └──────────────────┘`;
 
 const AGENT_UNIT = `/** Validates that a template exists for the specified operation ID. */
 const validateOperationId = async (context: Context, parameters: unknown): Promise<void> => {
@@ -92,9 +81,7 @@ export default function MethodPage() {
 
         <Section id="pipeline" marker="the pipeline">
           <h2>One path for a change, and no side door.</h2>
-          <div className="diagram">
-            <pre>{PIPELINE}</pre>
-          </div>
+          <Pipeline />
           <Steps items={PIPELINE_STAGES} />
         </Section>
 
@@ -148,7 +135,7 @@ export default function MethodPage() {
 
         <Section id="gates" marker="verification">
           <h2>Eight gates. Build failures, not review comments.</h2>
-          <GateTable />
+          <GateRunner gates={gates} />
           <p className="caption">
             The last row is worth pausing on. Output schemas are enforced at request time, not only
             in CI. A service that returns something it never promised fails loudly rather than

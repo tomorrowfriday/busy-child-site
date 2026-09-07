@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { gates, literals } from '@/content/site';
+import { literals } from '@/content/site';
 import { tokenize } from '@/lib/compile';
 
 export function Section({
@@ -7,14 +7,21 @@ export function Section({
   marker,
   children,
   hero = false,
+  reveal = true,
 }: {
   id?: string;
   marker?: string;
   children: ReactNode;
   hero?: boolean;
+  /** The hero is above the fold, so it never animates in. */
+  reveal?: boolean;
 }) {
+  const classes = ['section', hero ? 'hero' : '', reveal && !hero ? 'reveal' : '']
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <section className={hero ? 'section hero' : 'section'} id={id}>
+    <section className={classes} id={id}>
       <div className="wrap">
         {marker ? <p className="marker">{`// ${marker}`}</p> : null}
         {children}
@@ -32,31 +39,6 @@ export function Literals() {
           <span>{literal.caption}</span>
         </div>
       ))}
-    </div>
-  );
-}
-
-export function GateTable() {
-  return (
-    <div className="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Gate</th>
-            <th scope="col">Catches</th>
-          </tr>
-        </thead>
-        <tbody>
-          {gates.map((gate) => (
-            <tr key={gate.gate}>
-              <td className="gate">
-                {gate.isCommand ? <code>{gate.gate}</code> : gate.gate}
-              </td>
-              <td>{gate.catches}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 }

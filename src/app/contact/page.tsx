@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { Link } from '@/components/Link';
 import { Footer, Masthead } from '@/components/Chrome';
 import { Section, Steps } from '@/components/Primitives';
 import { site } from '@/content/site';

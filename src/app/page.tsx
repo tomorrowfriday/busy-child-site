@@ -1,9 +1,10 @@
-import Link from 'next/link';
-import { CompilerDemo } from '@/components/CompilerDemo';
+import { Link } from '@/components/Link';
+import { GateRunner } from '@/components/GateRunner';
+import { SpecEditor } from '@/components/SpecEditor';
 import { Footer, Masthead } from '@/components/Chrome';
-import { GateTable, Literals, Section } from '@/components/Primitives';
+import { Literals, Section } from '@/components/Primitives';
 import { clientProjects } from '@/content/projects';
-import { promises, scenarios, site } from '@/content/site';
+import { gates, promises, scenarios, site } from '@/content/site';
 
 export default function HomePage() {
   return (
@@ -43,13 +44,14 @@ export default function HomePage() {
             runs against a real database on every change.
           </p>
 
-          <CompilerDemo scenarios={scenarios} />
+          <SpecEditor scenarios={scenarios} />
 
           <p className="caption">
-            Both panes above are computed in your browser by the same pure function the pipeline
-            uses. Pick a different scenario and watch the test regenerate — nothing here is a
-            screenshot. An agent cannot make a failing test pass by weakening the assertion,
-            because the assertion isn&apos;t in the test file.
+            That editor is live. Change the role, rename the operation, edit an assertion — the
+            test on the right is recompiled in your browser by the same pure function the pipeline
+            uses. Take the last assertion away and nothing is generated at all, because a scenario
+            that asserts nothing proves nothing. An agent cannot make a failing test pass by
+            weakening the assertion, because the assertion isn&apos;t in the test file.
           </p>
           <p>
             <Link href="/method">How the whole pipeline works →</Link>
@@ -92,10 +94,11 @@ export default function HomePage() {
         <Section marker="what stops it shipping broken">
           <h2>Every change runs the same stack of gates.</h2>
           <p className="lead">
-            These are build failures, not review comments. Nothing reaches production by being
-            waved through.
+            These are build failures, not review comments. Run them, then pick a gate to break
+            and watch the build stop there — everything after a failure is skipped, not reported
+            at the end.
           </p>
-          <GateTable />
+          <GateRunner gates={gates} />
           <p className="caption">
             That last row is the unusual one. Output schemas are enforced at request time, not only
             in CI — a service that returns something it never promised fails loudly rather than

@@ -23,10 +23,11 @@ demonstration of how we build, not a description of it. Three consequences:
   at module load. An invalid promise, a lower-case operation name or a non-kebab slug
   throws during `next build` rather than shipping. It is `composer validate`, applied
   to a website.
-- **The homepage compiler is real.** `src/lib/compile.ts` is a pure function that turns
-  a spec scenario into the test it becomes. The homepage runs it in the browser — the
-  panes are computed, not a pair of pre-written strings being swapped. It is the claim,
-  executing.
+- **The homepage compiler is real, and editable.** `src/lib/compile.ts` is a pure
+  function that turns a spec scenario into the test it becomes. The homepage runs it in
+  the browser and lets a visitor change the spec — role, operation, assertions — and
+  watch the test recompile. Break the spec and nothing is generated at all, because the
+  editor runs the same schema the build runs. It is the claim, executing.
 - **The gates are the ones we sell.** 100% coverage on the logic and content layers,
   enforced as a threshold. Not aspirational: `npm run gates` fails under it.
 
@@ -43,13 +44,22 @@ src/
 │   ├── opengraph-image.tsx social card, rendered at build
 │   ├── sitemap.ts robots.ts
 │   └── globals.css         the whole design system
-├── components/             Chrome, Primitives, CompilerDemo
+├── components/
+│   ├── SpecEditor.tsx      editable spec → live recompiled test
+│   ├── GateRunner.tsx      the gate table, runnable
+│   ├── Pipeline.tsx        SVG pipeline, lights in sequence on scroll
+│   ├── Reveal.tsx          scroll reveal (one observer for the page)
+│   ├── Link.tsx            next/link with prefetch off — see note below
+│   └── Chrome, Primitives
 ├── content/
 │   ├── schema.ts           Zod schemas — the content specification
 │   ├── site.ts             copy, gates, promises, scenarios
 │   └── projects.ts         the work
-└── lib/compile.ts          spec → test compiler + tokenizer
-tests/                      37 tests, 100% coverage of src/lib and src/content
+└── lib/
+    ├── compile.ts          spec → test compiler + tokenizer
+    ├── gates.ts            gate-run planning and summary
+    └── scenarioEdit.ts     immutable spec edits + validity
+tests/                      72 tests, 100% coverage of src/lib and src/content
 .github/workflows/ci.yml    the gates
 _legacy-static/             the previous hand-written HTML site, kept for reference
 ```
@@ -91,19 +101,44 @@ body text), JetBrains Mono for everything else. Self-hosted at build by `next/fo
 so there is no request to Google at runtime, no layout shift and no third-party
 tracking on a page that argues for restraint.
 
+## The interaction layer
+
+Three interactive pieces, and one rule behind all of them: **every animation
+demonstrates a claim rather than decorating one.** The copy says "No theater", so
+nothing here moves for effect.
+
+| Piece | What it demonstrates |
+|---|---|
+| **Spec editor** (home) | That the assertion lives in the spec. Edit the role, operation or an assertion and the test recompiles. Remove the last assertion and the compiler refuses to emit — the same failure `composer validate` produces in CI. |
+| **Gate runner** (home, `/method`) | That verification is a build failure, not a review comment. Run the gates, then pick one to break: it stops there and everything after it is skipped, not reported at the end. |
+| **Pipeline** (`/method`) | The mechanism itself. Stages light in order as it scrolls in, once. A diagram that loops forever is wallpaper. |
+
+All three collapse to a finished, static state under `prefers-reduced-motion`, and the
+logic behind them is pure and unit-tested — the components only animate what
+`src/lib` decides.
+
 ### Rules worth keeping
 
 - **List markers are positioned, not grid cells.** A list item containing `<strong>` or
   a link would otherwise scatter its children across implicit grid rows. This was a real
   bug in the previous site; don't reintroduce it.
-- **The motion budget is one moment** — the compiled pane settling when you pick a
-  different scenario. It respects `prefers-reduced-motion`. Nothing else animates.
+- **Motion is functional or it does not ship.** Scroll reveal, the compile settle, the
+  gate stagger, the pipeline sequence. Each one is showing you something true. No
+  parallax, no counters ticking up, no scroll-jacking.
+- **Nothing is hidden behind JavaScript.** Scroll-reveal hides sections with CSS, so a
+  `<noscript>` block in `<head>` puts them back. Without it, a reader whose JavaScript
+  failed would get a blank page below the hero.
 - **No fake IDE chrome.** No window dots, no simulated tabs, no typing animation. The
   typography and the colour system are the design.
 - **Rules, not shadows.** Hairline borders, flat panels, no gradients.
 - **Wide content scrolls inside its own container**, so the page body never scrolls
   sideways. The spec pane wraps because it is prose; the generated pane scrolls because
   breaking a line would misrepresent what the compiler emitted.
+- **Prefetch is off** (`src/components/Link.tsx`). Next 16 writes each route's RSC
+  payload to `work/__next.work/__PAGE__.txt` under `output: export`, while the router
+  prefetches `work/__next.work.__PAGE__.txt` — so every prefetch 404s. Navigation is
+  unaffected either way, and five static pages do not need prefetching. If a later Next
+  release lines those paths up, delete the wrapper.
 
 ## Before launch — TODO
 

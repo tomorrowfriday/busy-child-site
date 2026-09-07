@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@/components/Link';
 import { nav, site } from '@/content/site';
 
 export function Masthead({ current }: { current?: string }) {
