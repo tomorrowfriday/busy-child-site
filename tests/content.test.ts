@@ -137,6 +137,21 @@ describe('projectBySlug', () => {
   });
 });
 
+describe('outbound links', () => {
+  // The portfolio PDF printed upwork.com/agencies/busy-child, which does not
+  // resolve — the real agency profile is keyed by a numeric id. This shipped
+  // once; it should not ship again.
+  it('points at the agency profile by id, not the busy-child slug', () => {
+    expect(site.upwork).toBe('https://www.upwork.com/agencies/2029955071357100515/');
+    expect(site.upwork).not.toContain('busy-child');
+  });
+
+  it('uses an absolute https URL', () => {
+    expect(() => new URL(site.upwork)).not.toThrow();
+    expect(new URL(site.upwork).protocol).toBe('https:');
+  });
+});
+
 describe('launch blockers are visible', () => {
   // These assert the placeholders still exist so nobody forgets they are
   // placeholders. Replace the value and update the test in the same commit.

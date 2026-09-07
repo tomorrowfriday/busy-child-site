@@ -22,7 +22,7 @@ export const site = {
   description:
     'A senior engineering team that designs, builds, and maintains production web and mobile software for enterprises. Spec-driven, serverless-first, 100% test coverage. The partner who scopes your project is the one who ships it.',
   sectors: ['Fund administration', 'Healthcare', 'Insurance', 'Consumer mobile'],
-  upwork: 'https://www.upwork.com/agencies/busy-child/',
+  upwork: 'https://www.upwork.com/agencies/2029955071357100515/',
   // TODO: replace with the real inbox before launch.
   email: 'hello@busychild.com',
   // TODO: set once the domain is registered — used for canonical + OG URLs.
