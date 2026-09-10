@@ -3,56 +3,73 @@ import { z } from 'zod';
 /**
  * The site's content specification.
  *
- * Every piece of copy on this site is data validated against these schemas at
- * module load, which means an invalid content file fails `next build` rather
- * than shipping a broken page. It is the same idea as `composer validate` in
- * the DOS pipeline, applied to a website: the spec is the source of truth, and
- * the build is the gate.
+ * Every string on this site is data validated against these schemas at module
+ * load, which means invalid or incomplete content fails `next build` rather
+ * than shipping a broken page. It is `composer validate` applied to a website.
+ *
+ * Both locales are parsed against the same `contentSchema`, so a translation
+ * that is missing a section — or has grown one the other language lacks —
+ * cannot ship. See `tests/locales.test.ts`.
  */
 
 const nonEmpty = z.string().trim().min(1, 'must not be empty');
 
-/** A metric we can publish. Client names are withheld; numbers are not. */
+export const LOCALES = ['en', 'uk'] as const;
+export const localeSchema = z.enum(LOCALES);
+export type Locale = (typeof LOCALES)[number];
+
+/** A bullet with an optional lead-in rendered bold. Keeps markup out of copy. */
+export const bulletSchema = z.object({
+  strong: nonEmpty.optional(),
+  text: nonEmpty,
+});
+
 export const metricSchema = z.object({
   value: nonEmpty,
   caption: nonEmpty,
 });
 
+export const literalSchema = metricSchema;
+
 export const projectSchema = z.object({
-  slug: z
-    .string()
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'slug must be kebab-case'),
+  slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'slug must be kebab-case'),
   domain: nonEmpty,
   title: nonEmpty,
   metric: metricSchema,
   summary: nonEmpty,
-  /** Longer narrative shown on /work. */
   context: nonEmpty,
   shipped: z.array(nonEmpty).min(3, 'list at least three shipped items'),
   stack: z.array(nonEmpty).min(1),
-  /** Optional pull-quote describing the outcome. */
   outcome: nonEmpty.optional(),
-  /** Our own products may be named; client work may not. */
   named: z.boolean().default(false),
   externalUrl: z.string().url().optional(),
+  externalLabel: nonEmpty.optional(),
 });
 
 export const gateSchema = z.object({
   gate: nonEmpty,
-  /** Rendered in the keyword colour when it is a command rather than a name. */
   isCommand: z.boolean().default(false),
   catches: nonEmpty,
 });
 
 export const promiseSchema = z.object({
-  /** Each promise is phrased as a refusal — harder to fake than a claim. */
-  refusal: z.string().regex(/^No\b/, 'every promise is phrased as a refusal'),
+  refusal: nonEmpty,
   detail: nonEmpty,
 });
 
 export const stepSchema = z.object({
   title: nonEmpty,
   detail: nonEmpty,
+});
+
+/* ── what a client actually gets, in an owner's language ────────────────── */
+
+export const outcomeSchema = z.object({
+  title: nonEmpty,
+  detail: nonEmpty,
+  /** Optional real figure from shipped work, e.g. "$1M / yr". */
+  proof: nonEmpty.optional(),
+  proofCaption: nonEmpty.optional(),
 });
 
 /* ── the specification language the compiler consumes ───────────────────── */
@@ -67,23 +84,164 @@ export const assertionSchema = z.discriminatedUnion('kind', [
 export const scenarioSchema = z.object({
   index: z.number().int().positive(),
   title: nonEmpty,
-  /** Roles are upper-case identifiers, e.g. USER2, ADMIN. */
   role: z.string().regex(/^[A-Z][A-Z0-9_]*$/, 'role must be an upper-case identifier'),
-  /** Operations are PascalCase, e.g. IndexActivities. */
-  operation: z
-    .string()
-    .regex(/^[A-Z][A-Za-z0-9]*$/, 'operation must be PascalCase'),
+  operation: z.string().regex(/^[A-Z][A-Za-z0-9]*$/, 'operation must be PascalCase'),
   mutation: z.record(z.string(), z.string()).optional(),
   assertions: z.array(assertionSchema).min(1, 'a scenario must assert something'),
-  /** One line explaining what this scenario proves, shown beside the demo. */
   proves: nonEmpty,
 });
 
-export const literalSchema = z.object({
-  value: nonEmpty,
-  caption: nonEmpty,
+/* ── page copy ──────────────────────────────────────────────────────────── */
+
+const sectionSchema = z.object({
+  marker: nonEmpty,
+  title: nonEmpty,
+  lead: nonEmpty.optional(),
+  body: z.array(nonEmpty).optional(),
+  caption: nonEmpty.optional(),
+  bullets: z.array(bulletSchema).optional(),
+  note: z.object({ tag: nonEmpty, text: nonEmpty }).optional(),
+  link: nonEmpty.optional(),
 });
 
+export const contentSchema = z.object({
+  locale: localeSchema,
+  /** Shown in the language switcher, in its own language. */
+  localeLabel: nonEmpty,
+  localeName: nonEmpty,
+
+  site: z.object({
+    tagline: nonEmpty,
+    statement: nonEmpty,
+    description: nonEmpty,
+    sectors: z.array(nonEmpty).min(3),
+  }),
+
+  nav: z.array(z.object({ href: nonEmpty, label: nonEmpty })).length(5),
+
+  common: z.object({
+    sendBrief: nonEmpty,
+    seeWork: nonEmpty,
+    upwork: nonEmpty,
+    upworkAlt: nonEmpty,
+    sameDay: nonEmpty,
+    skipToContent: nonEmpty,
+    switchLanguage: nonEmpty,
+  }),
+
+  literals: z.array(literalSchema).length(4),
+  gates: z.array(gateSchema).length(8),
+  promises: z.array(promiseSchema).length(6),
+  engagement: z.array(stepSchema).length(4),
+  scenarios: z.array(scenarioSchema).min(3),
+  projects: z.array(projectSchema).min(4),
+
+  home: z.object({
+    outcomes: sectionSchema.extend({ items: z.array(outcomeSchema).min(5) }),
+    specimen: sectionSchema,
+    work: sectionSchema,
+    gates: sectionSchema,
+    promises: sectionSchema,
+    contact: sectionSchema,
+    editor: z.object({
+      specHead: nonEmpty,
+      outHead: nonEmpty,
+      failHead: nonEmpty,
+      compiles: nonEmpty,
+      blocked: nonEmpty,
+      reset: nonEmpty,
+      role: nonEmpty,
+      operation: nonEmpty,
+      assertions: nonEmpty,
+      empty: nonEmpty,
+      invalidLead: nonEmpty,
+      proves: nonEmpty,
+      edited: nonEmpty,
+      editedText: nonEmpty,
+      specInvalid: nonEmpty,
+      kinds: z.object({
+        excludesItem: nonEmpty,
+        includesItem: nonEmpty,
+        fieldEquals: nonEmpty,
+        rejectedWith: nonEmpty,
+      }),
+    }),
+    runner: z.object({
+      run: nonEmpty,
+      runAgain: nonEmpty,
+      stop: nonEmpty,
+      breakLabel: nonEmpty,
+      breakNothing: nonEmpty,
+      passed: nonEmpty,
+      failed: nonEmpty,
+      skipped: nonEmpty,
+      gatesWord: nonEmpty,
+      neverRan: nonEmpty,
+    }),
+  }),
+
+  workPage: z.object({
+    metaTitle: nonEmpty,
+    metaDescription: nonEmpty,
+    hero: sectionSchema,
+    shippedHeading: nonEmpty,
+    outcomeTag: nonEmpty,
+    next: sectionSchema,
+  }),
+
+  methodPage: z.object({
+    metaTitle: nonEmpty,
+    metaDescription: nonEmpty,
+    hero: sectionSchema,
+    stages: z.array(stepSchema).length(7),
+    pipeline: sectionSchema,
+    whyItWorks: sectionSchema,
+    gates: sectionSchema,
+    standard: sectionSchema,
+    review: sectionSchema,
+    economics: sectionSchema,
+    api: sectionSchema,
+    fit: sectionSchema,
+    start: sectionSchema,
+    pipelineLabels: z.object({
+      spec: nonEmpty,
+      validate: nonEmpty,
+      build: nonEmpty,
+      agent: nonEmpty,
+      gates: nonEmpty,
+      specSub: nonEmpty,
+      validateSub: nonEmpty,
+      buildSub: nonEmpty,
+      agentSub: nonEmpty,
+      gatesSub: nonEmpty,
+      ship: nonEmpty,
+      repair: nonEmpty,
+      humanApproved: nonEmpty,
+      alt: nonEmpty,
+    }),
+  }),
+
+  workingPage: z.object({
+    metaTitle: nonEmpty,
+    metaDescription: nonEmpty,
+    hero: sectionSchema,
+    engagement: sectionSchema,
+    bar: sectionSchema,
+    team: sectionSchema,
+  }),
+
+  contactPage: z.object({
+    metaTitle: nonEmpty,
+    metaDescription: nonEmpty,
+    hero: sectionSchema,
+    brief: sectionSchema,
+    briefItems: z.array(stepSchema).length(5),
+    answers: sectionSchema,
+    mailSubject: nonEmpty,
+  }),
+});
+
+export type Content = z.infer<typeof contentSchema>;
 export type Metric = z.infer<typeof metricSchema>;
 export type Project = z.infer<typeof projectSchema>;
 export type Gate = z.infer<typeof gateSchema>;
@@ -92,6 +250,9 @@ export type Step = z.infer<typeof stepSchema>;
 export type Assertion = z.infer<typeof assertionSchema>;
 export type Scenario = z.infer<typeof scenarioSchema>;
 export type Literal = z.infer<typeof literalSchema>;
+export type Outcome = z.infer<typeof outcomeSchema>;
+export type Bullet = z.infer<typeof bulletSchema>;
+export type Section = z.infer<typeof sectionSchema>;
 
 /**
  * Validate a content collection, failing the build with a readable message

@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { compileScenario, renderSpec, tokenize } from '@/lib/compile';
 import type { Scenario } from '@/content/schema';
-import { scenarios } from '@/content/site';
+import en from '@/content/locales/en';
+const scenarios = en.scenarios;
 
 const isolation: Scenario = {
   index: 4,

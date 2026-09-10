@@ -604,3 +604,67 @@ td.gate code{color:var(--kw)}
   .field > span{flex-basis:100%}
   .runner-verdict{margin-left:0;flex-basis:100%}
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   What you get — written for an owner, so it reads warmer and larger than
+   the technical sections around it.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.outcomes{
+  display:grid;gap:1px;background:var(--line);border:1px solid var(--line);
+  grid-template-columns:repeat(auto-fit,minmax(288px,1fr));
+}
+.outcome{
+  background:var(--panel);padding:1.3rem 1.35rem 1.4rem;
+  display:flex;flex-direction:column;gap:.6rem;
+}
+.outcome h3{
+  font-family:var(--f-disp);font-size:1rem;font-weight:600;letter-spacing:-.02em;
+  line-height:1.35;color:var(--fg);
+}
+.outcome p{font-size:.87rem;line-height:1.78;color:var(--fg-dim)}
+.outcome-proof{
+  margin-top:auto;padding-top:.8rem;border-top:1px solid var(--line);
+  display:flex;flex-direction:column;gap:.1rem;
+}
+.outcome-proof b{
+  font-family:var(--f-disp);font-size:1.15rem;font-weight:700;color:var(--num);
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.2;
+}
+.outcome-proof span{font-size:.74rem;color:var(--fg-faint);line-height:1.55}
+
+/* ─── masthead: nav plus language switch ────────────────────────────────── */
+
+.mast-right{display:flex;flex-wrap:wrap;align-items:baseline;gap:.8rem 1.4rem}
+
+.locale-switch{display:flex;align-items:baseline;gap:.35rem;font-size:.78rem}
+.locale-switch a{
+  color:var(--fg-faint);text-decoration:none;padding:.05rem .3rem;
+  border:1px solid transparent;letter-spacing:.04em;
+}
+.locale-switch a:hover{color:var(--fg)}
+.locale-switch a.is-active{color:var(--fg);border-color:var(--line-hi)}
+.locale-switch a:not(:last-child)::after{
+  content:"";
+}
+
+/* ─── the bare domain: a language gateway, not a page ───────────────────── */
+
+.gateway{
+  min-height:70vh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:1.6rem;padding:3rem 1.25rem;
+}
+.gateway-mark{
+  font-family:var(--f-disp);font-weight:700;font-size:1.2rem;letter-spacing:-.03em;
+  color:var(--fg);
+}
+.gateway-links{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center}
+.gateway-links a{
+  font-family:var(--f-mono);font-size:.9rem;color:var(--fn);text-decoration:none;
+  border:1px solid var(--line-hi);padding:.5rem 1.1rem;
+}
+.gateway-links a:hover{color:var(--fg);border-color:var(--fn)}
+
+@media (max-width:620px){
+  .mast-right{width:100%;justify-content:space-between;gap:.6rem 1rem}
+}

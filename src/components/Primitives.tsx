@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { literals } from '@/content/site';
 import { tokenize } from '@/lib/compile';
+import type { Bullet, Gate, Literal, Outcome, Step } from '@/content/schema';
 
 export function Section({
   id,
@@ -30,15 +30,75 @@ export function Section({
   );
 }
 
-export function Literals() {
+export function Literals({ items }: { items: readonly Literal[] }) {
   return (
     <div className="literals">
-      {literals.map((literal) => (
+      {items.map((literal) => (
         <div className="literal" key={literal.value}>
           <b>{literal.value}</b>
           <span>{literal.caption}</span>
         </div>
       ))}
+    </div>
+  );
+}
+
+export function Bullets({ items }: { items: readonly Bullet[] }) {
+  return (
+    <ul className="dash">
+      {items.map((bullet) => (
+        <li key={bullet.text}>
+          {bullet.strong ? <strong>{bullet.strong}</strong> : null}
+          {bullet.strong ? ' ' : null}
+          {bullet.text}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function Note({ tag, text }: { tag: string; text: string }) {
+  return (
+    <div className="note">
+      <span className="tag">{tag}</span>
+      <p>{text}</p>
+    </div>
+  );
+}
+
+/** What a client gets, in an owner's language rather than an engineer's. */
+export function Outcomes({ items }: { items: readonly Outcome[] }) {
+  return (
+    <div className="outcomes">
+      {items.map((item) => (
+        <article className="outcome" key={item.title}>
+          <h3>{item.title}</h3>
+          <p>{item.detail}</p>
+          {item.proof ? (
+            <div className="outcome-proof">
+              <b>{item.proof}</b>
+              <span>{item.proofCaption}</span>
+            </div>
+          ) : null}
+        </article>
+      ))}
+    </div>
+  );
+}
+
+export function GateTable({ gates }: { gates: readonly Gate[] }) {
+  return (
+    <div className="table-wrap">
+      <table>
+        <tbody>
+          {gates.map((gate) => (
+            <tr key={gate.gate}>
+              <td className="gate">{gate.isCommand ? <code>{gate.gate}</code> : gate.gate}</td>
+              <td>{gate.catches}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -70,7 +130,7 @@ export function Specimen({ source }: { source: string }) {
   );
 }
 
-export function Steps({ items }: { items: readonly { title: string; detail: string }[] }) {
+export function Steps({ items }: { items: readonly Step[] }) {
   return (
     <div className="steps">
       {items.map((item, index) => (

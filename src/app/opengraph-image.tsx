@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
-import { site } from '@/content/site';
+import { site } from '@/content';
+import en from '@/content/locales/en';
 
 /**
  * Social card, generated at build time.
@@ -12,7 +13,7 @@ import { site } from '@/content/site';
 export const dynamic = 'force-static';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-export const alt = `${site.name} — ${site.tagline}`;
+export const alt = `${site.name} — ${en.site.tagline}`;
 
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -32,7 +33,7 @@ export default function OpengraphImage() {
       >
         <div style={{ display: 'flex', fontSize: 26, color: '#6e786d' }}>
           {'// '}
-          {site.sectors.join(' · ').toLowerCase()}
+          {en.site.sectors.join(' · ').toLowerCase()}
         </div>
 
         <div
@@ -45,7 +46,7 @@ export default function OpengraphImage() {
             maxWidth: 1010,
           }}
         >
-          {site.statement}
+          {en.site.statement}
         </div>
 
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>

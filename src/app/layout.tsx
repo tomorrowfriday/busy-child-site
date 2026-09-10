@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Martian_Mono } from 'next/font/google';
 import { Reveal } from '@/components/Reveal';
-import { site } from '@/content/site';
+import { site, DEFAULT_LOCALE } from '@/content';
 import './globals.css';
 
 /**
@@ -9,14 +9,10 @@ import './globals.css';
  * runtime, no layout shift, and no third-party tracking on a page that argues
  * for restraint.
  */
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-mono',
-});
+const mono = JetBrains_Mono({ subsets: ['latin', 'cyrillic'], display: 'swap', variable: '--font-mono' });
 
 const display = Martian_Mono({
-  subsets: ['latin'],
+  subsets: ['latin', 'cyrillic'],
   display: 'swap',
   weight: ['400', '600', '700'],
   variable: '--font-display',
@@ -24,28 +20,19 @@ const display = Martian_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: {
-    default: `${site.name} — ${site.tagline.toLowerCase()}`,
-    template: `%s — ${site.name}`,
-  },
-  description: site.description,
-  openGraph: {
-    type: 'website',
-    siteName: site.name,
-    title: `${site.name} — ${site.tagline.toLowerCase()}`,
-    description: site.description,
-  },
-  twitter: { card: 'summary_large_image' },
+  title: site.name,
   robots: { index: true, follow: true },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // `data-scroll-behavior` tells Next the smooth scroll is deliberate, so it
-    // suppresses it during route transitions rather than animating the jump to
-    // the top of each new page.
+    // The root layout is locale-agnostic — it wraps both languages — so `lang`
+    // is set here to the default and narrowed per-locale on the wrapper in
+    // app/[locale]/layout.tsx. `data-scroll-behavior` tells Next the smooth
+    // scroll is deliberate, so it suppresses it during route transitions.
     <html
-      lang="en"
+      lang={DEFAULT_LOCALE}
       className={`${mono.variable} ${display.variable}`}
       data-scroll-behavior="smooth"
     >
@@ -63,9 +50,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <a className="skip-link" href="#main">
-          Skip to content
-        </a>
         {children}
         <Reveal />
       </body>

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { durationFor, formatMs, planRun, summarise } from '@/lib/gates';
-import { gates } from '@/content/site';
+import en from '@/content/locales/en';
+const gates = en.gates;
 
 describe('durationFor', () => {
   it('is deterministic — the same gate always takes the same time', () => {
@@ -51,7 +52,7 @@ describe('planRun', () => {
   it('attaches what the failing gate catches, as the failure note', () => {
     const steps = planRun(gates, 'tsc');
     const failed = steps.find((s) => s.status === 'failed');
-    expect(failed?.note).toBe(gates.find((g) => g.gate === 'tsc')?.catches);
+    expect(failed?.note).toBe(gates.find((g: { gate: string }) => g.gate === 'tsc')?.catches);
   });
 
   it('gives skipped gates no duration — they never ran', () => {

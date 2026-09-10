@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react';
 import { compileScenario, renderSpec } from '@/lib/compile';
 import {
   ASSERTION_KINDS,
-  ASSERTION_LABELS,
   changeAssertionKind,
   checkScenario,
   removeAssertion,
@@ -12,7 +11,7 @@ import {
   setOperation,
   setRole,
 } from '@/lib/scenarioEdit';
-import type { Assertion, Scenario } from '@/content/schema';
+import type { Assertion, Content, Scenario } from '@/content/schema';
 import { Code } from './Primitives';
 
 /**
@@ -25,7 +24,13 @@ import { Code } from './Primitives';
  *
  * This is the site's whole argument, made touchable.
  */
-export function SpecEditor({ scenarios }: { scenarios: readonly Scenario[] }) {
+export function SpecEditor({
+  scenarios,
+  t,
+}: {
+  scenarios: readonly Scenario[];
+  t: Content['home']['editor'];
+}) {
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Scenario>(() => scenarios[0]!);
   const [dirty, setDirty] = useState(false);
@@ -78,17 +83,17 @@ export function SpecEditor({ scenarios }: { scenarios: readonly Scenario[] }) {
         {/* ── the spec, editable ─────────────────────────────────────── */}
         <div className="editor-pane">
           <div className="pane-head">
-            <span className="src">docs/spec/ — edit me</span>
+            <span className="src">{t.specHead}</span>
             {dirty ? (
               <button type="button" className="mini-btn" onClick={() => load(index)}>
-                Reset
+                {t.reset}
               </button>
             ) : null}
           </div>
 
           <div className="editor-fields">
             <label className="field">
-              <span>Role</span>
+              <span>{t.role}</span>
               <input
                 value={draft.role}
                 spellCheck={false}
@@ -98,7 +103,7 @@ export function SpecEditor({ scenarios }: { scenarios: readonly Scenario[] }) {
             </label>
 
             <label className="field">
-              <span>Operation</span>
+              <span>{t.operation}</span>
               <input
                 value={draft.operation}
                 spellCheck={false}
@@ -108,7 +113,7 @@ export function SpecEditor({ scenarios }: { scenarios: readonly Scenario[] }) {
             </label>
 
             <div className="field-group">
-              <span className="field-legend">Assertions</span>
+              <span className="field-legend">{t.assertions}</span>
               {draft.assertions.map((assertion, i) => (
                 <AssertionRow
                   key={i}
@@ -116,18 +121,17 @@ export function SpecEditor({ scenarios }: { scenarios: readonly Scenario[] }) {
                   canRemove={draft.assertions.length > 0}
                   onChange={(next) => edit(setAssertion(draft, i, next))}
                   onRemove={() => edit(removeAssertion(draft, i))}
+                  kinds={t.kinds}
                 />
               ))}
               {draft.assertions.length === 0 ? (
-                <p className="field-empty">
-                  No assertions. A scenario that asserts nothing proves nothing.
-                </p>
+                <p className="field-empty">{t.empty}</p>
               ) : null}
             </div>
           </div>
 
           <div className="pane-preview">
-            <pre>{spec ?? '— spec invalid —'}</pre>
+            <pre>{spec ?? t.specInvalid}</pre>
           </div>
         </div>
 
@@ -135,10 +139,10 @@ export function SpecEditor({ scenarios }: { scenarios: readonly Scenario[] }) {
         <div className="editor-pane">
           <div className="pane-head">
             <span className={check.ok ? 'out' : 'bad'}>
-              {check.ok ? 'generated — never edited' : 'composer validate — failed'}
+              {check.ok ? t.outHead : t.failHead}
             </span>
             <span className={`badge ${check.ok ? 'is-ok' : 'is-bad'}`}>
-              {check.ok ? 'compiles' : 'blocked'}
+              {check.ok ? t.compiles : t.blocked}
             </span>
           </div>
 
@@ -149,10 +153,7 @@ export function SpecEditor({ scenarios }: { scenarios: readonly Scenario[] }) {
               </pre>
             ) : (
               <div className="validate-fail">
-                <p className="validate-lead">
-                  Nothing is generated. The build stops here rather than emitting a test that
-                  doesn&apos;t match the spec.
-                </p>
+                <p className="validate-lead">{t.invalidLead}</p>
                 <ul>
                   {check.errors.map((error) => (
                     <li key={error}>{error}</li>
@@ -165,10 +166,8 @@ export function SpecEditor({ scenarios }: { scenarios: readonly Scenario[] }) {
       </div>
 
       <p className="editor-foot">
-        <b>{dirty ? 'Edited' : 'Proves'}</b>
-        {dirty
-          ? 'You changed the spec and the test changed with it — that is the only way to change what is verified.'
-          : scenarios[index]?.proves}
+        <b>{dirty ? t.edited : t.proves}</b>
+        {dirty ? t.editedText : scenarios[index]?.proves}
       </p>
     </div>
   );
@@ -179,11 +178,13 @@ function AssertionRow({
   canRemove,
   onChange,
   onRemove,
+  kinds,
 }: {
   assertion: Assertion;
   canRemove: boolean;
   onChange: (next: Assertion) => void;
   onRemove: () => void;
+  kinds: Content['home']['editor']['kinds'];
 }) {
   return (
     <div className="assertion">
@@ -196,7 +197,7 @@ function AssertionRow({
       >
         {ASSERTION_KINDS.map((kind) => (
           <option key={kind} value={kind}>
-            {ASSERTION_LABELS[kind]}
+            {kinds[kind]}
           </option>
         ))}
       </select>

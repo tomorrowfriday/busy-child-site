@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { formatMs, planRun, summarise, type GateStep } from '@/lib/gates';
-import type { Gate } from '@/content/schema';
+import type { Content, Gate } from '@/content/schema';
 
 /**
  * The gate table, made runnable.
@@ -12,7 +12,13 @@ import type { Gate } from '@/content/schema';
  * That is the difference the copy claims — a build failure rather than a review
  * comment — and it is easier to believe once you have watched it happen.
  */
-export function GateRunner({ gates }: { gates: readonly Gate[] }) {
+export function GateRunner({
+  gates,
+  t,
+}: {
+  gates: readonly Gate[];
+  t: Content['home']['runner'];
+}) {
   const [steps, setSteps] = useState<GateStep[]>(() =>
     gates.map((gate) => ({
       name: gate.gate,
@@ -107,11 +113,11 @@ export function GateRunner({ gates }: { gates: readonly Gate[] }) {
     <div className="runner">
       <div className="runner-bar">
         <button type="button" className="run-btn" onClick={running ? reset : run} disabled={false}>
-          {running ? 'Stop' : done ? 'Run again' : 'Run the gates'}
+          {running ? t.stop : done ? t.runAgain : t.run}
         </button>
 
         <label className="runner-break">
-          <span>Break</span>
+          <span>{t.breakLabel}</span>
           <select
             value={failAt}
             onChange={(event) => {
@@ -119,7 +125,7 @@ export function GateRunner({ gates }: { gates: readonly Gate[] }) {
               reset();
             }}
           >
-            <option value="">nothing — clean run</option>
+            <option value="">{t.breakNothing}</option>
             {gates.map((gate) => (
               <option key={gate.gate} value={gate.gate}>
                 {gate.gate}
@@ -131,8 +137,8 @@ export function GateRunner({ gates }: { gates: readonly Gate[] }) {
         {settled ? (
           <span className={`runner-verdict ${summary.ok ? 'is-ok' : 'is-bad'}`}>
             {summary.ok
-              ? `build passed · ${summary.passed} gates · ${formatMs(summary.totalMs)}`
-              : `build failed · ${summary.passed} passed, ${summary.skipped} never ran`}
+              ? `${t.passed} · ${summary.passed} ${t.gatesWord} · ${formatMs(summary.totalMs)}`
+              : `${t.failed} · ${summary.passed} / ${summary.skipped} ${t.neverRan}`}
           </span>
         ) : null}
       </div>
@@ -156,7 +162,7 @@ export function GateRunner({ gates }: { gates: readonly Gate[] }) {
             </span>
             <span className="time">
               {step.status === 'passed' || step.status === 'failed' ? formatMs(step.ms) : ''}
-              {step.status === 'skipped' ? 'skipped' : ''}
+              {step.status === 'skipped' ? t.skipped : ''}
             </span>
             <span className="visually-hidden">{step.status}</span>
             {step.status === 'failed' && step.note ? (
