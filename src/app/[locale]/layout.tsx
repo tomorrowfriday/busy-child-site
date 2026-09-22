@@ -7,6 +7,13 @@ export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
 
+/**
+ * Only en and uk exist. Without this, any unmatched top-level path — a
+ * browser probing /favicon.ico, a stray link — is treated as a locale Next
+ * must generate, which throws under output: export. false makes it a 404.
+ */
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {

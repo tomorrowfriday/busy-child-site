@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!--
+    A terminal cursor on the site's own ground. The wordmark is monospace and
+    the whole design argues the site is a source file, so the mark is the
+    caret you would be typing at — in the literal colour every metric uses.
+  -->
+  <rect width="32" height="32" rx="3" fill="#171a17"/>
+  <rect x="6" y="21" width="20" height="4" rx="1" fill="#e3a36d"/>
+  <path d="M9 9l5 5-5 5" fill="none" stroke="#88c99d" stroke-width="3"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
