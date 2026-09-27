@@ -1,0 +1,19 @@
+# Copy this file into a project repo as .github/workflows/notify-skravets.yml
+# On every push to main it asks the skravets hub to rebuild the site.
+# Needs the repo secret SKRAVETS_TOKEN (same token as in the hub repo).
+name: Notify skravets
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -fsS -X POST \
+            -H "Authorization: Bearer ${{ secrets.SKRAVETS_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/tomorrowfriday/skravets/dispatches \
+            -d '{"event_type":"project-updated","client_payload":{"repo":"${{ github.repository }}"}}'
