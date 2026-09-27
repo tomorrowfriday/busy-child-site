@@ -396,6 +396,71 @@ td.gate code{color:var(--kw)}
   .step{grid-template-columns:2.4rem 1fr}
 }
 
+/* ─── the cascade ───────────────────────────────────────────────────────── */
+/* A folded document: one scannable line per claim, detail one click down.
+   The row is the index entry — domain, claim, number — so the page still
+   argues its case with every fold shut. */
+
+.folds{border:1px solid var(--line);background:var(--panel)}
+.fold{border-bottom:1px solid var(--line)}
+.fold:last-child{border-bottom:0}
+
+.fold > summary{
+  display:grid;grid-template-columns:1.5rem minmax(0,1fr) auto;gap:.15rem .75rem;
+  align-items:baseline;padding:.9rem 1.15rem;cursor:pointer;list-style:none;
+}
+.fold > summary::-webkit-details-marker{display:none}
+.fold > summary::marker{content:""}
+.fold > summary:hover{background:var(--panel-2)}
+.fold > summary:hover .fold-claim{color:var(--fn)}
+.fold > summary:focus-visible{outline:2px solid var(--fn);outline-offset:-2px}
+
+/* The fold marker is the keyword colour because a fold is structure. */
+.fold-mark::before{content:"▸";color:var(--kw);font-size:.82rem}
+.fold[open] > summary .fold-mark::before{content:"▾"}
+
+.fold-head{display:flex;flex-direction:column;gap:.28rem;min-width:0}
+.fold-claim{
+  font-family:var(--f-disp);font-size:.95rem;font-weight:600;color:var(--fg);
+  letter-spacing:-.02em;line-height:1.42;text-wrap:balance;
+}
+.fold-badge{
+  font-family:var(--f-mono);font-size:.62rem;font-weight:400;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--str);border:1px solid var(--str);
+  padding:.05rem .35rem;margin-left:.6rem;vertical-align:.15em;white-space:nowrap;
+}
+.fold-figure{
+  font-family:var(--f-disp);font-size:.92rem;font-weight:700;color:var(--num);
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums;text-align:right;
+  line-height:1.42;white-space:nowrap;
+}
+.fold-figure small{
+  display:block;font-family:var(--f-mono);font-size:.68rem;font-weight:400;
+  color:var(--fg-faint);letter-spacing:0;line-height:1.5;white-space:normal;max-width:17ch;
+}
+
+/* The body hangs off the indent guide an editor draws down a folded region. */
+.fold-body{
+  margin:0 1.15rem 1.2rem 1.9rem;padding:.1rem 0 .1rem 1.1rem;
+  border-left:1px solid var(--line-hi);
+  display:flex;flex-direction:column;gap:.95rem;
+}
+.fold-body > p{font-size:.86rem;line-height:1.75;max-width:var(--measure)}
+.fold-body h4{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-faint);font-weight:400}
+.fold-body .stack{margin-top:0}
+.fold-body .shipped li{font-size:.83rem}
+
+/* Says the page is foldable without a tooltip or an onboarding hint. */
+.fold-lede{font-size:.78rem;color:var(--fg-faint)}
+.fold-lede::before{content:"// ";color:var(--com)}
+
+@media (max-width:620px){
+  .fold > summary{grid-template-columns:1.2rem minmax(0,1fr);row-gap:.5rem;padding:.85rem .95rem}
+  .fold-figure{grid-column:2;text-align:left}
+  .fold-figure small{max-width:none}
+  .fold-body{margin-left:1.5rem;margin-right:.95rem}
+}
+
 /* ══════════════════════════════════════════════════════════════════════════
    Interaction layer
    Every animation here demonstrates a claim. Nothing decorates.

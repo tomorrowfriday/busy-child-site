@@ -31,6 +31,8 @@ const uk: Content = validate(
       sameDay: 'Відповідь того ж робочого дня',
       skipToContent: 'Перейти до вмісту',
       switchLanguage: 'Language',
+      foldHint: 'Кожен рядок розгортається. Розгорніть те, що вас цікавить.',
+      liveBadge: 'наживо',
     },
 
     literals: [
