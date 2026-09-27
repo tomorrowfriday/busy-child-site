@@ -13,6 +13,12 @@ npm run dev      # http://localhost:3000
 npm run gates    # typecheck → lint → coverage(100%) → build
 ```
 
+To just *look* at the site, there is a launcher that needs nothing but Node installed
+— `start.cmd` on Windows (double-click it), `./start.sh` on macOS and Linux, or
+`npm run up` anywhere. It installs dependencies on a fresh clone, reuses a dev server
+that is already running instead of failing against it, picks the first free port from
+3000, and opens the browser once the server answers.
+
 ## Why it is built like this
 
 Every client project on this site is anonymised and there are no screenshots, so a

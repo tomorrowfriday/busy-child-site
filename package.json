@@ -5,6 +5,7 @@
   "description": "Busy Child — production web & mobile platforms",
   "scripts": {
     "dev": "next dev",
+    "up": "node scripts/start.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
