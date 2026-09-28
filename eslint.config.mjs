@@ -13,6 +13,9 @@ const config = [
       'coverage/**',
       'node_modules/**',
       '_legacy-static/**',
+      // Imported from Claude Design: the .dc.html source and its generated
+      // runtime. Reference material, not source — see src/app/[locale]/page.tsx.
+      'Design/**',
       'next-env.d.ts',
     ],
   },

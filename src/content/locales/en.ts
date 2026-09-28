@@ -142,7 +142,16 @@ const en: Content = validate(
         slug: 'fund-administration',
         domain: 'Investment fund administration',
         title: 'End-to-end fundraise platform',
+        sector: 'Fund administration',
+        short: 'Fundraise platform',
+        oneLiner: 'Investors onboard, sign and fund a commitment in one portal.',
         metric: { value: '$4M+ / mo', caption: 'transaction volume, across tens of thousands of investors' },
+        metricShort: 'moves through it',
+        facts: [
+          { k: 'Volume', v: '$4M+ a month' },
+          { k: 'Scale', v: 'Tens of thousands of investors' },
+          { k: 'Type', v: 'Multi-tenant web platform' },
+        ],
         summary:
           'Accreditation, document signing, ACH funding and portfolio reporting in one multi-tenant system, replacing a stack of point SaaS tools.',
         context:
@@ -161,7 +170,16 @@ const en: Content = validate(
         slug: 'workforce-scheduling',
         domain: 'Healthcare workforce scheduling',
         title: 'Native iOS & Android shift platform',
+        sector: 'Healthcare',
+        short: 'Shift scheduling app',
+        oneLiner: 'Nurses pick up and swap shifts from their phones, live.',
         metric: { value: 'iOS + Android', caption: 'native apps over a real-time GraphQL gateway' },
+        metricShort: 'two native apps',
+        facts: [
+          { k: 'Client', v: 'National US staffing operator' },
+          { k: 'Users', v: 'Facility managers and nurses' },
+          { k: 'Apps', v: 'Web, native iOS, native Android' },
+        ],
         summary:
           'Built for a national US staffing operator. Facility managers build and balance schedules; nurses pick up open shifts and swap from native apps.',
         context:
@@ -179,7 +197,16 @@ const en: Content = validate(
         slug: 'provider-scheduling',
         domain: 'Float-pool provider scheduling',
         title: 'Event-driven shift cascade',
+        sector: 'Healthcare',
+        short: 'Shift offer cascade',
+        oneLiner: 'Open shifts are offered pool by pool until someone takes them.',
         metric: { value: 'Kafka · Kubernetes', caption: 'delivered as an npm-published UI library' },
+        metricShort: 'drops into existing apps',
+        facts: [
+          { k: 'Client', v: 'National healthcare staffing business' },
+          { k: 'Core', v: 'Event-driven, Kafka on Kubernetes' },
+          { k: 'Ships as', v: 'UI library published to npm' },
+        ],
         summary:
           'Shift offers cascade through configurable provider pools, delivered as an embeddable UI consumed by host applications.',
         context:
@@ -197,7 +224,16 @@ const en: Content = validate(
         slug: 'claims-management',
         domain: 'Insurance claims management',
         title: 'Bilingual multi-location claims portal',
+        sector: 'Insurance',
+        short: 'Claims portal',
+        oneLiner: 'Insurance claims moved from spreadsheets to one bilingual portal.',
         metric: { value: '$1M / yr', caption: 'saved after deployment' },
+        metricShort: 'saved',
+        facts: [
+          { k: 'Saved', v: '$1M a year' },
+          { k: 'Client', v: 'Multi-location staffing agency' },
+          { k: 'Languages', v: 'English and Spanish' },
+        ],
         summary:
           'Replaced fragile spreadsheet workflows across every location with RBAC, audit logs, and EN/ES PDF reports for carrier submission.',
         context:
@@ -219,7 +255,16 @@ const en: Content = validate(
         slug: 'mines',
         domain: 'Consumer mobile — iOS & visionOS',
         title: 'Mines — Classic Bomb Puzzle',
+        sector: 'Consumer mobile',
+        short: 'Mines',
+        oneLiner: 'A clean, ad-free Minesweeper you can download and play today.',
         metric: { value: '4.6 ★', caption: 'App Store rating' },
+        metricShort: 'on the App Store',
+        facts: [
+          { k: 'Platforms', v: 'iPhone, iPad, Apple Vision' },
+          { k: 'Languages', v: 'Six' },
+          { k: 'Advertising', v: 'None, and no tracking' },
+        ],
         summary:
           'A clean, ad-free Minesweeper for iPhone, iPad and Apple Vision — and the one thing here you can go and use yourself.',
         context:
@@ -318,6 +363,121 @@ const en: Content = validate(
         marker: "let's build it",
         title: "Send a brief — you'll hear back the same business day.",
         lead: 'Tell us what you are building, or just what is slowing you down. That is the only thing we need to start a useful conversation.',
+      },
+
+      anchors: [
+        { href: '#work', label: 'Work' },
+        { href: '#results', label: 'Results' },
+        { href: '#proof', label: 'Proof' },
+        { href: '#contact', label: 'Contact' },
+      ],
+
+      headline: 'We design, build and run the software your business runs on.',
+
+      rail: {
+        title: "What we've built",
+        hintWide: 'tap a card for details',
+        hintNarrow: 'swipe →',
+        details: 'Details →',
+      },
+
+      results: {
+        title: 'What changes for you',
+        lead: 'The spreadsheets, email threads and "ask Maria, she knows" become one system that runs itself.',
+        items: [
+          {
+            title: 'No more re-typing',
+            detail: 'Reminders, signatures and data entry happen on their own.',
+          },
+          {
+            title: 'Everything on one screen',
+            detail: 'See where every order, claim or job stands, right now.',
+          },
+          {
+            title: 'Money that reconciles itself',
+            detail: 'Invoices, payments and payouts run without chasing.',
+          },
+          {
+            title: 'Mistakes get blocked',
+            detail: 'Your rules are built in, and every change is recorded.',
+          },
+          {
+            title: 'Works with your tools',
+            detail: 'Connected to your bank, accounting, email and documents.',
+          },
+          {
+            title: 'Grows without hiring',
+            detail: "Twice the volume doesn't mean twice the admin staff.",
+          },
+        ],
+      },
+
+      proof: {
+        title: 'How we keep it from breaking',
+        lead: 'Nothing reaches your business until it has passed all four steps — whether a person or AI wrote the code.',
+        steps: [
+          {
+            title: 'Write it down',
+            detail: 'What the software must do, in plain English you can read and check.',
+            label: 'The requirement, and the test it becomes — edit either side',
+          },
+          {
+            title: 'Turn it into tests',
+            detail: 'Every requirement becomes an automatic test. Nobody writes them by hand.',
+            label: 'Change the spec and watch the test recompile',
+          },
+          {
+            title: 'Check every change',
+            detail: '8 automatic checks run on every change. One failure stops everything.',
+            label: 'The 8 checks, in order — run them, then break one',
+          },
+          {
+            title: 'Ship it',
+            detail: 'Only code that passes every check goes live — and it keeps being checked.',
+            label: 'What "passed" means',
+          },
+        ],
+        gatesNote:
+          'These are build failures, not review comments. The first failure stops the build — nothing after it runs.',
+        ship: [
+          {
+            value: '100%',
+            detail: 'of the code is covered by tests. 99% fails the build.',
+          },
+          {
+            value: 'Live',
+            detail:
+              'checks keep running after launch. A service that returns something it never promised fails loudly instead of passing bad data on.',
+          },
+        ],
+      },
+
+      working: {
+        title: 'How we work',
+        items: [
+          'The senior partner who scopes it ships it',
+          'You talk to engineers, not account managers',
+          'Senior people only — no juniors learning on you',
+          "Cost changes flagged before they're spent",
+          'Short meetings, written decisions',
+          'AI speeds us up, but every line is still reviewed',
+        ],
+      },
+
+      closing: {
+        title: "Tell us what's slowing you down.",
+        lead: "One paragraph is enough. You'll hear back the same business day.",
+      },
+
+      sheet: {
+        of: 'of',
+        prev: 'Previous project',
+        next: 'Next project',
+        close: 'Close',
+        shipped: 'What we shipped',
+        builtWith: 'Built with',
+        outcome: 'Outcome',
+        cta: 'Want one like this? Send a brief',
       },
 
       editor: {

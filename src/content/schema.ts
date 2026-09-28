@@ -31,11 +31,26 @@ export const metricSchema = z.object({
 
 export const literalSchema = metricSchema;
 
+/** A single labelled figure in a project's detail sheet. */
+export const factSchema = z.object({
+  k: nonEmpty,
+  v: nonEmpty,
+});
+
 export const projectSchema = z.object({
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'slug must be kebab-case'),
   domain: nonEmpty,
   title: nonEmpty,
+  /** Short sector chip on the home rail card, e.g. "Fund administration". */
+  sector: nonEmpty,
+  /** Card-sized title — `title` is the long form used on /work. */
+  short: nonEmpty,
+  /** One sentence a non-engineer can read off the card. */
+  oneLiner: nonEmpty,
   metric: metricSchema,
+  /** Two or three words under the card metric — `metric.caption` is the long form. */
+  metricShort: nonEmpty,
+  facts: z.array(factSchema).min(2, 'list at least two facts'),
   summary: nonEmpty,
   context: nonEmpty,
   shipped: z.array(nonEmpty).min(3, 'list at least three shipped items'),
@@ -143,6 +158,60 @@ export const contentSchema = z.object({
     gates: sectionSchema,
     promises: sectionSchema,
     contact: sectionSchema,
+
+    /* ── the home page proper ──────────────────────────────────────────────
+       Its own copy, deliberately terser than the sections above: those are
+       shared with /what-you-get, /work and /method, which have room to argue.
+       The home page has one screen to be understood in.                     */
+
+    /** In-page anchors in the masthead. Four, against `nav`'s five routes. */
+    anchors: z.array(z.object({ href: nonEmpty, label: nonEmpty })).length(4),
+    /** The hero line. Shorter than `site.statement`, which still feeds metadata. */
+    headline: nonEmpty,
+
+    rail: z.object({
+      title: nonEmpty,
+      /** Swapped for `hintNarrow` once the rail starts scrolling sideways. */
+      hintWide: nonEmpty,
+      hintNarrow: nonEmpty,
+      details: nonEmpty,
+    }),
+
+    results: z.object({
+      title: nonEmpty,
+      lead: nonEmpty,
+      items: z.array(z.object({ title: nonEmpty, detail: nonEmpty })).length(6),
+    }),
+
+    proof: z.object({
+      title: nonEmpty,
+      lead: nonEmpty,
+      /** Four tabs. `label` captions the panel each one opens. */
+      steps: z
+        .array(z.object({ title: nonEmpty, detail: nonEmpty, label: nonEmpty }))
+        .length(4),
+      gatesNote: nonEmpty,
+      ship: z.array(z.object({ value: nonEmpty, detail: nonEmpty })).length(2),
+    }),
+
+    working: z.object({
+      title: nonEmpty,
+      items: z.array(nonEmpty).length(6),
+    }),
+
+    closing: z.object({ title: nonEmpty, lead: nonEmpty }),
+
+    /** The project detail sheet that slides in from the rail. */
+    sheet: z.object({
+      of: nonEmpty,
+      prev: nonEmpty,
+      next: nonEmpty,
+      close: nonEmpty,
+      shipped: nonEmpty,
+      builtWith: nonEmpty,
+      outcome: nonEmpty,
+      cta: nonEmpty,
+    }),
     editor: z.object({
       specHead: nonEmpty,
       outHead: nonEmpty,
@@ -251,6 +320,7 @@ export type Assertion = z.infer<typeof assertionSchema>;
 export type Scenario = z.infer<typeof scenarioSchema>;
 export type Literal = z.infer<typeof literalSchema>;
 export type Outcome = z.infer<typeof outcomeSchema>;
+export type Fact = z.infer<typeof factSchema>;
 export type Bullet = z.infer<typeof bulletSchema>;
 export type Section = z.infer<typeof sectionSchema>;
 

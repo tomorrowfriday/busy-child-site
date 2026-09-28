@@ -92,6 +92,12 @@ describe('the two languages stay in step', () => {
     expect(uk.projects).toHaveLength(en.projects.length);
     expect(uk.scenarios).toHaveLength(en.scenarios.length);
     expect(uk.home.outcomes.items).toHaveLength(en.home.outcomes.items.length);
+    expect(uk.home.anchors).toHaveLength(en.home.anchors.length);
+    expect(uk.home.results.items).toHaveLength(en.home.results.items.length);
+    expect(uk.home.proof.steps).toHaveLength(en.home.proof.steps.length);
+    expect(uk.home.proof.ship).toHaveLength(en.home.proof.ship.length);
+    expect(uk.home.working.items).toHaveLength(en.home.working.items.length);
+    expect(uk.projects.map((p) => p.facts.length)).toEqual(en.projects.map((p) => p.facts.length));
     expect(uk.methodPage.stages).toHaveLength(en.methodPage.stages.length);
     expect(uk.contactPage.briefItems).toHaveLength(en.contactPage.briefItems.length);
   });
@@ -116,7 +122,8 @@ describe('the Ukrainian copy is actually translated', () => {
 
   // Values that are the same in both languages on purpose: identifiers, code,
   // brand names, stacks, numerals and the like.
-  const SHARED = /^(projects\.\d+\.(stack|slug|externalUrl)|scenarios\.\d+\.(role|operation|assertions|mutation)|gates\.\d+\.(gate|isCommand)|literals\.\d+\.value|methodPage\.pipelineLabels\.spec|common\.(upwork|switchLanguage)|nav\.\d+\.href|locale$|projects\.\d+\.title|projects\.\d+\.metric\.value|home\.editor\.(specHead|outHead|failHead)|methodPage\.metaTitle)/;
+  const SHARED =
+    /^(projects\.\d+\.(stack|slug|externalUrl)|scenarios\.\d+\.(role|operation|assertions|mutation)|gates\.\d+\.(gate|isCommand)|literals\.\d+\.value|methodPage\.pipelineLabels\.spec|common\.(upwork|switchLanguage)|nav\.\d+\.href|locale$|projects\.\d+\.title|projects\.\d+\.metric\.value|home\.editor\.(specHead|outHead|failHead)|methodPage\.metaTitle|home\.anchors\.\d+\.href|home\.proof\.ship\.\d+\.value)/;
 
   const candidates = Object.keys(enStrings).filter((path) => !SHARED.test(path));
 
