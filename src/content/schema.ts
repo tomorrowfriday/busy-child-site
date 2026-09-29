@@ -142,6 +142,10 @@ export const contentSchema = z.object({
     sameDay: nonEmpty,
     skipToContent: nonEmpty,
     switchLanguage: nonEmpty,
+    /** Tells the reader the page folds, once, instead of a tooltip per row. */
+    foldHint: nonEmpty,
+    /** Marks a fold whose body is a running demo rather than prose. */
+    liveBadge: nonEmpty,
   }),
 
   literals: z.array(literalSchema).length(4),

@@ -1,8 +1,9 @@
-import { Footer } from '@/components/Chrome';
+import { GateRunner } from '@/components/GateRunner';
+import { SpecEditor } from '@/components/SpecEditor';
+import { Footer, Masthead } from '@/components/Chrome';
+import { Fold, Folds } from '@/components/Fold';
 import { Link } from '@/components/Link';
-import { LocaleSwitch } from '@/components/LocaleSwitch';
-import { ProjectRail } from '@/components/ProjectRail';
-import { ProofTabs } from '@/components/ProofTabs';
+import { Literals, Note, Section } from '@/components/Primitives';
 import { clientProjects, getContent, isLocale, site, LOCALES } from '@/content';
 import { notFound } from 'next/navigation';
 
@@ -11,12 +12,12 @@ export function generateStaticParams() {
 }
 
 /**
- * The home page — "Busy Child Home v3".
+ * The home page is the whole argument, folded.
  *
- * One screen-deep argument: what we built, what it changes for you, how it is
- * kept from breaking, and how we work. The five routes still exist and the
- * footer still links them; this page is the short version, and the masthead
- * here points at its own sections rather than at those routes.
+ * Every claim the site makes is one readable line, and the evidence for it is
+ * one click down rather than several screens away — the same shape as the
+ * specification this team sells. The first row of each cascade is open, so
+ * the pattern explains itself and the page never reads as a list of teasers.
  */
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -57,101 +58,151 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         </div>
 
-        <div className="home-stats">
-          {c.literals.map((literal) => (
-            <div key={literal.value}>
-              <b>{literal.value}</b>
-              <span>{literal.caption}</span>
-            </div>
-          ))}
-        </div>
-      </header>
+        {/* 02 · four literals — the whole picture in numbers */}
+        <Section>
+          <Literals items={c.literals} />
+        </Section>
 
-      <main id="main" className="home">
-        {/* 01 · what we've built */}
-        <section id="work" className="band reveal">
-          <div className="wrap">
-            <ProjectRail
-              projects={clientProjects(c)}
-              t={home.rail}
-              sheet={home.sheet}
-              locale={locale}
-            />
-          </div>
-        </section>
+        {/* 03 · what you get — business outcomes, before any technical proof */}
+        <Section id="what-you-get" marker={home.outcomes.marker}>
+          <h2>{home.outcomes.title}</h2>
+          <p className="lead">{home.outcomes.lead}</p>
+          <p className="fold-lede">{c.common.foldHint}</p>
+          <Folds>
+            {home.outcomes.items.map((item, index) => (
+              <Fold
+                key={item.title}
+                group="outcomes"
+                claim={item.title}
+                figure={item.proof}
+                figureCaption={item.proofCaption}
+                open={index === 0}
+              >
+                <p>{item.detail}</p>
+              </Fold>
+            ))}
+          </Folds>
+          {home.outcomes.note ? (
+            <Note tag={home.outcomes.note.tag} text={home.outcomes.note.text} />
+          ) : null}
+          <p>
+            <Link href={`${base}/work`}>{home.outcomes.link}</Link>
+          </p>
+        </Section>
 
-        {/* 02 · what changes for you */}
-        <section id="results" className="band reveal">
-          <div className="wrap">
-            <div className="band-head">
-              <h2>{home.results.title}</h2>
-              <p>{home.results.lead}</p>
-            </div>
-            <div className="results">
-              {home.results.items.map((item, index) => (
-                <div className="result" key={item.title}>
-                  <span className="mark" aria-hidden="true">
-                    {MARKS[index]}
-                  </span>
-                  <span className="result-body">
-                    <b>{item.title}</b>
-                    <span>{item.detail}</span>
-                  </span>
+        {/* 04 · the work — domain, claim and number on the surface */}
+        <Section marker={home.work.marker}>
+          <h2>{home.work.title}</h2>
+          <p>{home.work.lead}</p>
+          <Folds>
+            {clientProjects(c).map((project, index) => (
+              <Fold
+                key={project.slug}
+                group="work"
+                eyebrow={project.domain}
+                claim={project.title}
+                figure={project.metric.value}
+                figureCaption={project.metric.caption}
+                open={index === 0}
+              >
+                <p>{project.context}</p>
+                <div>
+                  <h4>{c.workPage.shippedHeading}</h4>
+                  <ul className="shipped">
+                    {project.shipped.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 03 · how we keep it from breaking */}
-        <section id="proof" className="band reveal">
-          <div className="wrap">
-            <div className="band-head">
-              <h2>{home.proof.title}</h2>
-              <p>{home.proof.lead}</p>
-            </div>
-            <ProofTabs
-              t={home.proof}
-              scenarios={c.scenarios}
-              gates={c.gates}
-              editor={home.editor}
-              runner={home.runner}
-            />
-          </div>
-        </section>
-
-        {/* 04 · how we work */}
-        <section id="how" className="band reveal">
-          <div className="wrap">
-            <h2>{home.working.title}</h2>
-            <div className="promises">
-              {home.working.items.map((item) => (
-                <div className="promise" key={item}>
-                  <span aria-hidden="true">✓</span>
-                  <span>{item}</span>
+                {project.outcome ? (
+                  <Note tag={c.workPage.outcomeTag} text={project.outcome} />
+                ) : null}
+                <div className="stack">
+                  {project.stack.map((tech) => (
+                    <span key={tech}>{tech}</span>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+                {project.externalUrl ? (
+                  <div className="cta">
+                    <a className="button ghost" href={project.externalUrl}>
+                      {project.externalLabel}
+                    </a>
+                  </div>
+                ) : null}
+              </Fold>
+            ))}
+          </Folds>
+          <p>
+            <Link href={`${base}/work`}>{home.work.link}</Link>
+          </p>
+        </Section>
 
-        {/* 05 · send a brief */}
-        <section id="contact" className="band reveal">
-          <div className="wrap">
-            <div className="closing">
-              <div className="closing-copy">
-                <h2>{home.closing.title}</h2>
-                <p>{home.closing.lead}</p>
-              </div>
-              <div className="cta">
-                <Link className="button invert" href={`${base}/contact`}>
-                  {c.common.sendBrief}
-                </Link>
-                <a className="button ghost-invert" href={site.upwork}>
-                  {c.common.upwork}
-                </a>
-              </div>
-            </div>
+        {/* 05 · the specimen, running — heavy, so it stays folded until asked for */}
+        <Section marker={home.specimen.marker}>
+          <Folds>
+            <Fold
+              group="proof-spec"
+              claim={home.specimen.title}
+              badge={c.common.liveBadge}
+              heading
+            >
+              <p>{home.specimen.lead}</p>
+              <SpecEditor scenarios={c.scenarios} t={home.editor} />
+              <p className="caption">{home.specimen.caption}</p>
+              <p>
+                <Link href={`${base}/method`}>{home.specimen.link}</Link>
+              </p>
+            </Fold>
+          </Folds>
+        </Section>
+
+        {/* 06 · the gates */}
+        <Section marker={home.gates.marker}>
+          <Folds>
+            <Fold
+              group="proof-gates"
+              claim={home.gates.title}
+              badge={c.common.liveBadge}
+              heading
+            >
+              <p>{home.gates.lead}</p>
+              <GateRunner gates={c.gates} t={home.runner} />
+              <p className="caption">{home.gates.caption}</p>
+            </Fold>
+          </Folds>
+        </Section>
+
+        {/* 07 · six refusals */}
+        <Section marker={home.promises.marker}>
+          <h2>{home.promises.title}</h2>
+          <Folds>
+            {c.promises.map((promise, index) => (
+              <Fold
+                key={promise.refusal}
+                group="promises"
+                claim={promise.refusal}
+                open={index === 0}
+              >
+                <p>{promise.detail}</p>
+              </Fold>
+            ))}
+          </Folds>
+          <p>
+            <Link href={`${base}/working-with-us`}>{home.promises.link}</Link>
+          </p>
+        </Section>
+
+        {/* 08 · send a brief — the one section that is never folded */}
+        <Section marker={home.contact.marker}>
+          <h2>{home.contact.title}</h2>
+          <p className="lead">{home.contact.lead}</p>
+          <div className="cta">
+            <Link className="button" href={`${base}/contact`}>
+              {c.common.sendBrief}
+            </Link>
+            <a className="button ghost" href={site.upwork}>
+              {c.common.upworkAlt}
+            </a>
           </div>
         </section>
       </main>

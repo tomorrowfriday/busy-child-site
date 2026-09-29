@@ -31,6 +31,8 @@ const en: Content = validate(
       sameDay: 'Same-business-day reply',
       skipToContent: 'Skip to content',
       switchLanguage: 'Мова',
+      foldHint: 'Every line opens. Unfold the ones that matter to you.',
+      liveBadge: 'live',
     },
 
     literals: [
