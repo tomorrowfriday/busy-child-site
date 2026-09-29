@@ -167,8 +167,20 @@ Also worth settling:
 
 ## Deploying
 
-Static export — `npm run build` writes `out/`. Anything serves it:
+A push to `main` publishes the site. Nothing else to run.
 
-- **Cloudflare Pages** — build `npm run build`, output directory `out`.
-- **Netlify** — same, or drag `out/` onto the dashboard.
-- **GitHub Pages** — publish `out/` (CI already uploads it as an artifact).
+`.github/workflows/notify-skravets.yml` asks the [skravets][hub] hub to rebuild;
+the hub clones this repo, runs `npm ci && npm run build` with
+`NEXT_PUBLIC_BASE_PATH=/busy-child`, and deploys the result to Cloudflare
+Workers alongside the other projects. Live at
+<https://skravets.skravets.workers.dev/busy-child/>.
+
+That notify step needs the repo secret `SKRAVETS_TOKEN` — a fine-grained token
+with **Contents: read and write** on this repo and on the hub. Write is not
+optional: `repository_dispatch` rejects a read-only token. When deploys go
+quiet, check that the token has not expired before looking anywhere else.
+
+[hub]: https://github.com/tomorrowfriday/skravets
+
+The output is a plain static export, so nothing above is load-bearing —
+`npm run build` writes `out/`, and any static host will serve it.
