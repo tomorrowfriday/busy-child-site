@@ -691,67 +691,76 @@ body:has(.deck){overflow:hidden}
   color:var(--fg-dim);font-family:var(--f-mono);font-size:15px;line-height:1.6;
 }
 
-/* ─── the rail ──────────────────────────────────────────────────────────── */
+/* ─── the bar across the top ────────────────────────────────────────────── */
 
-.deck-panel{
-  position:absolute;left:0;top:0;z-index:45;
-  width:clamp(240px,22vw,300px);height:100%;
-  background:var(--paper);border-right:1px solid var(--line);
-  display:flex;flex-direction:column;gap:1rem;
-  padding:clamp(1rem,2.6vh,1.6rem) clamp(.8rem,1.4vw,1.2rem);
+.deck-top{
+  position:absolute;left:0;right:0;top:0;height:3.8rem;z-index:45;
+  background:var(--paper);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:clamp(.8rem,2.4vw,2.4rem);
+  padding:0 clamp(1rem,3vw,2.4rem);
 }
-.panel-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-shrink:0}
-.panel-mark{
-  font-family:var(--f-disp);font-weight:800;font-size:clamp(1.3rem,1.9vw,1.7rem);
+.top-mark{
+  font-family:var(--f-disp);font-weight:800;font-size:clamp(1.25rem,1.8vw,1.6rem);
   letter-spacing:-.075em;line-height:1;background:none;border:0;padding:0;
-  cursor:pointer;color:var(--fg);
+  cursor:pointer;color:var(--fg);flex-shrink:0;
 }
-.panel-mark .dot,.deck-mark .dot{color:var(--num)}
-.panel-run{font-size:.72rem;color:var(--fg-faint);font-variant-numeric:tabular-nums}
+.top-mark .dot,.deck-mark .dot{color:var(--num)}
 
-.panel-list{
-  flex:1;display:flex;flex-direction:column;justify-content:center;gap:.15rem;
-  min-height:0;overflow-y:auto;scrollbar-width:none;
+.top-nav{
+  flex:1;display:flex;align-items:center;gap:clamp(.1rem,.8vw,.6rem);
+  min-width:0;overflow-x:auto;scrollbar-width:none;
 }
-.panel-item{
-  font-family:var(--f-mono);display:grid;grid-template-columns:1.4rem minmax(0,1fr);
-  align-items:baseline;gap:.4rem;width:100%;text-align:left;border:0;border-radius:10px;
-  cursor:pointer;padding:.36rem .5rem;background:transparent;color:inherit;
-  transition:background .35s ease;
+.top-nav::-webkit-scrollbar{display:none}
+.top-group{display:flex;align-items:center;gap:.25rem;flex-shrink:0}
+.top-pill{
+  font-family:var(--f-disp);font-size:clamp(.72rem,1vw,.84rem);font-weight:600;
+  letter-spacing:-.03em;color:var(--fg-dim);background:transparent;border:0;
+  border-radius:999px;padding:.4rem .75rem;cursor:pointer;white-space:nowrap;
+  transition:background .3s ease;
 }
-.panel-item:hover{background:var(--panel-2)}
-.panel-item.is-sub{padding:.22rem .5rem;margin-left:.9rem;max-width:calc(100% - .9rem)}
-.panel-item.is-on{background:color-mix(in oklab,var(--hue) 16%,var(--paper))}
-.panel-n{font-size:.6rem;color:var(--fg-faint);font-variant-numeric:tabular-nums}
-.panel-item.is-on .panel-n{color:var(--hue)}
-.panel-label{
-  font-family:var(--f-disp);font-size:.84rem;font-weight:700;letter-spacing:-.035em;
-  line-height:1.25;color:var(--fg);min-width:0;display:flex;flex-direction:column;gap:.05rem;
+.top-pill:hover{background:var(--panel-2)}
+.top-pill.is-on{
+  font-weight:800;color:var(--fg);
+  background:color-mix(in oklab,var(--hue) 16%,var(--paper));
 }
-.panel-item.is-sub .panel-label{font-size:.74rem;font-weight:500;color:var(--fg-dim)}
-.panel-item.is-on .panel-label{font-weight:800;color:var(--fg)}
-.panel-hint{
-  font-family:var(--f-mono);font-size:.6rem;font-weight:400;letter-spacing:0;
-  color:var(--fg-faint);
+.top-chips{display:flex;gap:.2rem}
+.top-chips button{
+  font-family:var(--f-mono);width:1.45rem;height:1.45rem;border-radius:50%;border:0;
+  padding:0;cursor:pointer;font-size:.58rem;font-weight:700;color:var(--hue);
+  background:color-mix(in oklab,var(--hue) 14%,var(--paper));
+  transition:background .3s ease,color .3s ease;
 }
-.panel-foot{display:flex;flex-direction:column;gap:.6rem;flex-shrink:0}
-.panel-bar{height:3px;border-radius:2px;background:var(--fg);transition:width .6s ease}
-.panel-foot{border-top:1px solid var(--line);padding-top:.7rem}
-.panel-foot .locale-switch{font-size:.72rem}
+.top-chips button.is-on{color:var(--paper);background:var(--hue)}
 
-.panel-here{display:flex;align-items:center;gap:.6rem;min-width:0;flex-shrink:0}
-.panel-dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--hue);flex-shrink:0}
-.panel-here span:last-child{
+.top-right{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
+.top-right .locale-switch{font-size:.72rem}
+.pill.sm{font-size:.78rem;padding:.45rem .95rem}
+
+.top-progress{
+  position:absolute;left:0;bottom:-1px;height:2px;background:var(--hue);
+  transition:width .6s ease,background .6s ease;
+}
+
+/* ─── the strip that replaces it on a phone ─────────────────────────────── */
+
+.deck-strip{
+  display:none;position:absolute;left:0;right:0;top:0;height:5.4rem;z-index:45;
+  background:var(--paper);border-bottom:1px solid var(--line);
+  flex-direction:column;gap:.35rem;padding:.7rem 1rem .5rem;
+}
+.strip-top{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.strip-run{font-size:.72rem;color:var(--fg-faint);font-variant-numeric:tabular-nums}
+.strip-here{display:flex;align-items:center;gap:.6rem;min-width:0}
+.strip-dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--hue);flex-shrink:0}
+.strip-here > span:nth-child(2){
   font-family:var(--f-disp);font-size:.9rem;font-weight:700;letter-spacing:-.03em;
-  color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;
 }
+.strip-here .locale-switch{font-size:.7rem;flex-shrink:0}
 
 /* ─── the stage ─────────────────────────────────────────────────────────── */
 
-.stage{
-  position:absolute;top:0;left:clamp(240px,22vw,300px);right:0;bottom:0;
-  overflow:hidden;container-type:size;
-}
+.stage{position:absolute;top:3.8rem;left:0;right:0;bottom:0;overflow:hidden;container-type:size}
 .screen{position:absolute;inset:0;background:var(--paper);overflow:hidden;will-change:transform,opacity}
 .screen-wash{
   position:absolute;right:-16vmin;top:50%;width:84vmin;height:84vmin;border-radius:50%;
@@ -951,58 +960,39 @@ body:has(.deck){overflow:hidden}
 .ticks li > span:first-child{color:var(--str)}
 .sheet-body .pill{align-self:flex-start}
 
-/* ─── the shell line and the nudges ─────────────────────────────────────── */
+/* ─── where you are, and the two nudges ─────────────────────────────────── */
 
-@keyframes blink{to{opacity:0}}
+.deck-bar{
+  position:absolute;left:0;right:0;bottom:0;z-index:40;
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:clamp(.8rem,2.4cqh,1.4rem) clamp(1.2rem,5cqw,4rem);
+  color:var(--fg);pointer-events:none;font-size:.74rem;transition:color .5s;
+}
+.bar-label{opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-right{pointer-events:auto;display:flex;align-items:center;gap:.45rem}
+.bar-count{font-variant-numeric:tabular-nums;margin-right:.3rem}
+.bar-right button{
+  font-family:var(--f-mono);width:2.2rem;height:2.2rem;border-radius:50%;
+  border:1px solid currentColor;background:transparent;color:inherit;
+  cursor:pointer;opacity:.75;
+}
+.bar-right button:hover:not(:disabled){opacity:1}
+.bar-right button:disabled{opacity:.25;cursor:default}
 
-.deck-foot{
-  position:absolute;left:clamp(240px,22vw,300px);right:0;bottom:0;z-index:44;
-  display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:.6rem clamp(1.2rem,5cqw,4rem);pointer-events:none;
-}
-.shell{font-size:.74rem;color:var(--fg-faint);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden}
-.shell-prompt{color:var(--str);margin-right:.45rem}
-.caret{animation:blink 1s steps(1) infinite;margin-left:.1rem}
-.deck-nav{display:flex;gap:.35rem;pointer-events:auto}
-.deck-nav button{
-  font-family:var(--f-mono);font-size:.8rem;width:2.1rem;height:2.1rem;border-radius:50%;
-  border:1px solid var(--line-hi);background:var(--paper);color:var(--fg);cursor:pointer;
-}
-.deck-nav button:hover:not(:disabled){border-color:var(--fg)}
-.deck-nav button:disabled{opacity:.3;cursor:default}
-.is-dark .shell{color:color-mix(in oklab,var(--paper) 60%,transparent)}
-.is-dark .deck-nav button{background:transparent;color:var(--paper);border-color:var(--fg-faint)}
+/* The last screen is inverted, so the chrome over it has to invert too. */
+.is-dark .deck-bar{color:var(--paper)}
 
-.deck-chips{
-  position:absolute;right:clamp(1.2rem,5cqw,4rem);top:1rem;z-index:44;
-  display:flex;gap:.3rem;
-}
-.deck-chips button{
-  font-family:var(--f-disp);font-size:.72rem;font-weight:600;letter-spacing:-.03em;
-  color:var(--fg-dim);background:transparent;border:0;border-radius:999px;
-  padding:.35rem .7rem;cursor:pointer;white-space:nowrap;transition:background .3s ease;
-}
-.deck-chips button:hover{background:var(--panel-2)}
-.deck-chips button.is-on{color:var(--fg);font-weight:800;background:color-mix(in oklab,var(--hue) 16%,var(--paper))}
-.is-dark .deck-chips button{color:color-mix(in oklab,var(--paper) 70%,transparent)}
-.is-dark .deck-chips button.is-on{color:var(--paper);background:color-mix(in oklab,var(--paper) 18%,transparent)}
-
-/* ─── narrow: the panel becomes a strip across the top ──────────────────── */
+/* ─── narrow: the top bar becomes the strip ─────────────────────────────── */
 
 @media (max-width:759px){
-  /* The rail becomes a strip. Its height and the stage's offset are the same
-     number by hand — get them out of step and the strip covers the content. */
-  .deck-panel{
-    width:100%;height:6.6rem;flex-direction:column;gap:.3rem;
-    padding:.7rem 1rem .5rem;border-right:0;border-bottom:1px solid var(--line);
-  }
-  .stage,.deck-foot{left:0}
-  .stage{top:6.6rem}
-  .deck-chips{display:none}
-  .panel-foot{
-    border-top:0;padding-top:0;flex-direction:row;align-items:center;
-    justify-content:space-between;gap:.6rem;
-  }
-  .panel-bar{display:none}
+  .deck-top{display:none}
+  .deck-strip{display:flex}
+  .stage{top:5.4rem}
   .screen-inner{padding-top:clamp(1rem,4cqh,2rem)}
+}
+
+/* Below this the four case chips stop fitting beside the pills. */
+@media (max-width:899px){
+  .top-chips{display:none}
+  .top-right .locale-switch{display:none}
 }

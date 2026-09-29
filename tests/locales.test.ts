@@ -123,7 +123,7 @@ describe('the Ukrainian copy is actually translated', () => {
   // Values that are the same in both languages on purpose: identifiers, code,
   // brand names, stacks, numerals and the like.
   const SHARED =
-    /^(projects\.\d+\.(stack|slug|externalUrl)|scenarios\.\d+\.(role|operation|assertions|mutation)|gates\.\d+\.(gate|isCommand)|literals\.\d+\.value|methodPage\.pipelineLabels\.spec|common\.(upwork|switchLanguage)|nav\.\d+\.href|locale$|projects\.\d+\.title|projects\.\d+\.metric\.value|home\.editor\.(specHead|outHead|failHead)|methodPage\.metaTitle|home\.anchors\.\d+\.href|home\.proof\.ship\.\d+\.value|home\.deck\.screens\.\d+\.(cmd|hint))/;
+    /^(projects\.\d+\.(stack|slug|externalUrl)|scenarios\.\d+\.(role|operation|assertions|mutation)|gates\.\d+\.(gate|isCommand)|literals\.\d+\.value|methodPage\.pipelineLabels\.spec|common\.(upwork|switchLanguage)|nav\.\d+\.href|locale$|projects\.\d+\.title|projects\.\d+\.metric\.value|home\.editor\.(specHead|outHead|failHead)|methodPage\.metaTitle|home\.anchors\.\d+\.href|home\.proof\.ship\.\d+\.value|home\.deck\.screens\.\d+\.hint)/;
 
   const candidates = Object.keys(enStrings).filter((path) => !SHARED.test(path));
 

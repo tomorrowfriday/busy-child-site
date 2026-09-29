@@ -207,13 +207,10 @@ export const contentSchema = z.object({
 
     /**
      * The deck. Ten screens, advanced by wheel, swipe, keys or the menu.
-     * `cmd` is the shell line typed out as a screen arrives; `hint` is the
-     * metadata under a menu entry, and may be empty.
+     * `hint` is the metadata under a menu entry, and may be empty.
      */
     deck: z.object({
-      screens: z
-        .array(z.object({ label: nonEmpty, cmd: nonEmpty, hint: z.string() }))
-        .length(10),
+      screens: z.array(z.object({ label: nonEmpty, hint: z.string() })).length(10),
       workCaption: nonEmpty,
       methodLabel: nonEmpty,
       caseLabel: nonEmpty,

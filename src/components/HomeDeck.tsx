@@ -74,32 +74,13 @@ export function HomeDeck({
   const [phase, setPhase] = useState<Phase>('run');
   const [sheet, setSheet] = useState<'project' | 'method' | null>(null);
   const [caseIndex, setCaseIndex] = useState(0);
-  const [narrow, setNarrow] = useState(false);
-  const [tight, setTight] = useState(false);
-  /* Keyed to its screen, so a screen change resets the count without a write. */
-  const [typing, setTyping] = useState({ screen: 0, length: 0 });
+  /* The top bar and the narrow strip are the same markup to React; which one
+     is shown is a media query, so there is no width state to hydrate wrong. */
 
   const busyUntil = useRef(0);
   const wheelHold = useRef(0);
   const touchY = useRef<number | null>(null);
   const cleanup = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  /* Event-driven rather than polled: two queries, two listeners. */
-  useEffect(() => {
-    const small = window.matchMedia('(max-width: 759px)');
-    const mid = window.matchMedia('(max-width: 899px)');
-    const sync = () => {
-      setNarrow(small.matches);
-      setTight(mid.matches);
-    };
-    sync();
-    small.addEventListener('change', sync);
-    mid.addEventListener('change', sync);
-    return () => {
-      small.removeEventListener('change', sync);
-      mid.removeEventListener('change', sync);
-    };
-  }, []);
 
   const go = useCallback(
     (target: number) => {
@@ -126,36 +107,6 @@ export function HomeDeck({
   const back = useCallback(() => go(current - 1), [go, current]);
 
   useEffect(() => () => clearTimeout(cleanup.current), []);
-
-  /* The shell line types itself out as a screen lands. Every write is deferred
-     into a timer: setting state straight from an effect body cascades renders. */
-  useEffect(() => {
-    const full = deck.screens[current]?.cmd ?? '';
-
-    if (prefersReduced()) {
-      const settle = setTimeout(() => setTyping({ screen: current, length: full.length }), 0);
-      return () => clearTimeout(settle);
-    }
-
-    let tick: ReturnType<typeof setInterval> | undefined;
-    const start = setTimeout(() => {
-      tick = setInterval(() => {
-        setTyping((state) => {
-          const next = (state.screen === current ? state.length : 0) + 1;
-          if (next >= full.length) {
-            clearInterval(tick);
-            return { screen: current, length: full.length };
-          }
-          return { screen: current, length: next };
-        });
-      }, 38);
-    }, 260);
-
-    return () => {
-      clearTimeout(start);
-      clearInterval(tick);
-    };
-  }, [current, deck.screens]);
 
   const stepCaseBy = useCallback(
     (delta: number) => setCaseIndex((i) => stepCase(i, delta, projects.length)),
@@ -234,8 +185,6 @@ export function HomeDeck({
 
   const dark = current === DARK_SCREEN;
   const hue = HUES[current] ?? 'var(--fg)';
-  const command = deck.screens[current]?.cmd ?? '';
-  const typed = typing.screen === current ? typing.length : 0;
   const selected = projects[caseIndex];
 
   const styleFor = useMemo(
@@ -243,12 +192,8 @@ export function HomeDeck({
     [current, previous, phase],
   );
 
-  const menu = deck.screens.map((screen, index) => ({
-    ...screen,
-    index,
-    on: index === current,
-    sub: index >= FIRST_PROJECT && index < FIRST_PROJECT + projects.length,
-  }));
+  /** The top bar shows four entries; the four cases hide behind "our work". */
+  const TOP_ENTRIES = [1, 6, 7, 8] as const;
 
   return (
     <div
@@ -258,43 +203,66 @@ export function HomeDeck({
       onTouchEnd={onTouchEnd}
       style={{ '--hue': hue } as React.CSSProperties}
     >
-      {/* ── the rail: a top bar when there is room, a panel when there is not ── */}
-      <aside className={`deck-panel${narrow ? ' is-strip' : ''}`}>
-        <div className="panel-top">
-          <button type="button" className="panel-mark" onClick={() => go(0)}>
+      {/* ── the bar across the top, and the strip that replaces it on a phone ── */}
+      <header className="deck-top">
+        <button type="button" className="top-mark" onClick={() => go(0)}>
+          {site.wordmark}
+          <span className="dot">.</span>
+        </button>
+
+        <nav className="top-nav" aria-label={deck.menuLabel}>
+          {TOP_ENTRIES.map((index) => (
+            <div className="top-group" key={index}>
+              <button
+                type="button"
+                className={`top-pill${groupOf(current) === index ? ' is-on' : ''}`}
+                aria-current={groupOf(current) === index ? 'true' : undefined}
+                onClick={() => go(index)}
+              >
+                {deck.screens[index]?.label}
+              </button>
+              {index === 1 ? (
+                <span className="top-chips">
+                  {projects.map((project, i) => (
+                    <button
+                      key={project.slug}
+                      type="button"
+                      className={current === FIRST_PROJECT + i ? 'is-on' : undefined}
+                      style={{ '--hue': PROJECT_HUES[i] } as React.CSSProperties}
+                      onClick={() => go(FIRST_PROJECT + i)}
+                      aria-label={project.short}
+                      title={project.short}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                </span>
+              ) : null}
+            </div>
+          ))}
+        </nav>
+
+        <div className="top-right">
+          <LocaleSwitch locale={locale} label={content.common.switchLanguage} />
+          <Link className="pill sm" href={`/${locale}/contact`}>
+            {content.common.sendBrief}
+          </Link>
+        </div>
+
+        <div className="top-progress" style={{ width: progress(current) }} />
+      </header>
+
+      <aside className="deck-strip">
+        <div className="strip-top">
+          <button type="button" className="top-mark" onClick={() => go(0)}>
             {site.wordmark}
             <span className="dot">.</span>
           </button>
-          <span className="panel-run">{runState(current)}</span>
+          <span className="strip-run">{runState(current)}</span>
         </div>
-
-        {narrow ? (
-          <div className="panel-here">
-            <span className="panel-dot" />
-            <span>{deck.screens[current]?.label}</span>
-          </div>
-        ) : (
-          <nav className="panel-list" aria-label={deck.menuLabel}>
-            {menu.map((item) => (
-              <button
-                key={item.label}
-                type="button"
-                className={`panel-item${item.sub ? ' is-sub' : ''}${item.on ? ' is-on' : ''}`}
-                aria-current={item.on ? 'true' : undefined}
-                onClick={() => go(item.index)}
-              >
-                <span className="panel-n">{String(item.index + 1).padStart(2, '0')}</span>
-                <span className="panel-label">
-                  <span>{item.label}</span>
-                  {item.hint ? <span className="panel-hint">{item.hint}</span> : null}
-                </span>
-              </button>
-            ))}
-          </nav>
-        )}
-
-        <div className="panel-foot">
-          <div className="panel-bar" style={{ width: progress(current) }} />
+        <div className="strip-here">
+          <span className="strip-dot" />
+          <span>{deck.screens[current]?.label}</span>
           <LocaleSwitch locale={locale} label={content.common.switchLanguage} />
         </div>
       </aside>
@@ -575,16 +543,13 @@ export function HomeDeck({
         </div>
       ) : null}
 
-      {/* ── the shell line, and the two nudges ─────────────────────────────── */}
-      <div className="deck-foot">
-        <span className="shell">
-          <span className="shell-prompt">$</span>
-          {command.slice(0, typed)}
-          <span className="caret" aria-hidden="true">
-            ▌
+      {/* ── where you are, and the two nudges ──────────────────────────────── */}
+      <div className="deck-bar">
+        <span className="bar-label">{deck.screens[current]?.label}</span>
+        <div className="bar-right">
+          <span className="bar-count">
+            <b>{String(current + 1).padStart(2, '0')}</b> / {SCREEN_COUNT}
           </span>
-        </span>
-        <span className="deck-nav">
           <button type="button" onClick={back} aria-label={deck.prev} disabled={current === 0}>
             ↑
           </button>
@@ -596,24 +561,8 @@ export function HomeDeck({
           >
             ↓
           </button>
-        </span>
+        </div>
       </div>
-
-      {/* Collapsed to one entry on narrow screens; the chips jump between cases. */}
-      {tight ? null : (
-        <nav className="deck-chips" aria-label={deck.menuLabel}>
-          {[1, 6, 7, 8].map((index) => (
-            <button
-              key={index}
-              type="button"
-              className={groupOf(current) === index ? 'is-on' : undefined}
-              onClick={() => go(index)}
-            >
-              {deck.screens[index]?.label}
-            </button>
-          ))}
-        </nav>
-      )}
     </div>
   );
 }

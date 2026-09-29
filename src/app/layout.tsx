@@ -55,9 +55,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               `visibility:visible!important;clip-path:none!important;` +
               `border-bottom:1px solid var(--line)}` +
               `.screen-inner{height:auto;overflow:visible;padding-block:2.5rem}` +
-              `.deck-foot,.deck-chips,.panel-list,.panel-bar{display:none}` +
-              `.deck-panel{position:static;width:100%;height:auto;border-right:0;` +
-              `border-bottom:1px solid var(--line)}</style>`,
+              `.deck-bar,.top-progress{display:none}` +
+              `.deck-top{position:static;height:auto;flex-wrap:wrap;padding:.8rem 1rem}` +
+              `.deck-strip{display:none}</style>`,
           }}
         />
       </head>
