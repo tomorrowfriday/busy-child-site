@@ -846,8 +846,9 @@ body:has(.deck){overflow:hidden}
 .work-metric span{color:var(--fg-faint)}
 
 /* ─── 02–05 the cases ───────────────────────────────────────────────────── */
+/* `.case` is taken: /work uses it for long-form entries, capped at --measure. */
 
-.case{
+.deck-case{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));
   align-items:center;gap:clamp(1.2rem,5cqh,4rem) clamp(1.5rem,5cqw,5rem);
 }

@@ -338,7 +338,7 @@ export function HomeDeck({
             hue={PROJECT_HUES[index]}
             wash
           >
-            <div className="case">
+            <div className="deck-case">
               <div className="case-copy">
                 <span className="case-tag">
                   <span className="muted">
