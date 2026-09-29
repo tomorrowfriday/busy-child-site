@@ -471,6 +471,27 @@ const en: Content = validate(
         lead: "One paragraph is enough. You'll hear back the same business day.",
       },
 
+      deck: {
+        screens: [
+          { label: 'Who we are', cmd: 'whoami', hint: '' },
+          { label: 'Our work', cmd: 'ls ./work', hint: '4 platforms' },
+          { label: 'Fundraise platform', cmd: 'open work/fundraise-platform', hint: '$4M+/mo' },
+          { label: 'Shift scheduling', cmd: 'open work/shift-app', hint: 'iOS+Android' },
+          { label: 'Shift offer cascade', cmd: 'open work/shift-cascade', hint: 'plug-in' },
+          { label: 'Claims portal', cmd: 'open work/claims-portal', hint: '$1M/yr' },
+          { label: 'What you get', cmd: 'diff ./before ./after', hint: '' },
+          { label: 'How we test', cmd: 'test --explain', hint: '' },
+          { label: 'How we work', cmd: 'cat promises.txt', hint: '' },
+          { label: 'Start a project →', cmd: 'send --brief', hint: '' },
+        ],
+        workCaption: '4 results · pick one, or keep scrolling',
+        methodLabel: 'How we test',
+        caseLabel: 'Case',
+        next: 'Next screen',
+        prev: 'Previous screen',
+        menuLabel: 'Sections',
+      },
+
       sheet: {
         of: 'of',
         prev: 'Previous project',

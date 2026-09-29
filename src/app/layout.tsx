@@ -45,7 +45,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         */}
         <noscript
           dangerouslySetInnerHTML={{
-            __html: `<style>.reveal{opacity:1!important;transform:none!important}</style>`,
+            __html:
+              `<style>.reveal{opacity:1!important;transform:none!important}` +
+              // The deck stacks ten screens and shows one. Without JavaScript
+              // nothing can advance it, so it unstacks into an ordinary page.
+              `body:has(.deck){overflow:auto}` +
+              `.deck,.stage{position:static;overflow:visible;height:auto;left:0}` +
+              `.screen{position:static;opacity:1!important;transform:none!important;` +
+              `visibility:visible!important;clip-path:none!important;` +
+              `border-bottom:1px solid var(--line)}` +
+              `.screen-inner{height:auto;overflow:visible;padding-block:2.5rem}` +
+              `.deck-foot,.deck-chips,.panel-list,.panel-bar{display:none}` +
+              `.deck-panel{position:static;width:100%;height:auto;border-right:0;` +
+              `border-bottom:1px solid var(--line)}</style>`,
           }}
         />
       </head>

@@ -205,6 +205,23 @@ export const contentSchema = z.object({
 
     closing: z.object({ title: nonEmpty, lead: nonEmpty }),
 
+    /**
+     * The deck. Ten screens, advanced by wheel, swipe, keys or the menu.
+     * `cmd` is the shell line typed out as a screen arrives; `hint` is the
+     * metadata under a menu entry, and may be empty.
+     */
+    deck: z.object({
+      screens: z
+        .array(z.object({ label: nonEmpty, cmd: nonEmpty, hint: z.string() }))
+        .length(10),
+      workCaption: nonEmpty,
+      methodLabel: nonEmpty,
+      caseLabel: nonEmpty,
+      next: nonEmpty,
+      prev: nonEmpty,
+      menuLabel: nonEmpty,
+    }),
+
     /** The project detail sheet that slides in from the rail. */
     sheet: z.object({
       of: nonEmpty,

@@ -42,7 +42,7 @@ demonstration of how we build, not a description of it. Three consequences:
 ```
 src/
 ├── app/                    routes (App Router, all statically exported)
-│   ├── page.tsx            home — seven-block sequence
+│   ├── page.tsx            home — the ten-screen deck
 │   ├── work/               four platforms + Mines
 │   ├── method/             DOS: spec, compiler, gates
 │   ├── working-with-us/    six refusals, engagement, quality bar
@@ -115,11 +115,12 @@ nothing here moves for effect.
 
 | Piece | What it demonstrates |
 |---|---|
-| **Spec editor** (home) | That the assertion lives in the spec. Edit the role, operation or an assertion and the test recompiles. Remove the last assertion and the compiler refuses to emit — the same failure `composer validate` produces in CI. |
-| **Gate runner** (home, `/method`) | That verification is a build failure, not a review comment. Run the gates, then pick one to break: it stops there and everything after it is skipped, not reported at the end. |
+| **Spec editor** (home method sheet, `/method`) | That the assertion lives in the spec. Edit the role, operation or an assertion and the test recompiles. Remove the last assertion and the compiler refuses to emit — the same failure `composer validate` produces in CI. |
+| **Gate runner** (home method sheet, `/method`) | That verification is a build failure, not a review comment. Run the gates, then pick one to break: it stops there and everything after it is skipped, not reported at the end. |
 | **Pipeline** (`/method`) | The mechanism itself. Stages light in order as it scrolls in, once. A diagram that loops forever is wallpaper. |
+| **The deck** (home) | That there is a route through the argument. Ten screens, one on top at a time, each arriving with its own motion so the direction of travel is legible. `src/lib/deck.ts` decides every frame of it. |
 
-All three collapse to a finished, static state under `prefers-reduced-motion`, and the
+All four collapse to a finished, static state under `prefers-reduced-motion`, and the
 logic behind them is pure and unit-tested — the components only animate what
 `src/lib` decides.
 
@@ -129,11 +130,17 @@ logic behind them is pure and unit-tested — the components only animate what
   a link would otherwise scatter its children across implicit grid rows. This was a real
   bug in the previous site; don't reintroduce it.
 - **Motion is functional or it does not ship.** Scroll reveal, the compile settle, the
-  gate stagger, the pipeline sequence. Each one is showing you something true. No
-  parallax, no counters ticking up, no scroll-jacking.
-- **Nothing is hidden behind JavaScript.** Scroll-reveal hides sections with CSS, so a
-  `<noscript>` block in `<head>` puts them back. Without it, a reader whose JavaScript
-  failed would get a blank page below the hero.
+  gate stagger, the pipeline sequence, the deck's transitions. Each one is showing you
+  something true. No parallax, no counters ticking up.
+- **The home page takes the wheel; nothing else does.** The deck is the one exception to
+  the rule this file used to state flatly, and it is deliberate: the home page is a
+  walkthrough with an order, and the screens carry that order. Every other route is an
+  ordinary scrolling document, and the deck hands the wheel back the moment a screen's
+  own content still has somewhere to scroll.
+- **Nothing is hidden behind JavaScript.** Scroll-reveal hides sections with CSS and the
+  deck stacks ten screens to show one, so a `<noscript>` block in `<head>` puts both
+  back — the deck unstacks into an ordinary long page. All ten screens are in the
+  exported HTML either way, so a crawler reads the whole argument.
 - **`Reveal` re-runs on every route change.** The App Router keeps the layout mounted
   across client-side navigation and swaps only the page, so a mount-only effect observes
   the first page's sections and never the next one's — leaving everything after the hero

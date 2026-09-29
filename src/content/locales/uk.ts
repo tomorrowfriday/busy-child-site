@@ -471,6 +471,27 @@ const uk: Content = validate(
         lead: 'Одного абзацу достатньо. Відповімо того ж робочого дня.',
       },
 
+      deck: {
+        screens: [
+          { label: 'Хто ми', cmd: 'whoami', hint: '' },
+          { label: 'Наші роботи', cmd: 'ls ./work', hint: '4 платформи' },
+          { label: 'Платформа збору капіталу', cmd: 'open work/fundraise-platform', hint: '$4M+/міс' },
+          { label: 'Планування змін', cmd: 'open work/shift-app', hint: 'iOS+Android' },
+          { label: 'Каскад пропозицій', cmd: 'open work/shift-cascade', hint: 'вбудовується' },
+          { label: 'Портал звернень', cmd: 'open work/claims-portal', hint: '$1M/рік' },
+          { label: 'Що ви отримаєте', cmd: 'diff ./before ./after', hint: '' },
+          { label: 'Як ми перевіряємо', cmd: 'test --explain', hint: '' },
+          { label: 'Як ми працюємо', cmd: 'cat promises.txt', hint: '' },
+          { label: 'Почати проєкт →', cmd: 'send --brief', hint: '' },
+        ],
+        workCaption: '4 результати · оберіть один або гортайте далі',
+        methodLabel: 'Як ми перевіряємо',
+        caseLabel: 'Кейс',
+        next: 'Наступний екран',
+        prev: 'Попередній екран',
+        menuLabel: 'Розділи',
+      },
+
       sheet: {
         of: 'з',
         prev: 'Попередній проєкт',
