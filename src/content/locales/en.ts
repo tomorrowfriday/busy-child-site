@@ -111,6 +111,7 @@ const en: Content = validate(
     scenarios: [
       {
         index: 4,
+        label: 'Tenant isolation',
         title: 'Platform activity is not returned to another organization user',
         role: 'USER2',
         operation: 'IndexActivities',
@@ -119,6 +120,7 @@ const en: Content = validate(
       },
       {
         index: 7,
+        label: 'Permission scope',
         title: 'A supervisor cannot approve a claim outside their location',
         role: 'SUPERVISOR',
         operation: 'ApproveClaim',
@@ -128,6 +130,7 @@ const en: Content = validate(
       },
       {
         index: 12,
+        label: 'Positive path',
         title: 'An investor sees their own commitment after funding',
         role: 'INVESTOR',
         operation: 'IndexCommitments',
@@ -148,7 +151,8 @@ const en: Content = validate(
         short: 'Fundraise platform',
         oneLiner: 'Investors onboard, sign and fund a commitment in one portal.',
         metric: { value: '$4M+ / mo', caption: 'transaction volume, across tens of thousands of investors' },
-        metricShort: 'moves through it',
+        metricBig: '$4M+',
+        metricShort: 'moves through it every month',
         facts: [
           { k: 'Volume', v: '$4M+ a month' },
           { k: 'Scale', v: 'Tens of thousands of investors' },
@@ -176,7 +180,8 @@ const en: Content = validate(
         short: 'Shift scheduling app',
         oneLiner: 'Nurses pick up and swap shifts from their phones, live.',
         metric: { value: 'iOS + Android', caption: 'native apps over a real-time GraphQL gateway' },
-        metricShort: 'two native apps',
+        metricBig: 'iOS + Android',
+        metricShort: 'two native apps, one live schedule',
         facts: [
           { k: 'Client', v: 'National US staffing operator' },
           { k: 'Users', v: 'Facility managers and nurses' },
@@ -203,7 +208,8 @@ const en: Content = validate(
         short: 'Shift offer cascade',
         oneLiner: 'Open shifts are offered pool by pool until someone takes them.',
         metric: { value: 'Kafka · Kubernetes', caption: 'delivered as an npm-published UI library' },
-        metricShort: 'drops into existing apps',
+        metricBig: 'Plug-in',
+        metricShort: 'ships as a library that drops into existing apps',
         facts: [
           { k: 'Client', v: 'National healthcare staffing business' },
           { k: 'Core', v: 'Event-driven, Kafka on Kubernetes' },
@@ -230,7 +236,8 @@ const en: Content = validate(
         short: 'Claims portal',
         oneLiner: 'Insurance claims moved from spreadsheets to one bilingual portal.',
         metric: { value: '$1M / yr', caption: 'saved after deployment' },
-        metricShort: 'saved',
+        metricBig: '$1M / yr',
+        metricShort: 'saved after deployment',
         facts: [
           { k: 'Saved', v: '$1M a year' },
           { k: 'Client', v: 'Multi-location staffing agency' },
@@ -261,6 +268,7 @@ const en: Content = validate(
         short: 'Mines',
         oneLiner: 'A clean, ad-free Minesweeper you can download and play today.',
         metric: { value: '4.6 ★', caption: 'App Store rating' },
+        metricBig: '4.6 ★',
         metricShort: 'on the App Store',
         facts: [
           { k: 'Platforms', v: 'iPhone, iPad, Apple Vision' },
@@ -376,12 +384,6 @@ const en: Content = validate(
 
       headline: 'We design, build and run the software your business runs on.',
 
-      rail: {
-        title: "What we've built",
-        hintWide: 'tap a card for details',
-        hintNarrow: 'swipe →',
-        details: 'Details →',
-      },
 
       results: {
         title: 'What changes for you',
@@ -468,7 +470,7 @@ const en: Content = validate(
 
       closing: {
         title: "Tell us what's slowing you down.",
-        lead: "One paragraph is enough. You'll hear back the same business day.",
+        lead: "One paragraph is enough. You'll hear back the same business day — from the people who'd build it.",
       },
 
       deck: {
@@ -489,6 +491,15 @@ const en: Content = validate(
         caseLabel: 'Case',
         next: 'Next screen',
         prev: 'Previous screen',
+        openCase: 'Open the case +',
+        seeExample: 'See a real example +',
+        methodKicker: 'Steps 01 → 02',
+        methodTitle: 'A requirement becomes a test',
+        methodLead: 'A scenario is written the way a product owner would state it. The compiler turns it into an executable test that runs against a real database on every change.',
+        specLabel: 'written by a person',
+        testLabel: 'generated automatically — never edited',
+        gatesKicker: 'Step 03 — the 8 checks, in order',
+        stepFourKicker: 'Step 04 — after launch',
         menuLabel: 'Sections',
       },
 

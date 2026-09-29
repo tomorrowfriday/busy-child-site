@@ -1,10 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { GateRunner } from '@/components/GateRunner';
 import { Link } from '@/components/Link';
 import { LocaleSwitch } from '@/components/LocaleSwitch';
-import { SpecEditor } from '@/components/SpecEditor';
+import { compileScenario, renderSpec, tokenize, tokenizeSpec } from '@/lib/compile';
 import {
   canGo,
   DARK_SCREEN,
@@ -74,6 +73,7 @@ export function HomeDeck({
   const [phase, setPhase] = useState<Phase>('run');
   const [sheet, setSheet] = useState<'project' | 'method' | null>(null);
   const [caseIndex, setCaseIndex] = useState(0);
+  const [scenario, setScenario] = useState(0);
   /* The top bar and the narrow strip are the same markup to React; which one
      is shown is a media query, so there is no width state to hydrate wrong. */
 
@@ -186,6 +186,13 @@ export function HomeDeck({
   const dark = current === DARK_SCREEN;
   const hue = HUES[current] ?? 'var(--fg)';
   const selected = projects[caseIndex];
+  const chosen = content.scenarios[scenario];
+
+  const caseOnScreen = projects[current - FIRST_PROJECT];
+  const barLabel =
+    current >= FIRST_PROJECT && caseOnScreen
+      ? `${caseOnScreen.sector} · ${caseOnScreen.short}`
+      : (deck.screens[current]?.label ?? '');
 
   const styleFor = useMemo(
     () => (index: number) => screenStyle(index, current, previous, phase, prefersReduced()),
@@ -341,33 +348,28 @@ export function HomeDeck({
                 </span>
                 <h2>{project.short}</h2>
                 <p className="case-line">{project.oneLiner}</p>
-                <div className="case-metric">
-                  <b>{project.metric.value}</b>
-                  <span>{project.metricShort}</span>
-                </div>
-                <button
-                  type="button"
-                  className="pill"
-                  onClick={() => {
-                    setCaseIndex(index);
-                    setSheet('project');
-                  }}
-                >
-                  {t.rail.details}
-                </button>
-              </div>
-              <div className="case-facts">
-                {project.facts.map((fact) => (
-                  <div className="fact" key={fact.k}>
-                    <span className="fact-k">{fact.k}</span>
-                    <span className="fact-v">{fact.v}</span>
-                  </div>
-                ))}
-                <div className="chips">
+                <div className="case-stack">
                   {project.stack.slice(0, 5).map((tech) => (
                     <span key={tech}>{tech}</span>
                   ))}
                 </div>
+                <div>
+                  <button
+                    type="button"
+                    className="pill hue"
+                    aria-haspopup="dialog"
+                    onClick={() => {
+                      setCaseIndex(index);
+                      setSheet('project');
+                    }}
+                  >
+                    {deck.openCase}
+                  </button>
+                </div>
+              </div>
+              <div className="case-metric">
+                <b>{project.metricBig}</b>
+                <span>{project.metricShort}</span>
               </div>
             </div>
           </Screen>
@@ -405,24 +407,22 @@ export function HomeDeck({
                 key={step.title}
                 style={{ '--hue': STEP_HUES[index] } as React.CSSProperties}
               >
-                <span className="step-n">{String(index + 1).padStart(2, '0')}</span>
-                <b>{step.title}</b>
-                <span>{step.detail}</span>
+                <b className="step-n">{String(index + 1).padStart(2, '0')}</b>
+                <span className="step-t">{step.title}</span>
+                <span className="step-p">{step.detail}</span>
               </div>
             ))}
           </div>
-          <div className="method-gates">
-            {content.gates.map((gate, index) => (
-              <div className="gate-row" key={gate.gate}>
-                <span className="gate-n">{String(index + 1).padStart(2, '0')}</span>
-                <span className="gate-name">{gate.gate}</span>
-                <span className="gate-stops">{gate.catches}</span>
-              </div>
-            ))}
+          <div>
+            <button
+              type="button"
+              className="pill"
+              aria-haspopup="dialog"
+              onClick={() => setSheet('method')}
+            >
+              {deck.seeExample}
+            </button>
           </div>
-          <button type="button" className="pill" onClick={() => setSheet('method')}>
-            {deck.methodLabel} →
-          </button>
         </Screen>
 
         <Screen index={8} label={deck.screens[8]?.label} style={styleFor(8)}>
@@ -444,13 +444,16 @@ export function HomeDeck({
           <p className="closing-lede">{t.closing.lead}</p>
           <div className="deck-cta">
             <Link className="pill invert" href={`/${locale}/contact`}>
-              {content.common.sendBrief}
+              {content.common.sendBrief} →
             </Link>
             <a className="pill ghost-invert" href={site.upwork}>
-              {content.common.upwork}
+              {content.common.upworkAlt}
             </a>
           </div>
-          <p className="closing-meta">{content.common.sameDay}</p>
+          <div className="closing-foot">
+            <LocaleSwitch locale={locale} label={content.common.switchLanguage} />
+            <span>© {site.name}</span>
+          </div>
         </Screen>
       </div>
 
@@ -534,8 +537,67 @@ export function HomeDeck({
                 </>
               ) : (
                 <>
-                  <SpecEditor scenarios={content.scenarios} t={t.editor} />
-                  <GateRunner gates={content.gates} t={t.runner} />
+                  <div className="sheet-lede">
+                    <span className="sheet-kicker">{deck.methodKicker}</span>
+                    <h3>{deck.methodTitle}</h3>
+                    <p className="sheet-desc">{deck.methodLead}</p>
+                  </div>
+
+                  <div className="scenario-chips">
+                    {content.scenarios.map((item, index) => (
+                      <button
+                        key={item.index}
+                        type="button"
+                        className={index === scenario ? 'is-on' : undefined}
+                        onClick={() => setScenario(index)}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {chosen ? (
+                    <>
+                      <CodePane
+                        label={deck.specLabel}
+                        tone="spec"
+                        source={renderSpec(chosen)}
+                        wrap
+                      />
+                      <CodePane
+                        label={deck.testLabel}
+                        tone="test"
+                        source={compileScenario(chosen)}
+                      />
+                      <p className="proves">
+                        <b>{t.editor.proves}: </b>
+                        {chosen.proves}
+                      </p>
+                    </>
+                  ) : null}
+
+                  <div className="sheet-block ruled">
+                    <span className="sheet-kicker num">{deck.gatesKicker}</span>
+                    {content.gates.map((gate, index) => (
+                      <div className="gate-row" key={gate.gate}>
+                        <span className="gate-n">{String(index + 1).padStart(2, '0')}</span>
+                        <span className="gate-body">
+                          <b>{gate.gate}</b>
+                          <span>{gate.catches}</span>
+                        </span>
+                      </div>
+                    ))}
+                    <p className="sheet-desc">{t.proof.gatesNote}</p>
+                  </div>
+
+                  <div className="sheet-block ruled">
+                    <span className="sheet-kicker str">{deck.stepFourKicker}</span>
+                    <p className="sheet-desc">{t.proof.ship[1]?.detail}</p>
+                  </div>
+
+                  <Link className="pill" href={`/${locale}/contact`}>
+                    {t.sheet.cta}
+                  </Link>
                 </>
               )}
             </div>
@@ -545,7 +607,7 @@ export function HomeDeck({
 
       {/* ── where you are, and the two nudges ──────────────────────────────── */}
       <div className="deck-bar">
-        <span className="bar-label">{deck.screens[current]?.label}</span>
+        <span className="bar-label">{barLabel}</span>
         <div className="bar-right">
           <span className="bar-count">
             <b>{String(current + 1).padStart(2, '0')}</b> / {SCREEN_COUNT}
@@ -596,5 +658,48 @@ function Screen({
       {wash ? <span className="screen-wash" aria-hidden="true" /> : null}
       <div className="screen-inner">{children}</div>
     </section>
+  );
+}
+
+/**
+ * One pane of the method sheet: a labelled block of numbered, highlighted
+ * lines. The spec is Markdown and the test is TypeScript, so each gets its own
+ * tokeniser — both from `src/lib/compile.ts`, the same module the build uses.
+ */
+function CodePane({
+  label,
+  tone,
+  source,
+  wrap = false,
+}: {
+  label: string;
+  tone: 'spec' | 'test';
+  source: string;
+  wrap?: boolean;
+}) {
+  const read = tone === 'spec' ? tokenizeSpec : tokenize;
+
+  return (
+    <div className={`code-pane is-${tone}`}>
+      <div className="code-label">{label}</div>
+      <div className={`code-lines${wrap ? ' is-wrap' : ''}`}>
+        {source.split('\n').map((line, index) => (
+          <div className="code-line" key={index}>
+            <span className="code-n">{index + 1}</span>
+            <span className="code-src">
+              {read(line).map((token, i) =>
+                token.kind === 'plain' ? (
+                  <span key={i}>{token.text}</span>
+                ) : (
+                  <span key={i} className={`tok-${token.kind}`}>
+                    {token.text}
+                  </span>
+                ),
+              )}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

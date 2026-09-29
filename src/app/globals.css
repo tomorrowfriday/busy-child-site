@@ -904,11 +904,6 @@ body:has(.deck){overflow:hidden}
 .method-step b{font-family:var(--f-disp);font-size:.9rem;font-weight:700;letter-spacing:-.03em;color:var(--fg)}
 .method-step span:last-child{font-size:.74rem;line-height:1.5}
 
-.method-gates{display:grid;gap:.15rem .9rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
-.gate-row{display:grid;grid-template-columns:1.6rem auto minmax(0,1fr);gap:.5rem;align-items:baseline;padding:.2rem 0}
-.gate-n{font-size:.66rem;color:var(--num);font-weight:700;font-variant-numeric:tabular-nums}
-.gate-name{font-size:.78rem;color:var(--fg);font-weight:700;white-space:nowrap}
-.gate-stops{font-size:.74rem;line-height:1.5;min-width:0}
 
 /* ─── 08 how we work ────────────────────────────────────────────────────── */
 
@@ -996,3 +991,124 @@ body:has(.deck){overflow:hidden}
   .top-chips{display:none}
   .top-right .locale-switch{display:none}
 }
+
+/* ─── v7: the case screens ──────────────────────────────────────────────── */
+
+.case-stack{display:flex;flex-wrap:wrap;gap:.3rem}
+.case-stack span{
+  font-size:.7rem;color:var(--fg-dim);border:1px solid var(--line);
+  background:var(--paper);border-radius:999px;padding:.08rem .55rem;
+}
+.case-metric{display:flex;flex-direction:column;gap:.3rem;min-width:0}
+.case-metric b{
+  font-family:var(--f-disp);font-size:clamp(2.4rem,min(8.4cqw,14cqh),7rem);font-weight:800;
+  color:var(--hue);letter-spacing:-.08em;line-height:.95;overflow-wrap:anywhere;
+}
+.case-metric span{font-size:clamp(.8rem,1.3cqw,.95rem);color:var(--fg-dim)}
+.pill.hue{background:var(--hue);border-color:var(--hue);color:var(--paper)}
+.pill.hue:hover{filter:brightness(1.12);background:var(--hue);border-color:var(--hue)}
+
+/* ─── v7: the method screen ─────────────────────────────────────────────── */
+
+.method-steps{
+  display:grid;gap:clamp(.6rem,2.4cqh,1.6rem) clamp(1rem,3cqw,2.2rem);
+  grid-template-columns:repeat(auto-fit,minmax(min(46%,130px),1fr));
+}
+.method-step{
+  display:flex;flex-direction:column;gap:.35rem;background:none;border:0;
+  border-top:3px solid var(--hue);border-radius:0;
+  padding:clamp(.4rem,1.4cqh,.8rem) 0 0;
+}
+.method-step .step-n{
+  font-family:var(--f-disp);font-size:clamp(1.05rem,min(3.6cqw,4.4cqh),2.8rem);
+  font-weight:800;color:var(--hue);letter-spacing:-.07em;line-height:1;
+}
+.method-step .step-t{
+  font-family:var(--f-disp);font-size:clamp(.9rem,1.5cqw,1.05rem);font-weight:700;
+  letter-spacing:-.03em;color:var(--fg);
+}
+.method-step .step-p{font-size:clamp(.72rem,min(1.1cqw,2.2cqh),.8rem);line-height:1.45}
+
+/* ─── v7: outcomes and promises, at the design's weight ─────────────────── */
+
+.results{
+  display:grid;gap:clamp(.5rem,2cqh,1.6rem) clamp(1rem,3cqw,2.5rem);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));
+}
+.result{background:none;border:0;border-radius:0;padding:0;gap:.8rem}
+.result .mark{
+  flex:0 0 2.2rem;height:2.2rem;border-radius:10px;font-size:.95rem;font-weight:700;
+  background:color-mix(in oklab,var(--hue) 14%,var(--paper));color:var(--hue);
+}
+.result-body b{
+  font-family:var(--f-disp);font-size:clamp(.9rem,1.5cqw,1.05rem);font-weight:700;
+  letter-spacing:-.03em;color:var(--fg);line-height:1.35;
+}
+.result-body > span{font-size:clamp(.72rem,min(1.1cqw,2.2cqh),.8rem);line-height:1.45}
+
+.promises{display:grid;gap:0 clamp(1rem,4cqw,3.5rem);grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))}
+.promise{padding:clamp(.55rem,1.8cqh,.95rem) 0}
+.promise > span:first-child{font-weight:700}
+.promise > span:last-child{
+  font-family:var(--f-disp);font-size:clamp(.9rem,1.7cqw,1.2rem);font-weight:600;
+  letter-spacing:-.035em;line-height:1.35;color:var(--fg);
+}
+
+/* ─── v7: the contact screen is a full-bleed colour ─────────────────────── */
+
+.screen.is-invert{background:var(--num);color:var(--paper)}
+.screen.is-invert h2,.screen.is-invert b{color:var(--paper)}
+.screen.is-invert p,.screen.is-invert span{color:var(--paper)}
+.closing-title{
+  margin:0;font-size:clamp(1.9rem,min(6.4cqw,10cqh),5.4rem);line-height:1;
+  letter-spacing:-.07em;max-width:14ch;
+}
+.closing-lede{margin:0;font-size:clamp(.88rem,1.4cqw,1.05rem);max-width:46ch}
+.closing-foot{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.4rem;font-size:.74rem;
+  opacity:.6;margin-top:clamp(0rem,2cqh,2.5rem);
+}
+.closing-foot .locale-switch a{color:var(--paper);text-decoration:none}
+.closing-foot .locale-switch a.is-active{text-decoration:underline}
+
+/* ─── v7: the method sheet ──────────────────────────────────────────────── */
+
+.sheet-kicker{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--kw)}
+.sheet-kicker.num{color:var(--num)}
+.sheet-kicker.str{color:var(--str)}
+.sheet-block.ruled{border-top:1px solid var(--line);padding-top:1.1rem;gap:.55rem}
+
+.scenario-chips{display:flex;gap:.35rem;flex-wrap:wrap}
+.scenario-chips button{
+  font-family:var(--f-mono);font-size:.74rem;color:var(--fg-dim);background:transparent;
+  border:1px solid var(--line-hi);border-radius:999px;padding:.22rem .75rem;cursor:pointer;
+}
+.scenario-chips button:hover{color:var(--fg)}
+.scenario-chips button.is-on{color:var(--paper);background:var(--fg);border-color:var(--fg)}
+
+.code-pane{border-radius:12px;border:1px solid var(--line);overflow:hidden}
+.code-pane.is-spec{background:color-mix(in oklab,var(--kw) 6%,var(--paper))}
+.code-pane.is-test{background:color-mix(in oklab,var(--fn) 6%,var(--paper))}
+.code-label{padding:.4rem .85rem;border-bottom:1px solid var(--line);font-size:.66rem}
+.code-pane.is-spec .code-label{color:var(--kw)}
+.code-pane.is-test .code-label{color:var(--fn)}
+.code-lines{padding:.55rem 0;font-size:.72rem;line-height:1.8;overflow-x:auto}
+.code-lines.is-wrap{overflow-x:visible}
+.code-line{display:grid;grid-template-columns:2rem max-content;min-width:max-content}
+.code-lines.is-wrap .code-line{grid-template-columns:2rem minmax(0,1fr);min-width:0}
+.code-n{color:var(--fg-faint);text-align:right;padding-right:.7rem;user-select:none}
+.code-src{white-space:pre;padding-right:.8rem}
+.code-lines.is-wrap .code-src{white-space:pre-wrap;overflow-wrap:anywhere}
+.code-src:empty::after{content:"\00a0"}
+
+.proves{margin:0;font-size:.82rem}
+.proves b{color:var(--str);font-weight:700}
+
+.gate-row{display:flex;gap:.7rem;align-items:baseline}
+.gate-n{color:var(--num);font-size:.72rem;font-weight:700;font-variant-numeric:tabular-nums}
+.gate-body{display:flex;flex-direction:column;min-width:0}
+.gate-body b{font-size:.84rem;color:var(--fg);font-weight:700}
+.gate-body span{font-size:.78rem;line-height:1.5}
+
+/* A sheet is a flex column; without this its panes are squeezed to nothing. */
+.sheet-body > *{flex-shrink:0}

@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { compileScenario, renderSpec, tokenize } from '@/lib/compile';
+import { compileScenario, renderSpec, tokenize, tokenizeSpec } from '@/lib/compile';
 import type { Scenario } from '@/content/schema';
 import en from '@/content/locales/en';
 const scenarios = en.scenarios;
 
 const isolation: Scenario = {
   index: 4,
+  label: 'Fixture',
   title: 'Platform activity is not returned to another organization user',
   role: 'USER2',
   operation: 'IndexActivities',
@@ -15,6 +16,7 @@ const isolation: Scenario = {
 
 const rejection: Scenario = {
   index: 7,
+  label: 'Fixture',
   title: 'A supervisor cannot approve a claim outside their location',
   role: 'SUPERVISOR',
   operation: 'ApproveClaim',
@@ -25,6 +27,7 @@ const rejection: Scenario = {
 
 const positive: Scenario = {
   index: 12,
+  label: 'Fixture',
   title: 'An investor sees their own commitment after funding',
   role: 'INVESTOR',
   operation: 'IndexCommitments',
@@ -158,5 +161,38 @@ describe('the published scenarios', () => {
       const closes = (compiled.match(/\}/g) ?? []).length;
       expect(opens).toBe(closes);
     }
+  });
+});
+
+describe('tokenizeSpec', () => {
+  it('marks a heading and leaves its text alone', () => {
+    expect(tokenizeSpec('### 4. Platform activity')).toEqual([
+      { kind: 'keyword', text: '### ' },
+      { kind: 'plain', text: '4. Platform activity' },
+    ]);
+  });
+
+  it('marks a bold lead-in', () => {
+    const tokens = tokenizeSpec('- **Role:** USER2');
+    expect(tokens).toContainEqual({ kind: 'keyword', text: '**Role:**' });
+    expect(tokens).toContainEqual({ kind: 'comment', text: '- ' });
+    expect(tokens.at(-1)).toEqual({ kind: 'plain', text: ' USER2' });
+  });
+
+  it('marks backticked identifiers as strings', () => {
+    expect(tokenizeSpec('where `id` equals')).toContainEqual({ kind: 'string', text: '`id`' });
+  });
+
+  it('keeps plain text between matches', () => {
+    const tokens = tokenizeSpec('result `a` and `b`');
+    expect(tokens).toContainEqual({ kind: 'plain', text: ' and ' });
+  });
+
+  it('returns a line with nothing to mark as a single plain token', () => {
+    expect(tokenizeSpec('just words')).toEqual([{ kind: 'plain', text: 'just words' }]);
+  });
+
+  it('returns nothing for an empty line', () => {
+    expect(tokenizeSpec('')).toEqual([]);
   });
 });

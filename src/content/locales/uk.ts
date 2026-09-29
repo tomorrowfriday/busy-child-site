@@ -111,6 +111,7 @@ const uk: Content = validate(
     scenarios: [
       {
         index: 4,
+        label: 'Ізоляція тенантів',
         title: 'Активність платформи не повертається користувачу іншої організації',
         role: 'USER2',
         operation: 'IndexActivities',
@@ -119,6 +120,7 @@ const uk: Content = validate(
       },
       {
         index: 7,
+        label: 'Межі прав',
         title: 'Супервайзер не може погодити звернення з чужої локації',
         role: 'SUPERVISOR',
         operation: 'ApproveClaim',
@@ -128,6 +130,7 @@ const uk: Content = validate(
       },
       {
         index: 12,
+        label: 'Позитивний сценарій',
         title: 'Інвестор бачить власне зобов’язання після оплати',
         role: 'INVESTOR',
         operation: 'IndexCommitments',
@@ -148,7 +151,8 @@ const uk: Content = validate(
         short: 'Платформа збору капіталу',
         oneLiner: 'Інвестор реєструється, підписує і оплачує зобовʼязання в одному порталі.',
         metric: { value: '$4M+ / міс', caption: 'обіг, десятки тисяч інвесторів' },
-        metricShort: 'проходить через неї',
+        metricBig: '$4M+',
+        metricShort: 'проходить через неї щомісяця',
         facts: [
           { k: 'Обіг', v: '$4M+ на місяць' },
           { k: 'Масштаб', v: 'Десятки тисяч інвесторів' },
@@ -176,7 +180,8 @@ const uk: Content = validate(
         short: 'Застосунок планування змін',
         oneLiner: 'Медсестри беруть і обмінюють зміни просто з телефона, наживо.',
         metric: { value: 'iOS + Android', caption: 'нативні застосунки поверх real-time GraphQL' },
-        metricShort: 'два нативні застосунки',
+        metricBig: 'iOS + Android',
+        metricShort: 'два нативні застосунки, один живий графік',
         facts: [
           { k: 'Клієнт', v: 'Національний кадровий оператор у США' },
           { k: 'Користувачі', v: 'Менеджери закладів і медсестри' },
@@ -203,7 +208,8 @@ const uk: Content = validate(
         short: 'Каскад пропозицій змін',
         oneLiner: 'Вільні зміни пропонуються пул за пулом, доки хтось їх не візьме.',
         metric: { value: 'Kafka · Kubernetes', caption: 'поставлено як UI-бібліотека в npm' },
-        metricShort: 'вбудовується в наявні застосунки',
+        metricBig: 'Вбудовується',
+        metricShort: 'постачається як бібліотека, що вбудовується в наявні застосунки',
         facts: [
           { k: 'Клієнт', v: 'Національний медичний кадровий бізнес' },
           { k: 'Ядро', v: 'Подієве, Kafka на Kubernetes' },
@@ -230,7 +236,8 @@ const uk: Content = validate(
         short: 'Портал звернень',
         oneLiner: 'Страхові звернення переїхали з таблиць в один двомовний портал.',
         metric: { value: '$1M / рік', caption: 'заощаджено після впровадження' },
-        metricShort: 'заощаджено',
+        metricBig: '$1M / рік',
+        metricShort: 'заощаджено після впровадження',
         facts: [
           { k: 'Заощаджено', v: '$1M на рік' },
           { k: 'Клієнт', v: 'Кадрова агенція з мережею локацій' },
@@ -261,6 +268,7 @@ const uk: Content = validate(
         short: 'Mines — сапер',
         oneLiner: 'Чистий сапер без реклами, який можна завантажити й зіграти сьогодні.',
         metric: { value: '4.6 ★', caption: 'рейтинг у App Store' },
+        metricBig: '4.6 ★',
         metricShort: 'у App Store',
         facts: [
           { k: 'Платформи', v: 'iPhone, iPad та Apple Vision' },
@@ -376,12 +384,6 @@ const uk: Content = validate(
 
       headline: 'Ми проєктуємо, будуємо й супроводжуємо софт, на якому працює ваш бізнес.',
 
-      rail: {
-        title: 'Що ми збудували',
-        hintWide: 'натисніть картку для деталей',
-        hintNarrow: 'гортайте →',
-        details: 'Деталі →',
-      },
 
       results: {
         title: 'Що зміниться для вас',
@@ -468,7 +470,7 @@ const uk: Content = validate(
 
       closing: {
         title: 'Розкажіть, що вас гальмує.',
-        lead: 'Одного абзацу достатньо. Відповімо того ж робочого дня.',
+        lead: 'Одного абзацу достатньо. Відповімо того ж робочого дня — ті самі люди, які це збудують.',
       },
 
       deck: {
@@ -489,6 +491,15 @@ const uk: Content = validate(
         caseLabel: 'Кейс',
         next: 'Наступний екран',
         prev: 'Попередній екран',
+        openCase: 'Відкрити кейс +',
+        seeExample: 'Побачити живий приклад +',
+        methodKicker: 'Кроки 01 → 02',
+        methodTitle: 'Вимога стає тестом',
+        methodLead: 'Сценарій написаний так, як його сформулював би власник продукту. Компілятор перетворює його на тест, що виконується на справжній базі при кожній зміні.',
+        specLabel: 'написано людиною',
+        testLabel: 'згенеровано автоматично — не редагується',
+        gatesKicker: 'Крок 03 — 8 перевірок, по черзі',
+        stepFourKicker: 'Крок 04 — після релізу',
         menuLabel: 'Розділи',
       },
 

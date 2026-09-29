@@ -168,3 +168,45 @@ export function tokenize(source: string): Token[] {
 
   return tokens;
 }
+
+/** Bold, inline code, and the dash that opens a bullet. */
+const SPEC_PATTERN = /(\*\*[^*]+\*\*)|(`[^`]+`)|(^\s*- )/g;
+
+/**
+ * Tokenises one line of the specification's Markdown.
+ *
+ * The spec and the test it compiles to are shown side by side, so both need
+ * highlighting — but they are different languages. This is the Markdown half:
+ * a heading, bold lead-ins, and backticked identifiers. It takes a single line
+ * because the panes number their lines.
+ */
+export function tokenizeSpec(line: string): Token[] {
+  if (line.startsWith('###')) {
+    return [
+      { kind: 'keyword', text: '### ' },
+      { kind: 'plain', text: line.slice(4) },
+    ];
+  }
+
+  const tokens: Token[] = [];
+  const pattern = new RegExp(SPEC_PATTERN.source, 'gm');
+  let last = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(line)) !== null) {
+    if (match.index > last) {
+      tokens.push({ kind: 'plain', text: line.slice(last, match.index) });
+    }
+    const [text, bold, code] = match;
+    tokens.push({
+      kind: bold !== undefined ? 'keyword' : code !== undefined ? 'string' : 'comment',
+      text,
+    });
+    last = match.index + text.length;
+  }
+
+  if (last < line.length) {
+    tokens.push({ kind: 'plain', text: line.slice(last) });
+  }
+  return tokens;
+}

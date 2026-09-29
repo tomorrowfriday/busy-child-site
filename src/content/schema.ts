@@ -48,7 +48,9 @@ export const projectSchema = z.object({
   /** One sentence a non-engineer can read off the card. */
   oneLiner: nonEmpty,
   metric: metricSchema,
-  /** Two or three words under the card metric — `metric.caption` is the long form. */
+  /** The figure set huge on the deck's case screen, e.g. "$4M+" or "Plug-in". */
+  metricBig: nonEmpty,
+  /** The line under it — `metric.caption` is the long form used on /work. */
   metricShort: nonEmpty,
   facts: z.array(factSchema).min(2, 'list at least two facts'),
   summary: nonEmpty,
@@ -99,6 +101,8 @@ export const assertionSchema = z.discriminatedUnion('kind', [
 export const scenarioSchema = z.object({
   index: z.number().int().positive(),
   title: nonEmpty,
+  /** Two or three words for the method sheet's chips — `title` is the sentence. */
+  label: nonEmpty,
   role: z.string().regex(/^[A-Z][A-Z0-9_]*$/, 'role must be an upper-case identifier'),
   operation: z.string().regex(/^[A-Z][A-Za-z0-9]*$/, 'operation must be PascalCase'),
   mutation: z.record(z.string(), z.string()).optional(),
@@ -173,14 +177,6 @@ export const contentSchema = z.object({
     /** The hero line. Shorter than `site.statement`, which still feeds metadata. */
     headline: nonEmpty,
 
-    rail: z.object({
-      title: nonEmpty,
-      /** Swapped for `hintNarrow` once the rail starts scrolling sideways. */
-      hintWide: nonEmpty,
-      hintNarrow: nonEmpty,
-      details: nonEmpty,
-    }),
-
     results: z.object({
       title: nonEmpty,
       lead: nonEmpty,
@@ -217,6 +213,17 @@ export const contentSchema = z.object({
       next: nonEmpty,
       prev: nonEmpty,
       menuLabel: nonEmpty,
+      /** The two buttons that open a sheet. */
+      openCase: nonEmpty,
+      seeExample: nonEmpty,
+      /** The method sheet: one scenario, shown as written and as compiled. */
+      methodKicker: nonEmpty,
+      methodTitle: nonEmpty,
+      methodLead: nonEmpty,
+      specLabel: nonEmpty,
+      testLabel: nonEmpty,
+      gatesKicker: nonEmpty,
+      stepFourKicker: nonEmpty,
     }),
 
     /** The project detail sheet that slides in from the rail. */

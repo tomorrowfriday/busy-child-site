@@ -13,6 +13,7 @@ import type { Assertion, Scenario } from '@/content/schema';
 
 const base: Scenario = {
   index: 4,
+  label: 'Fixture',
   title: 'Platform activity is not returned to another organization user',
   role: 'USER2',
   operation: 'IndexActivities',
