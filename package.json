@@ -2,7 +2,7 @@
   "name": "busy-child-site",
   "version": "2.0.0",
   "private": true,
-  "description": "Busy Child \u2014 production web & mobile platforms",
+  "description": "Busy Child — production web & mobile platforms",
   "scripts": {
     "dev": "next dev",
     "up": "node scripts/start.mjs",
@@ -16,7 +16,7 @@
     "gates": "npm run typecheck && npm run lint && npm run coverage && npm run build"
   },
   "dependencies": {
-    "next": "^16.3.4",
+    "next": "^16.4.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "zod": "^3.25.76"
@@ -29,11 +29,11 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "4.7.0",
-    "@vitest/coverage-v8": "3.2.7",
+    "@vitest/coverage-v8": "^3.2.7",
     "eslint": "^9.39.5",
-    "eslint-config-next": "^16.3.4",
+    "eslint-config-next": "^16.4.0",
     "jsdom": "26.1.0",
     "typescript": "5.9.2",
-    "vitest": "3.2.7"
+    "vitest": "^3.2.7"
   }
 }
