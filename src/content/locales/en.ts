@@ -382,7 +382,7 @@ const en: Content = validate(
         { href: '#contact', label: 'Contact' },
       ],
 
-      headline: 'We take care of the code, so you can focus on the business.',
+      headline: 'We take care of the code. You take care of the business.',
 
 
       results: {

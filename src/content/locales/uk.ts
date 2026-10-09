@@ -382,7 +382,7 @@ const uk: Content = validate(
         { href: '#contact', label: 'Контакти' },
       ],
 
-      headline: 'Код — наша турбота. Бізнес — ваша робота.',
+      headline: 'Ми дбаємо про код. Ви дбаєте про бізнес.',
 
 
       results: {
