@@ -575,56 +575,56 @@ const en: Content = validate(
     methodPage: {
       metaTitle: 'Method',
       metaDescription:
-        'DOS: we compile a written specification into a running API service. Roughly 60% of a finished service is generated deterministically and never edited by anyone — human or model.',
+        'How we build software that does what it was promised to do: write it down first in plain English, generate most of it from that, and prove every change before it ships.',
       hero: {
-        marker: 'DOS · spec-driven code generation',
-        title: 'We compile a written specification into a running service.',
+        marker: 'how we build',
+        title: 'Most software breaks because nobody wrote down what it was supposed to do.',
         body: [
-          'The spec is a plain-English Markdown document. A compiler turns it into TypeScript operations, schemas and both test suites. Coding agents write the functions that remain. Roughly 60% of a finished service is generated deterministically and never edited by anyone — human or model.',
-          'This is not prompt-and-check. The high-volume, error-prone parts of an API service — input validation, output schemas, permission wiring, pagination, CRUD, test scaffolding — come out of a deterministic compiler, so they cannot drift from the spec.',
+          'So that is where we start. Before a line of code exists, we write one plain-English document describing exactly what your system does: every rule, every permission, every thing that must never be allowed to happen. You can read it. More usefully, you can disagree with it — while disagreeing still costs an edit rather than a rebuild.',
+          'Then most of the system is built straight from that document — about 60% of it, produced the same way every time and edited by nobody, human or AI. Our engineers write the parts that genuinely need judgement. Nothing is improvised, and nothing quietly drifts away from what you agreed to.',
         ],
       },
       stages: [
         {
           title: 'Specification',
           detail:
-            'Work starts as a cross-linked wiki in docs/spec/ describing every document, operation, permission and test scenario in plain English. It is the design source of truth: when spec and code disagree, the spec wins.',
+            'Everything the system must do, written down in plain English: every record it keeps, every action it takes, who is allowed to do what, and what has to be true afterwards. When the document and the code disagree, the document is right.',
         },
         {
           title: 'Validation',
           detail:
-            "composer validate checks the spec's internal consistency — every type reference resolves, every operation's input and output attributes exist on its document, every scenario names a real operation and a real role.",
+            'A check that the document holds together on its own terms: nothing refers to something that does not exist, and no example names an action or a role we never defined. Contradictions surface here, while they are still free to fix.',
         },
         {
           title: 'Compilation',
           detail:
-            'composer build generates the service: operations, schemas, validation, permission wiring, pagination, CRUD, and both test suites.',
+            'The document is turned into working software: the actions, the data, the checks on everything coming in, the permissions, and both sets of tests. Automatically, and identically every time.',
         },
         {
           title: 'Generation',
           detail:
-            'Coding agents write what the compiler cannot infer — business helpers, document methods, security policy. By this point that has been reduced to small, isolated, individually described functions.',
+            'Our engineers and their AI tools write what the document could not imply on its own — the real business logic. By this point that is a list of small, separately described jobs, not an open-ended "go build me a system".',
         },
         {
           title: 'Verification',
-          detail: 'Every change runs the full stack of gates. Nothing merges by being waved through.',
+          detail: 'Every change runs the full set of checks. Nothing gets through because somebody was in a hurry.',
         },
         {
           title: 'Repair',
           detail:
-            'When a gate fails, the agent gets the failure and works it until the checks pass. No human babysitting the retry cycle.',
+            'When a check fails, the failure goes straight back and gets worked until everything passes. Nobody sits watching the retries.',
         },
         {
           title: 'Judgment',
           detail:
-            "Where a failure raises a question the gates can't settle, an engineer decides. Engineer time goes to specs and judgment calls, not line-by-line review of generated code.",
+            'Where something raises a question the checks cannot settle, a senior engineer decides. Their time goes to the decisions, not to reading generated code line by line.',
         },
       ],
       pipeline: { marker: 'the pipeline', title: 'One path for a change, and no side door.' },
       whyItWorks: {
         marker: 'the question everyone asks first',
         title: 'Why is your AI-written code better than ours?',
-        lead: "The honest answer isn't a better model or a cleverer prompt. It's that the hard part was settled by a compiler before the model was asked anything.",
+        lead: 'The honest answer is not a better model or a cleverer prompt. It is that every hard decision was already made, in writing, before the AI was asked for anything at all.',
         body: [
           'An agent told to “build an activities service” is being asked to make a hundred coupled decisions at once — naming, structure, validation, error handling, tenancy, tests — with nothing to check itself against until the whole thing exists. That is the hardest possible shape of task to hand a model, and it is what ad-hoc prompting does.',
           "Here the compiler has already made those decisions. What's left isn't a service. It's a set of individual functions, each arriving with:",
@@ -641,13 +641,13 @@ const en: Content = validate(
       },
       gates: {
         marker: 'verification',
-        title: 'Eight gates. Build failures, not review comments.',
+        title: 'Eight checks. Any one of them fails and nothing ships.',
         caption:
           'The last row is worth pausing on. Output schemas are enforced at request time, not only in CI. A service that returns something it never promised fails loudly rather than shipping malformed data downstream.',
       },
       standard: {
         marker: 'the quality standard',
-        title: '100% coverage, and a scenario for every operation.',
+        title: 'Every line tested. Every feature proven end to end.',
         bullets: [
           {
             strong: 'Two suites, two jobs.',
@@ -669,7 +669,7 @@ const en: Content = validate(
       },
       review: {
         marker: 'what code review becomes',
-        title: 'Review attention is a fixed budget. Most of it is normally spent badly.',
+        title: 'Attention is the scarcest thing on a project. Most teams spend it in the wrong place.',
         body: [
           'A four-hundred-line pull request contains maybe forty lines that genuinely required a human decision; the rest is wiring, validation, error plumbing and test scaffolding. Reviewers spend their sharpest attention on the mechanical parts, arrive at the consequential part fatigued, and approve it. It is why large diffs get “LGTM” and small ones get argued about.',
         ],
@@ -694,7 +694,7 @@ const en: Content = validate(
       },
       economics: {
         marker: 'the same design makes it cheaper',
-        title: 'Cost scales with the novel part of a service, not with its size.',
+        title: 'You pay for what is genuinely new, not for how big the system is.',
         bullets: [
           {
             strong: 'Most of the code costs no tokens.',
@@ -716,7 +716,7 @@ const en: Content = validate(
       },
       api: {
         marker: 'what comes with it',
-        title: 'A verified API description — and a typed client for free.',
+        title: 'Your other systems plug straight in — and stay plugged in.',
         body: [
           'Every service publishes its own OpenAPI description. What matters is that this one is verified three independent ways: it validates against the OpenAPI meta-schema before publishing; its schemas are the same objects the service validates requests and responses against at runtime, so there is no second copy to fall out of date; and the spec-coverage gate means no operation reaches it without an end-to-end test.',
           'Which means the frontend gets its client for free — TypeScript types, TanStack Query hooks, and a typed client that fails at compile time when the backend contract changes. A field renamed in the spec surfaces as a red squiggle in the web app before it ever surfaces as a bug.',
@@ -724,27 +724,27 @@ const en: Content = validate(
       },
       fit: {
         marker: 'where it applies',
-        title: "And where it doesn't.",
+        title: 'Where this pays off — and where we just build it the usual way.',
         bullets: [
           {
-            strong: 'Good fit.',
-            text: 'New API services. Consolidating logic scattered across ad-hoc endpoints. Systems where multi-tenant isolation and permission correctness matter.',
+            strong: 'Where it earns its keep.',
+            text: 'Systems a business actually runs on: anything with roles and permissions, money moving, an audit trail to defend, or several clients whose data must never meet.',
           },
           {
-            strong: 'Rewrites, with a caveat.',
-            text: 'A legacy migration means specifying the target behaviour and using scenario tests as the parity harness. That is a rewrite behind a spec, not an in-place code transformation.',
+            strong: 'Replacing something old.',
+            text: 'We write down what the replacement must do, then use the tests as proof it behaves like the thing it replaces — before you switch anyone over.',
           },
           {
-            strong: 'Not a fit.',
-            text: 'CMS work, one-off site builds, backlog clearing. Those are ordinary engineering, and we do them as ordinary engineering. The platform does not build your frontend either — it supplies the typed client the frontend consumes.',
+            strong: 'Everything else.',
+            text: 'Websites, mobile apps, integrations, automating something that still lives in a spreadsheet — we build those too, with the same senior people and the same standards, just without this particular machinery. Ask us either way.',
           },
         ],
       },
       start: {
         marker: 'a sensible way to start',
-        title: 'One service, end to end, in a short fixed window.',
+        title: 'Start with one thing. See how it feels to work this way.',
         caption:
-          'You end up with a working service and a concrete answer on whether spec-first suits how your team wants to work — before committing to retool around it.',
+          'You end up with something real and running, and a straight answer on whether this suits your team — before anyone commits to doing everything this way.',
       },
       pipelineLabels: {
         spec: 'spec/',
