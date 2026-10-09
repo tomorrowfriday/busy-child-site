@@ -8,7 +8,7 @@ const en: Content = validate(
     localeName: 'English',
 
     site: {
-      tagline: 'Production web & mobile platforms',
+      tagline: 'Custom software & automation',
       statement: 'We build the platforms your business runs on — and ship them ourselves.',
       description:
         'A senior engineering team that designs, builds, and maintains production web and mobile software for enterprises. Spec-driven, serverless-first, 100% test coverage. The partner who scopes your project is the one who ships it.',
@@ -36,10 +36,10 @@ const en: Content = validate(
     },
 
     literals: [
-      { value: '15+', caption: 'years shipping production systems' },
-      { value: '$4M+', caption: 'monthly transaction volume on one platform' },
-      { value: '100%', caption: 'test coverage, enforced as a build failure' },
-      { value: 'Senior', caption: 'only — no juniors learning on you' },
+      { value: '15+', caption: 'years building software businesses depend on' },
+      { value: '$4M+', caption: 'moves through one system we built, every month' },
+      { value: '100%', caption: 'of our code is tested — we do not ship it otherwise' },
+      { value: 'Senior', caption: 'engineers only — nobody learns on your project' },
     ],
 
     gates: [
@@ -350,7 +350,7 @@ const en: Content = validate(
 
       work: {
         marker: 'selected work',
-        title: 'Four platforms, in production.',
+        title: 'Four systems. Four businesses that now run on them.',
         lead: 'Client names are withheld. What we can publish is the domain, the architecture, and the numbers.',
         link: 'Read the work in detail →',
       },
@@ -382,7 +382,7 @@ const en: Content = validate(
         { href: '#contact', label: 'Contact' },
       ],
 
-      headline: 'We design, build and run the software your business runs on.',
+      headline: 'We build the software your business runs on, and prove it works before you see it.',
 
 
       results: {
@@ -457,7 +457,7 @@ const en: Content = validate(
       },
 
       working: {
-        title: 'How we work',
+        title: 'What you can count on',
         items: [
           'The senior partner who scopes it ships it',
           'You talk to engineers, not account managers',
@@ -486,7 +486,7 @@ const en: Content = validate(
           { label: 'How we work', hint: '' },
           { label: 'Start a project →', hint: '' },
         ],
-        workCaption: '4 results · pick one, or keep scrolling',
+        workCaption: 'Pick one to open it, or keep scrolling',
         methodLabel: 'How we test',
         caseLabel: 'Case',
         next: 'Next screen',
