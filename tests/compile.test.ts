@@ -38,6 +38,20 @@ const positive: Scenario = {
   proves: 'Positive path.',
 };
 
+/**
+ * Succeeds, and asserts on a single field rather than a collection — the one
+ * combination that leaves the generated test with `result` and no `data`.
+ */
+const singleField: Scenario = {
+  index: 15,
+  label: 'Fixture',
+  title: 'A funded commitment reports its status',
+  role: 'INVESTOR',
+  operation: 'ShowCommitment',
+  assertions: [{ kind: 'fieldEquals', path: 'status', value: 'funded' }],
+  proves: 'Single-document read.',
+};
+
 describe('renderSpec', () => {
   it('prints the scenario the way it appears in docs/spec/', () => {
     expect(renderSpec(isolation)).toBe(
@@ -82,6 +96,13 @@ describe('compileScenario', () => {
   it('declares the collection binding only when an item assertion needs it', () => {
     expect(compileScenario(isolation)).toContain('const data = result');
     expect(compileScenario(rejection)).not.toContain('const data = result');
+  });
+
+  it('omits the collection binding when a passing scenario asserts on a field', () => {
+    const compiled = compileScenario(singleField);
+    expect(compiled).toContain('const result = await');
+    expect(compiled).not.toContain('const data = result');
+    expect(compiled).toContain("expect(t.at(result, 'status')).toEqual('funded');");
   });
 
   it('awaits a rejection rather than a result when the spec expects failure', () => {

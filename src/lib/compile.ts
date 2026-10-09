@@ -144,17 +144,22 @@ export function tokenize(source: string): Token[] {
       tokens.push({ kind: 'plain', text: source.slice(last, match.index) });
     }
 
-    const [text, comment, str, num, ident] = match;
+    const [text, comment, str, num] = match;
     if (comment !== undefined) {
       tokens.push({ kind: 'comment', text });
     } else if (str !== undefined) {
       tokens.push({ kind: 'string', text });
     } else if (num !== undefined) {
       tokens.push({ kind: 'number', text });
-    } else if (ident !== undefined) {
+    } else {
+      // The pattern is four alternatives and three are ruled out, so this is
+      // the identifier group — and the whole match is that group, which is
+      // why `text` can be read as the name. Written as a plain `else` rather
+      // than a fourth test: a condition that is always true where it is
+      // reached is a branch no test can ever take.
       const isCall = source[match.index + text.length] === '(';
       tokens.push({
-        kind: KEYWORDS.has(ident) ? 'keyword' : isCall ? 'fn' : 'plain',
+        kind: KEYWORDS.has(text) ? 'keyword' : isCall ? 'fn' : 'plain',
         text,
       });
     }
