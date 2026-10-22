@@ -367,7 +367,8 @@ export function HomeDeck({
                 </div>
               </div>
               <div
-                className={`case-metric${project.metricBig.length > 14 ? ' is-long' : ''}`}
+                className="case-metric"
+                style={{ '--chars': String(project.metricBig.length) } as React.CSSProperties}
               >
                 <b>{project.metricBig}</b>
                 <span>{project.metricShort}</span>

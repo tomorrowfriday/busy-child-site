@@ -1003,7 +1003,7 @@ body:has(.deck){overflow:hidden}
 .case-metric{display:flex;flex-direction:column;gap:.3rem;min-width:0}
 .case-metric b{
   font-family:var(--f-disp);font-size:clamp(2.4rem,min(8.4cqw,14cqh),7rem);font-weight:800;
-  color:var(--hue);letter-spacing:-.08em;line-height:.95;overflow-wrap:break-word;
+  color:var(--hue);letter-spacing:-.08em;line-height:.95;white-space:nowrap;
 }
 .case-metric span{font-size:clamp(.8rem,1.3cqw,.95rem);color:var(--fg-dim)}
 .pill.hue{background:var(--hue);border-color:var(--hue);color:var(--paper)}
@@ -1126,6 +1126,12 @@ body:has(.deck){overflow:hidden}
 .case-metric{gap:.6rem}
 .case-metric span{line-height:1.5}
 
-/* A figure like "Kafka · Kubernetes" has a word too long to fit the column at
-   full size, and would be split mid-word. Set it smaller instead. */
-.case-metric.is-long b{font-size:clamp(1.6rem,min(5cqw,8cqh),3.6rem)}
+/* The figure never wraps: it shrinks to fit its column instead.
+   Martian Mono at this weight and tracking advances exactly 0.62em per
+   character (measured, not guessed), so the size that exactly fills the
+   column is width / (characters × 0.62). 0.63 leaves a hair of slack.
+   `--chars` comes from the component; `cqi` is this box, `cqh` the stage. */
+.case-metric{container-type:inline-size}
+.case-metric b{
+  font-size:min(clamp(2.4rem,14cqh,7rem),calc(100cqi / (var(--chars,8) * 0.63)));
+}

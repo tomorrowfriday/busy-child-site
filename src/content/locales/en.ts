@@ -350,7 +350,7 @@ const en: Content = validate(
 
       work: {
         marker: 'selected work',
-        title: 'Four systems. Four businesses that now run on them.',
+        title: 'Our products:',
         lead: 'Client names are withheld. What we can publish is the domain, the architecture, and the numbers.',
         link: 'Read the work in detail →',
       },
@@ -382,7 +382,7 @@ const en: Content = validate(
         { href: '#contact', label: 'Contact' },
       ],
 
-      headline: 'We take care of the code. You take care of the business.',
+      headline: 'We take care of the code.\nYou take care of the business.',
 
 
       results: {
@@ -398,7 +398,7 @@ const en: Content = validate(
             detail: 'See where every order, claim or job stands, right now.',
           },
           {
-            title: 'Money that reconciles itself',
+            title: 'Money moves on its own',
             detail: 'Invoices, payments and payouts run without chasing.',
           },
           {
@@ -410,15 +410,15 @@ const en: Content = validate(
             detail: 'Connected to your bank, accounting, email and documents.',
           },
           {
-            title: 'Grows without hiring',
+            title: 'Growth without hiring',
             detail: "Twice the volume doesn't mean twice the admin staff.",
           },
         ],
       },
 
       proof: {
-        title: 'How we keep it from breaking',
-        lead: 'Nothing reaches your business until it has passed all four steps — whether a person or AI wrote the code.',
+        title: 'No mistakes',
+        lead: 'We always take these four steps:',
         steps: [
           {
             title: 'Write it down',
@@ -457,11 +457,11 @@ const en: Content = validate(
       },
 
       working: {
-        title: 'What you can count on',
+        title: 'Our working principles:',
         items: [
-          'The senior partner who scopes it ships it',
+          'The engineer who scoped it ships it',
           'You talk to engineers, not account managers',
-          'Senior people only — no juniors learning on you',
+          'Experienced engineers only — we do not learn on you',
           "Cost changes flagged before they're spent",
           'Short meetings, written decisions',
           'AI speeds us up, but every line is still reviewed',
@@ -469,21 +469,21 @@ const en: Content = validate(
       },
 
       closing: {
-        title: "Tell us what's slowing you down.",
+        title: "Tell us what's on your mind.",
         lead: "One paragraph is enough. You'll hear back the same business day — from the people who'd build it.",
       },
 
       deck: {
         screens: [
           { label: 'Who we are', hint: '' },
-          { label: 'Our work', hint: '4 platforms' },
+          { label: 'Work', hint: '4 platforms' },
           { label: 'Fundraise platform', hint: '$4M+/mo' },
           { label: 'Shift scheduling', hint: 'iOS+Android' },
           { label: 'Shift offer cascade', hint: 'plug-in' },
           { label: 'Claims portal', hint: '$1M/yr' },
-          { label: 'What you get', hint: '' },
-          { label: 'How we test', hint: '' },
-          { label: 'How we work', hint: '' },
+          { label: 'Results', hint: '' },
+          { label: 'Quality', hint: '' },
+          { label: 'Principles', hint: '' },
           { label: 'Start a project →', hint: '' },
         ],
         methodLabel: 'How we test',
