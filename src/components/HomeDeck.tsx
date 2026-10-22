@@ -304,7 +304,6 @@ export function HomeDeck({
         <Screen index={1} label={deck.screens[1]?.label} style={styleFor(1)}>
           <div className="screen-head">
             <h2>{t.work.title}</h2>
-            <span className="muted">{deck.workCaption}</span>
           </div>
           <div className="work-list">
             {projects.map((project, index) => (
@@ -367,7 +366,9 @@ export function HomeDeck({
                   </button>
                 </div>
               </div>
-              <div className="case-metric">
+              <div
+                className={`case-metric${project.metricBig.length > 14 ? ' is-long' : ''}`}
+              >
                 <b>{project.metricBig}</b>
                 <span>{project.metricShort}</span>
               </div>
@@ -376,9 +377,9 @@ export function HomeDeck({
         ))}
 
         <Screen index={6} label={deck.screens[6]?.label} style={styleFor(6)}>
-          <div className="screen-head">
+          <div className="screen-stack">
             <h2>{t.results.title}</h2>
-            <span className="muted">{t.results.lead}</span>
+            <p className="muted">{t.results.lead}</p>
           </div>
           <div className="results">
             {t.results.items.map((item, index) => (
@@ -396,9 +397,9 @@ export function HomeDeck({
         </Screen>
 
         <Screen index={7} label={deck.screens[7]?.label} style={styleFor(7)}>
-          <div className="screen-head">
+          <div className="screen-stack">
             <h2>{t.proof.title}</h2>
-            <span className="muted">{t.proof.lead}</span>
+            <p className="muted">{t.proof.lead}</p>
           </div>
           <div className="method-steps">
             {t.proof.steps.map((step, index) => (

@@ -208,7 +208,7 @@ const en: Content = validate(
         short: 'Shift offer cascade',
         oneLiner: 'Open shifts are offered pool by pool, automatically, until someone takes them.',
         metric: { value: 'Kafka · Kubernetes', caption: 'delivered as an npm-published UI library' },
-        metricBig: 'Plug-in',
+        metricBig: 'Kafka · Kubernetes',
         metricShort: 'ships as a library that drops into existing apps',
         facts: [
           { k: 'Client', v: 'National healthcare staffing business' },
@@ -486,7 +486,6 @@ const en: Content = validate(
           { label: 'How we work', hint: '' },
           { label: 'Start a project →', hint: '' },
         ],
-        workCaption: 'Pick one to open it, or keep scrolling',
         methodLabel: 'How we test',
         caseLabel: 'Case',
         next: 'Next screen',

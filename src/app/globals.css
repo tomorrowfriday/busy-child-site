@@ -1003,7 +1003,7 @@ body:has(.deck){overflow:hidden}
 .case-metric{display:flex;flex-direction:column;gap:.3rem;min-width:0}
 .case-metric b{
   font-family:var(--f-disp);font-size:clamp(2.4rem,min(8.4cqw,14cqh),7rem);font-weight:800;
-  color:var(--hue);letter-spacing:-.08em;line-height:.95;overflow-wrap:anywhere;
+  color:var(--hue);letter-spacing:-.08em;line-height:.95;overflow-wrap:break-word;
 }
 .case-metric span{font-size:clamp(.8rem,1.3cqw,.95rem);color:var(--fg-dim)}
 .pill.hue{background:var(--hue);border-color:var(--hue);color:var(--paper)}
@@ -1113,3 +1113,19 @@ body:has(.deck){overflow:hidden}
 
 /* A sheet is a flex column; without this its panes are squeezed to nothing. */
 .sheet-body > *{flex-shrink:0}
+
+/* A heading over its lede, both ranged left — `.screen-head` sets them apart
+   on one line, which only works when the lede is a short aside. */
+.screen-stack{display:flex;flex-direction:column;gap:.45rem;align-items:flex-start}
+.screen-stack .muted{margin:0;max-width:52ch}
+
+/* The headline carries its own line break; the copy decides where it falls. */
+.deck-lede{white-space:pre-line}
+
+/* The figure is set at line-height .95, so its caption needs room beneath. */
+.case-metric{gap:.6rem}
+.case-metric span{line-height:1.5}
+
+/* A figure like "Kafka · Kubernetes" has a word too long to fit the column at
+   full size, and would be split mid-word. Set it smaller instead. */
+.case-metric.is-long b{font-size:clamp(1.6rem,min(5cqw,8cqh),3.6rem)}
