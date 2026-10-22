@@ -60,6 +60,9 @@ export const DARK_SCREEN = SCREEN_COUNT - 1;
 export const FIRST_PROJECT = 2;
 export const PROJECT_COUNT = 4;
 
+/** The screen whose sheet shows a requirement and the test it compiles to. */
+export const METHOD_SCREEN = 7;
+
 export const DURATION_MS = 950;
 
 const EASE = 'cubic-bezier(.7,0,.2,1)';

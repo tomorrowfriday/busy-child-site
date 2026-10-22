@@ -10,6 +10,7 @@ import {
   DURATION_MS,
   FIRST_PROJECT,
   groupOf,
+  METHOD_SCREEN,
   progress,
   runState,
   screenStyle,
@@ -186,6 +187,7 @@ export function HomeDeck({
   const dark = current === DARK_SCREEN;
   const hue = HUES[current] ?? 'var(--fg)';
   const selected = projects[caseIndex];
+  const methodLabel = deck.screens[METHOD_SCREEN]?.label ?? '';
   const chosen = content.scenarios[scenario];
 
   const caseOnScreen = projects[current - FIRST_PROJECT];
@@ -472,7 +474,7 @@ export function HomeDeck({
             className="sheet"
             role="dialog"
             aria-modal="true"
-            aria-label={sheet === 'project' ? selected?.short : deck.methodLabel}
+            aria-label={sheet === 'project' ? selected?.short : methodLabel}
             style={
               {
                 '--hue': sheet === 'project' ? PROJECT_HUES[caseIndex] : 'var(--kw)',
@@ -483,7 +485,7 @@ export function HomeDeck({
               <span className="sheet-count">
                 {sheet === 'project'
                   ? `${deck.caseLabel} ${String(caseIndex + 1).padStart(2, '0')} ${t.sheet.of} ${String(projects.length).padStart(2, '0')}`
-                  : deck.methodLabel}
+                  : methodLabel}
               </span>
               {sheet === 'project' ? (
                 <>

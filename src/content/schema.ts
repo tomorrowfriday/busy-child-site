@@ -207,7 +207,6 @@ export const contentSchema = z.object({
      */
     deck: z.object({
       screens: z.array(z.object({ label: nonEmpty, hint: z.string() })).length(10),
-      methodLabel: nonEmpty,
       caseLabel: nonEmpty,
       next: nonEmpty,
       prev: nonEmpty,

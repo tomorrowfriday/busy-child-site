@@ -486,7 +486,6 @@ const uk: Content = validate(
           { label: 'Принципи', hint: '' },
           { label: 'Почати проєкт →', hint: '' },
         ],
-        methodLabel: 'Як ми перевіряємо',
         caseLabel: 'Кейс',
         next: 'Наступний екран',
         prev: 'Попередній екран',

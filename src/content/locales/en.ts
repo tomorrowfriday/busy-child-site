@@ -486,7 +486,6 @@ const en: Content = validate(
           { label: 'Principles', hint: '' },
           { label: 'Start a project →', hint: '' },
         ],
-        methodLabel: 'How we test',
         caseLabel: 'Case',
         next: 'Next screen',
         prev: 'Previous screen',

@@ -4,6 +4,7 @@ import {
   DARK_SCREEN,
   DURATION_MS,
   groupOf,
+  METHOD_SCREEN,
   progress,
   runState,
   screenStyle,
@@ -162,5 +163,12 @@ describe('stepCase', () => {
 
   it('defaults to the four projects', () => {
     expect(stepCase(3, 1)).toBe(0);
+  });
+});
+
+describe('METHOD_SCREEN', () => {
+  it('points at a screen that exists, so the sheet can borrow its menu label', () => {
+    expect(METHOD_SCREEN).toBeGreaterThanOrEqual(0);
+    expect(METHOD_SCREEN).toBeLessThan(SCREEN_COUNT);
   });
 });
