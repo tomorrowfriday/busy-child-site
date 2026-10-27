@@ -15,8 +15,9 @@ export function Masthead({
   return (
     <header className="masthead">
       <div className="wrap">
-        <Link className="wordmark" href={`/${locale}`}>
+        <Link className="top-mark" href={`/${locale}`}>
           {site.wordmark}
+          <span className="dot">.</span>
         </Link>
         <div className="mast-right">
           <nav className="nav" aria-label="Primary">
@@ -42,8 +43,9 @@ export function Footer({ content, locale }: { content: Content; locale: Locale }
     <footer className="foot">
       <div className="wrap">
         <div className="col">
-          <Link className="wordmark" href={`/${locale}`}>
+          <Link className="top-mark" href={`/${locale}`}>
             {site.wordmark}
+            <span className="dot">.</span>
           </Link>
           <span className="meta">{content.site.tagline}</span>
         </div>

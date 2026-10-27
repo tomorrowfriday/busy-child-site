@@ -98,7 +98,6 @@ describe('the two languages stay in step', () => {
     expect(ua.home.proof.ship).toHaveLength(en.home.proof.ship.length);
     expect(ua.home.working.items).toHaveLength(en.home.working.items.length);
     expect(ua.projects.map((p) => p.facts.length)).toEqual(en.projects.map((p) => p.facts.length));
-    expect(ua.methodPage.stages).toHaveLength(en.methodPage.stages.length);
     expect(ua.contactPage.include).toHaveLength(en.contactPage.include.length);
   });
 
@@ -123,7 +122,7 @@ describe('the Ukrainian copy is actually translated', () => {
   // Values that are the same in both languages on purpose: identifiers, code,
   // brand names, stacks, numerals and the like.
   const SHARED =
-    /^(projects\.\d+\.(stack|slug|externalUrl)|scenarios\.\d+\.(role|operation|assertions|mutation)|gates\.\d+\.(gate|isCommand)|literals\.\d+\.value|methodPage\.pipelineLabels\.spec|common\.(upwork|switchLanguage)|nav\.\d+\.href|locale$|projects\.\d+\.title|projects\.\d+\.metric\.value|projects\.\d+\.metricBig|home\.editor\.(specHead|outHead|failHead)|methodPage\.metaTitle|home\.anchors\.\d+\.href|home\.proof\.ship\.\d+\.value|home\.deck\.screens\.\d+\.hint)/;
+    /^(projects\.\d+\.(stack|slug|externalUrl)|scenarios\.\d+\.(role|operation|assertions|mutation)|gates\.\d+\.(gate|isCommand)|literals\.\d+\.value|common\.(upwork|switchLanguage)|nav\.\d+\.href|locale$|projects\.\d+\.title|projects\.\d+\.metric\.value|projects\.\d+\.metricBig|home\.editor\.(specHead|outHead|failHead)|home\.anchors\.\d+\.href|home\.proof\.ship\.\d+\.value|home\.deck\.screens\.\d+\.hint)/;
 
   const candidates = Object.keys(enStrings).filter((path) => !SHARED.test(path));
 
@@ -142,7 +141,7 @@ describe('the Ukrainian copy is actually translated', () => {
     const cyrillic = /[Ѐ-ӿ]/;
     expect(cyrillic.test(ua.site.statement)).toBe(true);
     expect(cyrillic.test(ua.home.outcomes.title)).toBe(true);
-    expect(cyrillic.test(ua.methodPage.hero.title)).toBe(true);
+    expect(cyrillic.test(ua.home.proof.title)).toBe(true);
   });
 });
 

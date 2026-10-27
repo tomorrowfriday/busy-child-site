@@ -136,7 +136,7 @@ export const contentSchema = z.object({
     sectors: z.array(nonEmpty).min(3),
   }),
 
-  nav: z.array(z.object({ href: nonEmpty, label: nonEmpty })).length(5),
+  nav: z.array(z.object({ href: nonEmpty, label: nonEmpty })).length(4),
 
   common: z.object({
     sendBrief: nonEmpty,
@@ -281,37 +281,6 @@ export const contentSchema = z.object({
     next: sectionSchema,
   }),
 
-  methodPage: z.object({
-    metaTitle: nonEmpty,
-    metaDescription: nonEmpty,
-    hero: sectionSchema,
-    stages: z.array(stepSchema).length(7),
-    pipeline: sectionSchema,
-    whyItWorks: sectionSchema,
-    gates: sectionSchema,
-    standard: sectionSchema,
-    review: sectionSchema,
-    economics: sectionSchema,
-    api: sectionSchema,
-    fit: sectionSchema,
-    start: sectionSchema,
-    pipelineLabels: z.object({
-      spec: nonEmpty,
-      validate: nonEmpty,
-      build: nonEmpty,
-      agent: nonEmpty,
-      gates: nonEmpty,
-      specSub: nonEmpty,
-      validateSub: nonEmpty,
-      buildSub: nonEmpty,
-      agentSub: nonEmpty,
-      gatesSub: nonEmpty,
-      ship: nonEmpty,
-      repair: nonEmpty,
-      humanApproved: nonEmpty,
-      alt: nonEmpty,
-    }),
-  }),
 
   workingPage: z.object({
     metaTitle: nonEmpty,

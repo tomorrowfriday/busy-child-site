@@ -84,9 +84,6 @@ export default async function WorkPage({ params }: { params: Promise<{ locale: s
             <Link className="button" href={`${base}/contact`}>
               {c.common.sendBrief}
             </Link>
-            <Link className="button ghost" href={`${base}/method`}>
-              {c.methodPage.metaTitle}
-            </Link>
           </div>
         </Section>
       </main>

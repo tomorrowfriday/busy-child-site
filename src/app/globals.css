@@ -1218,9 +1218,13 @@ body:has(.deck){overflow:hidden}
 
    Declared once, in no theme block: the close looks the same for everyone. */
 :root{
-  --close-ground:#171a17;
-  --close-on:#fbfbf8;
-  --close-accent:#e3a36d;
+  /* The whole site is dark now, so the close is no longer a different
+     surface — these point at the theme's own tokens and exist only so the
+     closing rules below read as one idea. Give them literal values again to
+     make the close stand apart. */
+  --close-ground:var(--bg);
+  --close-on:var(--fg);
+  --close-accent:var(--num);
 }
 
 .screen.is-invert,

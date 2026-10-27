@@ -439,9 +439,6 @@ export function HomeDeck({
             >
               {deck.seeExample}
             </button>
-            <Link className="pill ghost" href={`/${locale}/method`}>
-              {navLabel('/method')} →
-            </Link>
           </div>
         </Screen>
 
