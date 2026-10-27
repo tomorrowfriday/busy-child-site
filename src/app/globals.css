@@ -1198,55 +1198,68 @@ body:has(.deck){overflow:hidden}
 .contact-foot a{color:color-mix(in oklab,var(--paper) 80%,transparent);text-decoration:none}
 .contact-foot a:hover{color:var(--paper);text-decoration:underline}
 
-/* ─── the brand fill, pinned ─────────────────────────────────────────────
-   --num and --paper both move with the viewer's theme, so the deck's closing
-   screen and /contact rendered as deep-orange-on-white in light and
-   pale-orange-on-ink in dark. A brand colour should not change shade with
-   someone's OS setting. These two values appear in no theme block, so the
-   fill is the same orange for everyone — swap the pair to restyle both
-   surfaces at once. */
+/* ─── the closing surface ────────────────────────────────────────────────
+   The deck's last screen and /contact are the only full-bleed surfaces on
+   the site. They were painted var(--num) on var(--paper): both tokens move
+   with the viewer's theme, so the same page rendered deep-orange-on-white in
+   light and pale-orange-on-ink in dark.
+
+   Orange is --num, the colour every metric on the site is painted with. A
+   whole page of it spends a hue that carries meaning elsewhere, which is the
+   one thing this stylesheet says it does not do. So the surface inverts to
+   ink, as .screen.is-invert originally did, and orange goes back to being
+   the accent — where it reads far better against the dark anyway.
+
+   Declared once, in no theme block: the close looks the same for everyone. */
 :root{
-  --brand-fill:#e3a36d;
-  --brand-ink:#191c19;
+  --close-ground:#171a17;
+  --close-on:#fbfbf8;
+  --close-accent:#e3a36d;
 }
 
 .screen.is-invert,
-.contact{background:var(--brand-fill);color:var(--brand-ink)}
+.contact{background:var(--close-ground);color:var(--close-on)}
 
 .screen.is-invert h2,
 .screen.is-invert b,
-.screen.is-invert p,
-.screen.is-invert span,
 .contact .closing-title,
 .contact-top .top-mark,
 .contact-top .locale-switch a:hover,
 .contact-top .locale-switch a.is-active,
-.contact-foot a:hover{color:var(--brand-ink)}
+.contact-foot a:hover{color:var(--close-on)}
 
-.contact .eyebrow{color:color-mix(in oklab,var(--brand-ink) 70%,transparent)}
-.contact .closing-lede{color:color-mix(in oklab,var(--brand-ink) 86%,transparent)}
-.contact-top .locale-switch a{color:color-mix(in oklab,var(--brand-ink) 65%,transparent)}
-.contact-top .locale-switch a.is-active{border-color:color-mix(in oklab,var(--brand-ink) 40%,transparent)}
-.contact-include h2{color:color-mix(in oklab,var(--brand-ink) 64%,transparent)}
-.contact-include li{color:color-mix(in oklab,var(--brand-ink) 88%,transparent)}
-.contact-include li::before{color:color-mix(in oklab,var(--brand-ink) 52%,transparent)}
-.contact-foot{color:color-mix(in oklab,var(--brand-ink) 60%,transparent)}
-.contact-foot a{color:color-mix(in oklab,var(--brand-ink) 80%,transparent)}
+.screen.is-invert p,
+.screen.is-invert span{color:color-mix(in oklab,var(--close-on) 80%,transparent)}
 
-/* The chrome that floats over the inverted screen inherits the same ink. */
-.is-dark .deck-bar{color:var(--brand-ink)}
-.closing-foot{color:color-mix(in oklab,var(--brand-ink) 68%,transparent)}
-.closing-foot .locale-switch a{color:var(--brand-ink)}
+/* The mark is exactly the deck's: paper wordmark, orange dot. */
+.contact-top .top-mark .dot{color:var(--close-accent)}
+.contact .eyebrow{color:var(--close-accent)}
 
-/* Pills on the fill: solid ink, with the fill showing through the label. */
+.contact .closing-lede{color:color-mix(in oklab,var(--close-on) 82%,transparent)}
+.contact-top .locale-switch a{color:color-mix(in oklab,var(--close-on) 58%,transparent)}
+.contact-top .locale-switch a.is-active{border-color:color-mix(in oklab,var(--close-on) 38%,transparent)}
+.contact-include h2{color:color-mix(in oklab,var(--close-on) 56%,transparent)}
+.contact-include li{color:color-mix(in oklab,var(--close-on) 84%,transparent)}
+.contact-include li::before{color:var(--close-accent)}
+.contact-foot{color:color-mix(in oklab,var(--close-on) 52%,transparent)}
+.contact-foot a{color:color-mix(in oklab,var(--close-on) 74%,transparent)}
+
+.is-dark .deck-bar{color:var(--close-on)}
+.closing-foot{color:color-mix(in oklab,var(--close-on) 62%,transparent)}
+.closing-foot .locale-switch a{color:var(--close-on)}
+
+/* Pills on the dark: the primary is the accent, so the address is the
+   brightest thing on the page — which is the only job this page has. */
 .screen.is-invert .pill.invert,
-.contact .pill.invert{background:var(--brand-ink);color:var(--brand-fill);border-color:var(--brand-ink)}
+.contact .pill.invert{
+  background:var(--close-accent);color:var(--close-ground);border-color:var(--close-accent);
+}
 .screen.is-invert .pill.invert:hover,
-.contact .pill.invert:hover{background:var(--brand-ink);border-color:var(--brand-ink);filter:brightness(1.35)}
+.contact .pill.invert:hover{filter:brightness(1.08)}
 .screen.is-invert .pill.ghost-invert,
 .contact .pill.ghost-invert{
-  color:var(--brand-ink);background:transparent;
-  border-color:color-mix(in oklab,var(--brand-ink) 38%,transparent);
+  color:var(--close-on);background:transparent;
+  border-color:color-mix(in oklab,var(--close-on) 34%,transparent);
 }
 .screen.is-invert .pill.ghost-invert:hover,
-.contact .pill.ghost-invert:hover{background:transparent;color:var(--brand-ink);border-color:var(--brand-ink)}
+.contact .pill.ghost-invert:hover{background:transparent;color:var(--close-on);border-color:var(--close-on)}

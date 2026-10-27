@@ -824,7 +824,7 @@ const en: Content = validate(
       hero: {
         marker: "let's build it",
         title: "Write, and we'll reply.",
-        lead: 'From then on your thoughts are busy with the work. So are ours.',
+        lead: 'From then on your thoughts are busy with your priorities. So are ours.',
       },
       includeLabel: 'You can add:',
       include: [
