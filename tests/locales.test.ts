@@ -99,7 +99,7 @@ describe('the two languages stay in step', () => {
     expect(uk.home.working.items).toHaveLength(en.home.working.items.length);
     expect(uk.projects.map((p) => p.facts.length)).toEqual(en.projects.map((p) => p.facts.length));
     expect(uk.methodPage.stages).toHaveLength(en.methodPage.stages.length);
-    expect(uk.contactPage.briefItems).toHaveLength(en.contactPage.briefItems.length);
+    expect(uk.contactPage.include).toHaveLength(en.contactPage.include.length);
   });
 
   it('keep project slugs identical, so /en/work#x and /uk/work#x agree', () => {
@@ -225,9 +225,10 @@ describe('outbound links', () => {
     }
   });
 
-  // Asserts the placeholder still exists so nobody forgets it is one.
-  it('flags the placeholder inbox', () => {
-    expect(site.email).toBe('hello@busychild.com');
+  // The inbox shipped as a hello@ placeholder once. This pins the real one.
+  it('points at the real inbox, not a placeholder', () => {
+    expect(site.email).toBe('kravets.s.mail@gmail.com');
+    expect(site.email).not.toMatch(/^hello@/);
   });
 });
 

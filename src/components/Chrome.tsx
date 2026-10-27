@@ -56,7 +56,6 @@ export function Footer({ content, locale }: { content: Content; locale: Locale }
         </div>
         <div className="col">
           <a href={site.upwork}>{content.common.upwork}</a>
-          <span className="meta">{content.common.sameDay}</span>
         </div>
       </div>
     </footer>

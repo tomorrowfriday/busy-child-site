@@ -28,7 +28,6 @@ const en: Content = validate(
       seeWork: 'See the work',
       upwork: 'Upwork',
       upworkAlt: 'Or invite us on Upwork',
-      sameDay: 'Same-business-day reply',
       skipToContent: 'Skip to content',
       switchLanguage: 'Мова',
       foldHint: 'Every line opens. Unfold the ones that matter to you.',
@@ -371,8 +370,8 @@ const en: Content = validate(
 
       contact: {
         marker: "let's build it",
-        title: "Send a brief — you'll hear back the same business day.",
-        lead: 'Tell us what you are building, or just what is slowing you down. That is the only thing we need to start a useful conversation.',
+        title: 'Tell us what you are building.',
+        lead: 'Or just what is slowing you down. That is the only thing we need to start a useful conversation.',
       },
 
       anchors: [
@@ -470,7 +469,7 @@ const en: Content = validate(
 
       closing: {
         title: "Tell us what's on your mind.",
-        lead: "One paragraph is enough. You'll hear back the same business day — from the people who'd build it.",
+        lead: "One paragraph is enough, and it reaches the people who would build it."
       },
 
       deck: {
@@ -566,7 +565,7 @@ const en: Content = validate(
       next: {
         marker: 'next',
         title: 'Building something in this territory?',
-        lead: "Send a brief and you'll hear back the same business day.",
+        lead: 'Tell us what you are building and what it has to do.',
       },
     },
 
@@ -821,39 +820,19 @@ const en: Content = validate(
     contactPage: {
       metaTitle: 'Contact',
       metaDescription:
-        'Send a brief and you will hear back the same business day. Tell us what you are building and what it has to do.',
+        'Tell us what you are building and what it has to do. One paragraph is enough, and it reaches the people who would build it.',
       hero: {
         marker: "let's build it",
-        title: "Send a brief — you'll hear back the same business day.",
-        lead: "Tell us what you're building and what it has to do. That's genuinely all we need to start a useful conversation, and you'll be talking to the person who would do the work.",
+        title: 'Tell us what you are building.',
+        lead: 'One paragraph is enough, and it reaches the people who would build it. If we are not the right team, we will say so straight away.',
       },
-      brief: {
-        marker: 'what to put in it',
-        title: 'A useful brief is about five sentences.',
-        lead: "Not a specification — we'll write that with you. Enough for us to tell you honestly whether we're the right team.",
-        note: {
-          tag: 'What happens next',
-          text: "You get a reply the same business day from a senior engineer, not a form response. If we're not the right fit we'll say so in that first reply rather than booking a call to find out.",
-        },
-      },
-      briefItems: [
-        { title: 'What you are building', detail: 'The system and the business it serves. One paragraph is plenty.' },
-        { title: 'What it has to do', detail: 'The two or three things that would make it a failure if they did not work.' },
-        { title: 'What exists today', detail: 'A running system, a prototype, spreadsheets, or nothing yet. All four are normal.' },
-        { title: 'Constraints that are real', detail: 'A date, a compliance regime, an incumbent stack you have to live with, a budget shape.' },
-        { title: 'Who we would be working with', detail: 'Whether there is an in-house team, and whether they will own it afterwards.' },
+      includeLabel: 'Worth including',
+      include: [
+        'What the system does, and who uses it.',
+        'What exists today — a running system, spreadsheets, or nothing yet.',
+        'Anything fixed: a date, a regulator, a stack you have to live with.',
       ],
-      answers: {
-        marker: 'straight answers',
-        title: 'Before you write it.',
-        bullets: [
-          { strong: 'Do you take small projects?', text: 'Yes, if they are real. One service end to end is our preferred way to start.' },
-          { strong: 'Can our team own the code afterwards?', text: 'That is the intended outcome. The specification is the handover artefact.' },
-          { strong: 'Do you work with an existing in-house team?', text: 'Regularly. We work behind your gates, in your process, on your infrastructure.' },
-          { strong: "Why don't you name your clients?", text: 'Most of our work is under NDA and we would rather respect that than trade it for a logo wall.' },
-          { strong: 'Is there anything we can actually try?', text: 'Yes — Mines is ours, it is on the App Store, and it is the same team.' },
-        ],
-      },
+      back: 'Back to the start',
       mailSubject: 'Project brief',
     },
   },

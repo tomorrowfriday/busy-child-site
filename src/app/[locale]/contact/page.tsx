@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Footer, Masthead } from '@/components/Chrome';
-import { Bullets, Note, Section, Steps } from '@/components/Primitives';
+import { Link } from '@/components/Link';
+import { LocaleSwitch } from '@/components/LocaleSwitch';
 import { getContent, isLocale, site, LOCALES } from '@/content';
 
 export function generateStaticParams() {
@@ -19,6 +19,15 @@ export async function generateMetadata({
   return { title: c.contactPage.metaTitle, description: c.contactPage.metaDescription };
 }
 
+/**
+ * The only page the deck links out to.
+ *
+ * It is built as one more screen rather than a document: the deck's closing
+ * screen is a full-bleed colour, and arriving here should feel like stepping
+ * through it, not leaving for an older site. Everything a visitor needs is
+ * above the fold — the address, three lines on what to include, and the way
+ * back.
+ */
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
@@ -28,40 +37,45 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const mailto = `mailto:${site.email}?subject=${encodeURIComponent(p.mailSubject)}`;
 
   return (
-    <>
-      <Masthead content={c} locale={locale} current="/contact" />
-      <main id="main">
-        <Section hero marker={p.hero.marker}>
-          <h1>{p.hero.title}</h1>
-          <p className="sub">{p.hero.lead}</p>
-          <div className="cta">
-            <a className="button" href={mailto}>
+    <main id="main" className="contact">
+      <div className="contact-inner">
+        <header className="contact-top">
+          <Link className="top-mark" href={`/${locale}`}>
+            {site.wordmark}
+            <span className="dot">.</span>
+          </Link>
+          <LocaleSwitch locale={locale} current="/contact" label={c.common.switchLanguage} />
+        </header>
+
+        <div className="contact-body">
+          <span className="eyebrow">{p.hero.marker}</span>
+          <h1 className="closing-title">{p.hero.title}</h1>
+          <p className="closing-lede">{p.hero.lead}</p>
+
+          <div className="deck-cta">
+            <a className="pill invert" href={mailto}>
               {site.email}
             </a>
-            <a className="button ghost" href={site.upwork}>
+            <a className="pill ghost-invert" href={site.upwork}>
               {c.common.upworkAlt}
             </a>
           </div>
-        </Section>
 
-        <Section marker={p.brief.marker}>
-          <h2>{p.brief.title}</h2>
-          <p className="lead">{p.brief.lead}</p>
-          <Steps items={p.briefItems} />
-          {p.brief.note ? <Note tag={p.brief.note.tag} text={p.brief.note.text} /> : null}
-        </Section>
-
-        <Section marker={p.answers.marker}>
-          <h2>{p.answers.title}</h2>
-          {p.answers.bullets ? <Bullets items={p.answers.bullets} /> : null}
-          <div className="cta">
-            <a className="button" href={mailto}>
-              {c.common.sendBrief}
-            </a>
+          <div className="contact-include">
+            <h2>{p.includeLabel}</h2>
+            <ul>
+              {p.include.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </div>
-        </Section>
-      </main>
-      <Footer content={c} locale={locale} />
-    </>
+        </div>
+
+        <footer className="contact-foot">
+          <Link href={`/${locale}`}>← {p.back}</Link>
+          <span>© {site.name}</span>
+        </footer>
+      </div>
+    </main>
   );
 }

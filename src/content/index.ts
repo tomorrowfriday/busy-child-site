@@ -22,8 +22,7 @@ export const site = {
   name: 'Busy Child',
   wordmark: 'busychild',
   upwork: 'https://www.upwork.com/agencies/2029955071357100515/',
-  // TODO: replace with the real inbox before launch.
-  email: 'hello@busychild.com',
+  email: 'kravets.s.mail@gmail.com',
   // TODO: set once the domain is registered — used for canonical + OG URLs.
   url: 'https://busychild.com',
 } as const;

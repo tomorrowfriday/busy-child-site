@@ -1135,3 +1135,63 @@ body:has(.deck){overflow:hidden}
 .case-metric b{
   font-size:min(clamp(2.4rem,14cqh,7rem),calc(100cqi / (var(--chars,8) * 0.63)));
 }
+
+/* ─── /contact: the deck's closing screen, as a page ────────────────────── */
+
+.contact{
+  min-height:100dvh;background:var(--num);color:var(--paper);
+  display:flex;flex-direction:column;
+}
+.contact-inner{
+  flex:1;width:100%;max-width:1100px;margin:0 auto;
+  padding:clamp(1rem,3vw,1.8rem) clamp(1.2rem,5vw,4rem) clamp(1.4rem,4vw,2.4rem);
+  display:flex;flex-direction:column;gap:clamp(1.4rem,5vh,3rem);
+}
+
+.contact-top{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.contact-top .top-mark{
+  font-family:var(--f-disp);font-weight:800;letter-spacing:-.05em;font-size:1rem;
+  color:var(--paper);text-decoration:none;background:none;border:0;padding:0;
+}
+.contact-top .locale-switch a{color:color-mix(in oklab,var(--paper) 70%,transparent)}
+.contact-top .locale-switch a:hover{color:var(--paper)}
+.contact-top .locale-switch a.is-active{color:var(--paper);border-color:color-mix(in oklab,var(--paper) 45%,transparent)}
+
+.contact-body{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  gap:clamp(.8rem,2.4vh,1.4rem);
+}
+.contact .eyebrow{color:color-mix(in oklab,var(--paper) 72%,transparent)}
+.contact .closing-title{color:var(--paper)}
+.contact .closing-lede{color:color-mix(in oklab,var(--paper) 86%,transparent)}
+.contact .deck-cta{margin-top:.4rem}
+
+/* The address is the one thing on the page that must be unmissable. */
+.contact .pill.invert{font-size:clamp(.85rem,1.6vw,1rem);padding:.7rem 1.4rem}
+
+.contact-include{
+  display:flex;flex-direction:column;gap:.55rem;
+  margin-top:clamp(.6rem,3vh,1.6rem);max-width:60ch;
+}
+.contact-include h2{
+  margin:0;font-family:var(--f-mono);font-size:.7rem;font-weight:400;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:color-mix(in oklab,var(--paper) 66%,transparent);
+}
+.contact-include ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.35rem}
+.contact-include li{
+  position:relative;padding-left:1.3rem;font-size:.86rem;line-height:1.6;
+  color:color-mix(in oklab,var(--paper) 88%,transparent);
+}
+.contact-include li::before{
+  content:"—";position:absolute;left:0;top:0;
+  color:color-mix(in oklab,var(--paper) 55%,transparent);
+}
+
+.contact-foot{
+  display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;justify-content:space-between;
+  align-items:baseline;font-size:.74rem;
+  color:color-mix(in oklab,var(--paper) 62%,transparent);
+}
+.contact-foot a{color:color-mix(in oklab,var(--paper) 80%,transparent);text-decoration:none}
+.contact-foot a:hover{color:var(--paper);text-decoration:underline}

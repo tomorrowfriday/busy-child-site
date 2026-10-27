@@ -143,7 +143,6 @@ export const contentSchema = z.object({
     seeWork: nonEmpty,
     upwork: nonEmpty,
     upworkAlt: nonEmpty,
-    sameDay: nonEmpty,
     skipToContent: nonEmpty,
     switchLanguage: nonEmpty,
     /** Tells the reader the page folds, once, instead of a tooltip per row. */
@@ -322,13 +321,18 @@ export const contentSchema = z.object({
     team: sectionSchema,
   }),
 
+  /**
+   * One screen. A visitor arrives here having already read the pitch, so the
+   * page's whole job is to make writing the first email easy — not to argue
+   * again.
+   */
   contactPage: z.object({
     metaTitle: nonEmpty,
     metaDescription: nonEmpty,
     hero: sectionSchema,
-    brief: sectionSchema,
-    briefItems: z.array(stepSchema).length(5),
-    answers: sectionSchema,
+    includeLabel: nonEmpty,
+    include: z.array(nonEmpty).length(3),
+    back: nonEmpty,
     mailSubject: nonEmpty,
   }),
 });
