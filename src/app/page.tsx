@@ -1,6 +1,11 @@
-import { LOCALES, DEFAULT_LOCALE } from '@/content';
+import { LANG, LOCALES, DEFAULT_LOCALE } from '@/content';
+
+/** Browser language tag -> route segment. */
+const TAG_TO_SEGMENT = Object.fromEntries(
+  LOCALES.flatMap((l) => [[LANG[l], l] as const, [l, l] as const]),
+);
 import en from '@/content/locales/en';
-import uk from '@/content/locales/uk';
+import ua from '@/content/locales/ua';
 
 /**
  * The bare domain.
@@ -19,10 +24,11 @@ export const metadata = {
 
 const REDIRECT = `(function () {
   try {
-    var supported = ${JSON.stringify(LOCALES)};
+    // A browser asks for Ukrainian as "uk"; the route segment is "ua".
+    var map = ${JSON.stringify(TAG_TO_SEGMENT)};
     var wanted = (navigator.languages || [navigator.language || ''])
-      .map(function (tag) { return String(tag).slice(0, 2).toLowerCase(); })
-      .filter(function (tag) { return supported.indexOf(tag) !== -1; })[0] || '${DEFAULT_LOCALE}';
+      .map(function (tag) { return map[String(tag).slice(0, 2).toLowerCase()]; })
+      .filter(Boolean)[0] || '${DEFAULT_LOCALE}';
     location.replace('${BASE}/' + wanted + '/');
   } catch (e) {
     location.replace('${BASE}/${DEFAULT_LOCALE}/');
@@ -38,8 +44,8 @@ export default function RootPage() {
         <a href={`${BASE}/en/`} hrefLang="en" lang="en">
           {en.localeName}
         </a>
-        <a href={`${BASE}/uk/`} hrefLang="uk" lang="uk">
-          {uk.localeName}
+        <a href={`${BASE}/ua/`} hrefLang="uk" lang="uk">
+          {ua.localeName}
         </a>
       </nav>
     </div>

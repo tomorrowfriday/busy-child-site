@@ -5,6 +5,7 @@ import { GateRunner } from '@/components/GateRunner';
 import { Link } from '@/components/Link';
 import { Pipeline } from '@/components/Pipeline';
 import { Bullets, Note, Section, Specimen, Steps } from '@/components/Primitives';
+import { SpecEditor } from '@/components/SpecEditor';
 import { getContent, isLocale, LOCALES } from '@/content';
 
 export function generateStaticParams() {
@@ -69,6 +70,15 @@ export default async function MethodPage({ params }: { params: Promise<{ locale:
           <p>{m.whyItWorks.link}</p>
           <Specimen source={AGENT_UNIT} />
           <p className="caption">{m.whyItWorks.caption}</p>
+        </Section>
+
+        <Section id="specimen" marker={c.home.specimen.marker}>
+          <h2>{c.home.specimen.title}</h2>
+          <p className="lead">{c.home.specimen.lead}</p>
+          <SpecEditor scenarios={c.scenarios} t={c.home.editor} />
+          {c.home.specimen.caption ? (
+            <p className="caption">{c.home.specimen.caption}</p>
+          ) : null}
         </Section>
 
         <Section id="gates" marker={m.gates.marker}>

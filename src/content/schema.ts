@@ -14,7 +14,7 @@ import { z } from 'zod';
 
 const nonEmpty = z.string().trim().min(1, 'must not be empty');
 
-export const LOCALES = ['en', 'uk'] as const;
+export const LOCALES = ['en', 'ua'] as const;
 export const localeSchema = z.enum(LOCALES);
 export type Locale = (typeof LOCALES)[number];
 

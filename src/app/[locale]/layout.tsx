@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getContent, isLocale, site, LOCALES } from '@/content';
+import { getContent, isLocale, site, LANG, LOCALES } from '@/content';
 import type { Locale } from '@/content/schema';
 
 export function generateStaticParams() {
@@ -31,12 +31,12 @@ export async function generateMetadata({
     description: content.site.description,
     alternates: {
       canonical: `${site.url}/${locale}`,
-      languages: Object.fromEntries(LOCALES.map((l) => [l, `${site.url}/${l}`])),
+      languages: Object.fromEntries(LOCALES.map((l) => [LANG[l], `${site.url}/${l}`])),
     },
     openGraph: {
       type: 'website',
       siteName: site.name,
-      locale: locale === 'uk' ? 'uk_UA' : 'en_US',
+      locale: locale === 'ua' ? 'uk_UA' : 'en_US',
       title: `${site.name} — ${content.site.tagline.toLowerCase()}`,
       description: content.site.description,
     },
@@ -64,7 +64,7 @@ export default async function LocaleLayout({
 function LocaleShell({ locale, children }: { locale: Locale; children: React.ReactNode }) {
   const content = getContent(locale);
   return (
-    <div data-locale={locale} lang={locale}>
+    <div data-locale={locale} lang={LANG[locale]}>
       <a className="skip-link" href="#main">
         {content.common.skipToContent}
       </a>

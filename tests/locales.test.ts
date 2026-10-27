@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import en from '@/content/locales/en';
-import uk from '@/content/locales/uk';
+import ua from '@/content/locales/ua';
 import { getContent, isLocale, LOCALES, clientProjects, ownProducts, site } from '@/content';
 import { projectSchema, scenarioSchema, validate } from '@/content/schema';
 import type { Content } from '@/content/schema';
@@ -14,7 +14,7 @@ import type { Content } from '@/content/schema';
  * drifted out of step, or a slug that stopped matching across languages.
  */
 
-const dictionaries: Record<string, Content> = { en, uk };
+const dictionaries: Record<string, Content> = { en, ua };
 
 /** Every leaf path in an object, e.g. "home.editor.role" or "literals.0.value". */
 function paths(value: unknown, prefix = ''): string[] {
@@ -53,7 +53,7 @@ function strings(value: unknown, prefix = ''): Record<string, string> {
 
 describe('the locale registry', () => {
   it('exposes exactly the locales it ships', () => {
-    expect([...LOCALES]).toEqual(['en', 'uk']);
+    expect([...LOCALES]).toEqual(['en', 'ua']);
     expect(Object.keys(dictionaries).sort()).toEqual([...LOCALES].sort());
   });
 
@@ -65,7 +65,7 @@ describe('the locale registry', () => {
 
   it('recognises its own locales and rejects others', () => {
     expect(isLocale('en')).toBe(true);
-    expect(isLocale('uk')).toBe(true);
+    expect(isLocale('ua')).toBe(true);
     expect(isLocale('fr')).toBe(false);
     expect(isLocale('')).toBe(false);
   });
@@ -76,49 +76,49 @@ describe('the two languages stay in step', () => {
   // rather than shipping a half-translated page.
   it('have identical key structures', () => {
     const a = paths(en).sort();
-    const b = paths(uk).sort();
+    const b = paths(ua).sort();
 
     const onlyInEn = a.filter((p) => !b.includes(p));
-    const onlyInUk = b.filter((p) => !a.includes(p));
+    const onlyInUa = b.filter((p) => !a.includes(p));
 
-    expect({ onlyInEn, onlyInUk }).toEqual({ onlyInEn: [], onlyInUk: [] });
+    expect({ onlyInEn, onlyInUa }).toEqual({ onlyInEn: [], onlyInUa: [] });
   });
 
   it('have the same number of every repeated block', () => {
-    expect(uk.literals).toHaveLength(en.literals.length);
-    expect(uk.gates).toHaveLength(en.gates.length);
-    expect(uk.promises).toHaveLength(en.promises.length);
-    expect(uk.engagement).toHaveLength(en.engagement.length);
-    expect(uk.projects).toHaveLength(en.projects.length);
-    expect(uk.scenarios).toHaveLength(en.scenarios.length);
-    expect(uk.home.outcomes.items).toHaveLength(en.home.outcomes.items.length);
-    expect(uk.home.anchors).toHaveLength(en.home.anchors.length);
-    expect(uk.home.results.items).toHaveLength(en.home.results.items.length);
-    expect(uk.home.proof.steps).toHaveLength(en.home.proof.steps.length);
-    expect(uk.home.proof.ship).toHaveLength(en.home.proof.ship.length);
-    expect(uk.home.working.items).toHaveLength(en.home.working.items.length);
-    expect(uk.projects.map((p) => p.facts.length)).toEqual(en.projects.map((p) => p.facts.length));
-    expect(uk.methodPage.stages).toHaveLength(en.methodPage.stages.length);
-    expect(uk.contactPage.include).toHaveLength(en.contactPage.include.length);
+    expect(ua.literals).toHaveLength(en.literals.length);
+    expect(ua.gates).toHaveLength(en.gates.length);
+    expect(ua.promises).toHaveLength(en.promises.length);
+    expect(ua.engagement).toHaveLength(en.engagement.length);
+    expect(ua.projects).toHaveLength(en.projects.length);
+    expect(ua.scenarios).toHaveLength(en.scenarios.length);
+    expect(ua.home.outcomes.items).toHaveLength(en.home.outcomes.items.length);
+    expect(ua.home.anchors).toHaveLength(en.home.anchors.length);
+    expect(ua.home.results.items).toHaveLength(en.home.results.items.length);
+    expect(ua.home.proof.steps).toHaveLength(en.home.proof.steps.length);
+    expect(ua.home.proof.ship).toHaveLength(en.home.proof.ship.length);
+    expect(ua.home.working.items).toHaveLength(en.home.working.items.length);
+    expect(ua.projects.map((p) => p.facts.length)).toEqual(en.projects.map((p) => p.facts.length));
+    expect(ua.methodPage.stages).toHaveLength(en.methodPage.stages.length);
+    expect(ua.contactPage.include).toHaveLength(en.contactPage.include.length);
   });
 
-  it('keep project slugs identical, so /en/work#x and /uk/work#x agree', () => {
-    expect(uk.projects.map((p) => p.slug)).toEqual(en.projects.map((p) => p.slug));
+  it('keep project slugs identical, so /en/work#x and /ua/work#x agree', () => {
+    expect(ua.projects.map((p) => p.slug)).toEqual(en.projects.map((p) => p.slug));
   });
 
   it('keep nav hrefs identical, so the language switch stays on the same page', () => {
-    expect(uk.nav.map((n) => n.href)).toEqual(en.nav.map((n) => n.href));
+    expect(ua.nav.map((n) => n.href)).toEqual(en.nav.map((n) => n.href));
   });
 
   it('keep the same project named/anonymous split', () => {
-    expect(clientProjects(uk).map((p) => p.slug)).toEqual(clientProjects(en).map((p) => p.slug));
-    expect(ownProducts(uk).map((p) => p.slug)).toEqual(ownProducts(en).map((p) => p.slug));
+    expect(clientProjects(ua).map((p) => p.slug)).toEqual(clientProjects(en).map((p) => p.slug));
+    expect(ownProducts(ua).map((p) => p.slug)).toEqual(ownProducts(en).map((p) => p.slug));
   });
 });
 
 describe('the Ukrainian copy is actually translated', () => {
   const enStrings = strings(en);
-  const ukStrings = strings(uk);
+  const uaStrings = strings(ua);
 
   // Values that are the same in both languages on purpose: identifiers, code,
   // brand names, stacks, numerals and the like.
@@ -133,16 +133,16 @@ describe('the Ukrainian copy is actually translated', () => {
 
   it('differs from English everywhere it should', () => {
     const untranslated = candidates.filter(
-      (path) => enStrings[path] === ukStrings[path] && (enStrings[path]?.length ?? 0) > 3,
+      (path) => enStrings[path] === uaStrings[path] && (enStrings[path]?.length ?? 0) > 3,
     );
     expect(untranslated).toEqual([]);
   });
 
   it('uses Cyrillic in its long-form copy', () => {
     const cyrillic = /[Ѐ-ӿ]/;
-    expect(cyrillic.test(uk.site.statement)).toBe(true);
-    expect(cyrillic.test(uk.home.outcomes.title)).toBe(true);
-    expect(cyrillic.test(uk.methodPage.hero.title)).toBe(true);
+    expect(cyrillic.test(ua.site.statement)).toBe(true);
+    expect(cyrillic.test(ua.home.outcomes.title)).toBe(true);
+    expect(cyrillic.test(ua.methodPage.hero.title)).toBe(true);
   });
 });
 
@@ -194,8 +194,8 @@ describe('the content schema rejects bad content', () => {
   });
 
   it('names the source file in the error, so the failure is actionable', () => {
-    expect(() => validate(scenarioSchema, {}, 'content/locales/uk.ts')).toThrow(
-      /content\/locales\/uk\.ts/,
+    expect(() => validate(scenarioSchema, {}, 'content/locales/ua.ts')).toThrow(
+      /content\/locales\/ua\.ts/,
     );
   });
 
@@ -234,7 +234,7 @@ describe('outbound links', () => {
 
 describe('the anonymity rule', () => {
   const FORBIDDEN = ['Fundamental', 'Humanics', 'CHG', 'Connect Staffing', 'Slate Studio'];
-  const haystack = JSON.stringify({ en, uk }).toLowerCase();
+  const haystack = JSON.stringify({ en, ua }).toLowerCase();
 
   it.each(FORBIDDEN)('does not mention %s in either language', (name) => {
     expect(haystack).not.toContain(name.toLowerCase());

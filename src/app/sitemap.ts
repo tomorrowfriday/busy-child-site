@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { getContent, site, LOCALES } from '@/content';
+import { getContent, site, LANG, LOCALES } from '@/content';
 
 export const dynamic = 'force-static';
 
@@ -20,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         // Tell search engines the two languages are the same page.
         alternates: {
           languages: Object.fromEntries(
-            LOCALES.map((l) => [l, `${site.url}/${l}${path}/`]),
+            LOCALES.map((l) => [LANG[l], `${site.url}/${l}${path}/`]),
           ),
         },
       });

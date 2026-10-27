@@ -3,7 +3,7 @@ import { contentSchema, validate, type Content } from '../schema';
 const uk: Content = validate(
   contentSchema,
   {
-    locale: 'uk',
+    locale: 'ua',
     localeLabel: 'UA',
     localeName: 'Українська',
 
@@ -836,7 +836,7 @@ const uk: Content = validate(
       mailSubject: 'Бриф проєкту',
     },
   },
-  'content/locales/uk.ts',
+  'content/locales/ua.ts',
 );
 
 export default uk;

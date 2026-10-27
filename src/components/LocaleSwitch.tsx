@@ -1,12 +1,12 @@
 import { Link } from '@/components/Link';
-import { LOCALES } from '@/content';
+import { LANG, LOCALES } from '@/content';
 import en from '@/content/locales/en';
-import uk from '@/content/locales/uk';
+import ua from '@/content/locales/ua';
 import type { Locale } from '@/content/schema';
 
 const LABELS: Record<Locale, { label: string; name: string }> = {
   en: { label: en.localeLabel, name: en.localeName },
-  uk: { label: uk.localeLabel, name: uk.localeName },
+  ua: { label: ua.localeLabel, name: ua.localeName },
 };
 
 /**
@@ -29,8 +29,8 @@ export function LocaleSwitch({
         <Link
           key={code}
           href={`/${code}${current ?? ''}`}
-          hrefLang={code}
-          lang={code}
+          hrefLang={LANG[code]}
+          lang={LANG[code]}
           aria-current={code === locale ? 'true' : undefined}
           className={code === locale ? 'is-active' : undefined}
         >
