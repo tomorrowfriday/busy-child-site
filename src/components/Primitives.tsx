@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
-import { tokenize } from '@/lib/compile';
-import type { Bullet, Gate, Literal, Outcome, Step } from '@/content/schema';
+import type { Bullet, Outcome, Step } from '@/content/schema';
 
 export function Section({
   id,
@@ -27,19 +26,6 @@ export function Section({
         {children}
       </div>
     </section>
-  );
-}
-
-export function Literals({ items }: { items: readonly Literal[] }) {
-  return (
-    <div className="literals">
-      {items.map((literal) => (
-        <div className="literal" key={literal.value}>
-          <b>{literal.value}</b>
-          <span>{literal.caption}</span>
-        </div>
-      ))}
-    </div>
   );
 }
 
@@ -82,50 +68,6 @@ export function Outcomes({ items }: { items: readonly Outcome[] }) {
           ) : null}
         </article>
       ))}
-    </div>
-  );
-}
-
-export function GateTable({ gates }: { gates: readonly Gate[] }) {
-  return (
-    <div className="table-wrap">
-      <table>
-        <tbody>
-          {gates.map((gate) => (
-            <tr key={gate.gate}>
-              <td className="gate">{gate.isCommand ? <code>{gate.gate}</code> : gate.gate}</td>
-              <td>{gate.catches}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-/** Renders source through the tokenizer so specimens are highlighted, not plain. */
-export function Code({ source }: { source: string }) {
-  return (
-    <>
-      {tokenize(source).map((token, index) =>
-        token.kind === 'plain' ? (
-          <span key={index}>{token.text}</span>
-        ) : (
-          <span key={index} className={`tok-${token.kind}`}>
-            {token.text}
-          </span>
-        ),
-      )}
-    </>
-  );
-}
-
-export function Specimen({ source }: { source: string }) {
-  return (
-    <div className="specimen">
-      <pre>
-        <Code source={source} />
-      </pre>
     </div>
   );
 }

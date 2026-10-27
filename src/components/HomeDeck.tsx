@@ -601,7 +601,7 @@ export function HomeDeck({
                         source={compileScenario(chosen)}
                       />
                       <p className="proves">
-                        <b>{t.editor.proves}: </b>
+                        <b>{t.sheet.proves}: </b>
                         {chosen.proves}
                       </p>
                     </>

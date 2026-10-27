@@ -508,47 +508,11 @@ const en: Content = validate(
         shipped: 'What we shipped',
         builtWith: 'Built with',
         outcome: 'Outcome',
+        proves: 'Proves',
         cta: 'Want one like this? Send a brief',
       },
 
-      editor: {
-        specHead: 'docs/spec/ — edit me',
-        outHead: 'generated — never edited',
-        failHead: 'composer validate — failed',
-        compiles: 'compiles',
-        blocked: 'blocked',
-        reset: 'Reset',
-        role: 'Role',
-        operation: 'Operation',
-        assertions: 'Assertions',
-        empty: 'No assertions. A scenario that asserts nothing proves nothing.',
-        invalidLead:
-          "Nothing is generated. The build stops here rather than emitting a test that doesn't match the spec.",
-        proves: 'Proves',
-        edited: 'Edited',
-        editedText:
-          'You changed the spec and the test changed with it — that is the only way to change what is verified.',
-        specInvalid: '— spec invalid —',
-        kinds: {
-          excludesItem: 'does not include item',
-          includesItem: 'includes item',
-          fieldEquals: 'field equals',
-          rejectedWith: 'is rejected with',
-        },
-      },
 
-      runner: {
-        run: 'Run the gates',
-        runAgain: 'Run again',
-        stop: 'Stop',
-        breakLabel: 'Break',
-        breakNothing: 'nothing — clean run',
-        passed: 'build passed',
-        failed: 'build failed',
-        skipped: 'skipped',
-        gatesWord: 'gates',
-        neverRan: 'never ran',
-      },
     },
 
     workPage: {
