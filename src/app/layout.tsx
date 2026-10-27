@@ -35,6 +35,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang={DEFAULT_LOCALE}
       className={`${mono.variable} ${display.variable}`}
       data-scroll-behavior="smooth"
+      // The site is dark for everyone, not only for people whose OS is.
+      // The light palette below it is intact — drop this attribute and the
+      // whole site follows prefers-color-scheme again.
+      data-theme="dark"
     >
       <head>
         {/*

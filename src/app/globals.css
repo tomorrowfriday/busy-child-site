@@ -29,10 +29,15 @@
 
   --measure:72ch;
   --pad:clamp(1.1rem,4vw,2rem);
+
+  /* Selects, scrollbars and focus rings are drawn by the browser; this tells
+     it which way round the page is so they are not light chips on dark. */
+  color-scheme:light;
 }
 
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
+    color-scheme:dark;
     --bg:#171a17;
     --gutter:#1e221e;
     --panel:#1d211d;
@@ -50,6 +55,7 @@
   }
 }
 :root[data-theme="dark"]{
+  color-scheme:dark;
   --bg:#171a17;
   --gutter:#1e221e;
   --panel:#1d211d;
