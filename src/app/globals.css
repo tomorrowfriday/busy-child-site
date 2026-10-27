@@ -1149,10 +1149,12 @@ body:has(.deck){overflow:hidden}
 }
 
 .contact-top{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.contact-top .top-mark{
-  font-family:var(--f-disp);font-weight:800;letter-spacing:-.05em;font-size:1rem;
-  color:var(--paper);text-decoration:none;background:none;border:0;padding:0;
-}
+/* Same mark as the deck's top bar — size and tracking inherited from
+   .top-mark, so the two stay in step if that changes. Only the colour moves:
+   the page ground is var(--num), which is the dot's own colour on the deck,
+   so the mark goes monochrome the way any wordmark does on its brand fill. */
+.contact-top .top-mark{color:var(--paper);text-decoration:none}
+.contact-top .top-mark .dot{color:inherit}
 .contact-top .locale-switch a{color:color-mix(in oklab,var(--paper) 70%,transparent)}
 .contact-top .locale-switch a:hover{color:var(--paper)}
 .contact-top .locale-switch a.is-active{color:var(--paper);border-color:color-mix(in oklab,var(--paper) 45%,transparent)}
