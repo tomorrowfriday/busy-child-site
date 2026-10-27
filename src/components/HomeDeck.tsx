@@ -67,6 +67,9 @@ export function HomeDeck({
   locale: Locale;
 }) {
   const t = content.home;
+  /** The page's own nav label, so these read in the visitor's language. */
+  const navLabel = (href: string) =>
+    content.nav.find((item) => item.href === href)?.label ?? href;
   const deck = t.deck;
 
   const [current, setCurrent] = useState(0);
@@ -328,6 +331,11 @@ export function HomeDeck({
               </button>
             ))}
           </div>
+          <div>
+            <Link className="pill ghost" href={`/${locale}/work`}>
+              {navLabel('/work')} →
+            </Link>
+          </div>
         </Screen>
 
         {projects.map((project, index) => (
@@ -397,6 +405,11 @@ export function HomeDeck({
               </div>
             ))}
           </div>
+          <div>
+            <Link className="pill ghost" href={`/${locale}/what-you-get`}>
+              {navLabel('/what-you-get')} →
+            </Link>
+          </div>
         </Screen>
 
         <Screen index={7} label={deck.screens[7]?.label} style={styleFor(7)}>
@@ -426,6 +439,9 @@ export function HomeDeck({
             >
               {deck.seeExample}
             </button>
+            <Link className="pill ghost" href={`/${locale}/method`}>
+              {navLabel('/method')} →
+            </Link>
           </div>
         </Screen>
 
@@ -441,6 +457,11 @@ export function HomeDeck({
               </div>
             ))}
           </div>
+          <div>
+            <Link className="pill ghost" href={`/${locale}/working-with-us`}>
+              {navLabel('/working-with-us')} →
+            </Link>
+          </div>
         </Screen>
 
         <Screen index={9} label={deck.screens[9]?.label} style={styleFor(9)} invert>
@@ -454,6 +475,15 @@ export function HomeDeck({
               {content.common.upworkAlt}
             </a>
           </div>
+          <nav className="closing-more" aria-label={content.common.more}>
+            {content.nav
+              .filter((item) => item.href !== '/contact')
+              .map((item) => (
+                <Link key={item.href} href={`/${locale}${item.href}`}>
+                  {item.label}
+                </Link>
+              ))}
+          </nav>
           <div className="closing-foot">
             <LocaleSwitch locale={locale} label={content.common.switchLanguage} />
             <span>© {site.name}</span>

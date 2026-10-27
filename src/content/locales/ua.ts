@@ -16,11 +16,11 @@ const uk: Content = validate(
     },
 
     nav: [
-      { href: '/what-you-get', label: '/що-ви-отримаєте' },
-      { href: '/work', label: '/роботи' },
-      { href: '/method', label: '/метод' },
-      { href: '/working-with-us', label: '/співпраця' },
-      { href: '/contact', label: '/контакти' },
+      { href: '/what-you-get', label: 'Що ви отримаєте' },
+      { href: '/work', label: 'Роботи' },
+      { href: '/method', label: 'Метод' },
+      { href: '/working-with-us', label: 'Співпраця' },
+      { href: '/contact', label: 'Контакти' },
     ],
 
     common: {
@@ -30,6 +30,7 @@ const uk: Content = validate(
       upworkAlt: 'Або запросіть нас в Upwork',
       skipToContent: 'Перейти до вмісту',
       switchLanguage: 'Language',
+      more: 'Докладніше',
       foldHint: 'Кожен рядок розгортається. Розгорніть те, що вас цікавить.',
       liveBadge: 'наживо',
     },

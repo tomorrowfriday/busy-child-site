@@ -16,11 +16,11 @@ const en: Content = validate(
     },
 
     nav: [
-      { href: '/what-you-get', label: '/what-you-get' },
-      { href: '/work', label: '/work' },
-      { href: '/method', label: '/method' },
-      { href: '/working-with-us', label: '/working-with-us' },
-      { href: '/contact', label: '/contact' },
+      { href: '/what-you-get', label: 'What you get' },
+      { href: '/work', label: 'Work' },
+      { href: '/method', label: 'Method' },
+      { href: '/working-with-us', label: 'Working with us' },
+      { href: '/contact', label: 'Contact' },
     ],
 
     common: {
@@ -30,6 +30,7 @@ const en: Content = validate(
       upworkAlt: 'Or invite us on Upwork',
       skipToContent: 'Skip to content',
       switchLanguage: 'Мова',
+      more: 'Read more',
       foldHint: 'Every line opens. Unfold the ones that matter to you.',
       liveBadge: 'live',
     },
