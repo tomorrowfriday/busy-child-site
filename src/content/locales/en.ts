@@ -820,17 +820,17 @@ const en: Content = validate(
     contactPage: {
       metaTitle: 'Contact',
       metaDescription:
-        'Tell us what you are building and what it has to do. One paragraph is enough, and it reaches the people who would build it.',
+        "Write, and we'll reply. Send a description of the system, how the work runs today, and anything you'd like it to do.",
       hero: {
         marker: "let's build it",
-        title: 'Tell us what you are building.',
-        lead: 'One paragraph is enough, and it reaches the people who would build it. If we are not the right team, we will say so straight away.',
+        title: "Write, and we'll reply.",
+        lead: 'From then on your thoughts are busy with the work. So are ours.',
       },
-      includeLabel: 'Worth including',
+      includeLabel: 'You can add:',
       include: [
-        'What the system does, and who uses it.',
-        'What exists today — a running system, spreadsheets, or nothing yet.',
-        'Anything fixed: a date, a regulator, a stack you have to live with.',
+        'A description of the system',
+        'A description of your processes',
+        "Anything you'd like",
       ],
       back: 'Back to the start',
       mailSubject: 'Project brief',

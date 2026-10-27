@@ -1197,3 +1197,56 @@ body:has(.deck){overflow:hidden}
 }
 .contact-foot a{color:color-mix(in oklab,var(--paper) 80%,transparent);text-decoration:none}
 .contact-foot a:hover{color:var(--paper);text-decoration:underline}
+
+/* ─── the brand fill, pinned ─────────────────────────────────────────────
+   --num and --paper both move with the viewer's theme, so the deck's closing
+   screen and /contact rendered as deep-orange-on-white in light and
+   pale-orange-on-ink in dark. A brand colour should not change shade with
+   someone's OS setting. These two values appear in no theme block, so the
+   fill is the same orange for everyone — swap the pair to restyle both
+   surfaces at once. */
+:root{
+  --brand-fill:#e3a36d;
+  --brand-ink:#191c19;
+}
+
+.screen.is-invert,
+.contact{background:var(--brand-fill);color:var(--brand-ink)}
+
+.screen.is-invert h2,
+.screen.is-invert b,
+.screen.is-invert p,
+.screen.is-invert span,
+.contact .closing-title,
+.contact-top .top-mark,
+.contact-top .locale-switch a:hover,
+.contact-top .locale-switch a.is-active,
+.contact-foot a:hover{color:var(--brand-ink)}
+
+.contact .eyebrow{color:color-mix(in oklab,var(--brand-ink) 70%,transparent)}
+.contact .closing-lede{color:color-mix(in oklab,var(--brand-ink) 86%,transparent)}
+.contact-top .locale-switch a{color:color-mix(in oklab,var(--brand-ink) 65%,transparent)}
+.contact-top .locale-switch a.is-active{border-color:color-mix(in oklab,var(--brand-ink) 40%,transparent)}
+.contact-include h2{color:color-mix(in oklab,var(--brand-ink) 64%,transparent)}
+.contact-include li{color:color-mix(in oklab,var(--brand-ink) 88%,transparent)}
+.contact-include li::before{color:color-mix(in oklab,var(--brand-ink) 52%,transparent)}
+.contact-foot{color:color-mix(in oklab,var(--brand-ink) 60%,transparent)}
+.contact-foot a{color:color-mix(in oklab,var(--brand-ink) 80%,transparent)}
+
+/* The chrome that floats over the inverted screen inherits the same ink. */
+.is-dark .deck-bar{color:var(--brand-ink)}
+.closing-foot{color:color-mix(in oklab,var(--brand-ink) 68%,transparent)}
+.closing-foot .locale-switch a{color:var(--brand-ink)}
+
+/* Pills on the fill: solid ink, with the fill showing through the label. */
+.screen.is-invert .pill.invert,
+.contact .pill.invert{background:var(--brand-ink);color:var(--brand-fill);border-color:var(--brand-ink)}
+.screen.is-invert .pill.invert:hover,
+.contact .pill.invert:hover{background:var(--brand-ink);border-color:var(--brand-ink);filter:brightness(1.35)}
+.screen.is-invert .pill.ghost-invert,
+.contact .pill.ghost-invert{
+  color:var(--brand-ink);background:transparent;
+  border-color:color-mix(in oklab,var(--brand-ink) 38%,transparent);
+}
+.screen.is-invert .pill.ghost-invert:hover,
+.contact .pill.ghost-invert:hover{background:transparent;color:var(--brand-ink);border-color:var(--brand-ink)}
