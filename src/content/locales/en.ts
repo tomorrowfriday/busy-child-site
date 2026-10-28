@@ -523,8 +523,7 @@ const en: Content = validate(
       outcomeTag: 'Outcome',
       next: {
         marker: 'next',
-        title: 'Building something in this territory?',
-        lead: 'Tell us what you are building and what it has to do.',
+        title: 'We can build a system that gives you back your time.',
       },
     },
 
