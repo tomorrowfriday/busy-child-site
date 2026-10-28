@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Footer, Masthead } from '@/components/Chrome';
+import { Band, PageShell } from '@/components/PageShell';
 import { Link } from '@/components/Link';
-import { Note, Outcomes, Section } from '@/components/Primitives';
-import { clientProjects, getContent, isLocale, LOCALES } from '@/content';
+import { getContent, isLocale, LOCALES } from '@/content';
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -20,10 +19,13 @@ export async function generateMetadata({
   return { title: c.home.outcomes.marker, description: c.home.outcomes.lead };
 }
 
+const MARKS = ['◆', '●', '▲', '■', '◇', '○'] as const;
+const HUES = ['var(--kw)', 'var(--num)', 'var(--str)', 'var(--fn)'] as const;
+
 /**
- * The same outcomes as the homepage section, given their own page and URL so a
- * non-technical reader can be sent straight here without scrolling past a
- * compiler demo first.
+ * The outcomes, for a reader who is not an engineer — the one page a
+ * non-technical owner can be sent to directly. Short on purpose: the six
+ * results, the plain-language note, and the way to write.
  */
 export default async function WhatYouGetPage({
   params,
@@ -35,54 +37,46 @@ export default async function WhatYouGetPage({
 
   const c = getContent(locale);
   const o = c.home.outcomes;
-  const base = `/${locale}`;
 
   return (
-    <>
-      <Masthead content={c} locale={locale} current="/what-you-get" />
-      <main id="main">
-        <Section hero marker={o.marker}>
-          <h1>{o.title}</h1>
-          <p className="sub">{o.lead}</p>
-        </Section>
+    <PageShell content={c} locale={locale} current="/what-you-get">
+      <Band head eyebrow={o.marker} title={o.title} lead={o.lead} />
 
-        <Section>
-          <Outcomes items={o.items} />
-          {o.note ? <Note tag={o.note.tag} text={o.note.text} /> : null}
-        </Section>
+      <Band hue="var(--str)">
+        <div className="results">
+          {o.items.map((item, index) => (
+            <div className="result" key={item.title}>
+              <span
+                className="mark"
+                aria-hidden="true"
+                style={{ '--hue': HUES[index % HUES.length] } as React.CSSProperties}
+              >
+                {MARKS[index % MARKS.length]}
+              </span>
+              <span className="result-body">
+                <b>{item.title}</b>
+                <span>{item.detail}</span>
+              </span>
+            </div>
+          ))}
+        </div>
 
-        <Section marker={c.home.work.marker}>
-          <h2>{c.home.work.title}</h2>
-          <p>{c.home.work.lead}</p>
-          <div className="projects">
-            {clientProjects(c).map((project) => (
-              <article className="project" key={project.slug}>
-                <span className="domain">{project.domain}</span>
-                <h3>{project.title}</h3>
-                <div className="metric">
-                  {project.metric.value}
-                  <small>{project.metric.caption}</small>
-                </div>
-                <p>{project.summary}</p>
-              </article>
-            ))}
+        {o.note ? (
+          <div className="sheet-outcome">
+            <span className="tag">{o.note.tag}</span>
+            <p>{o.note.text}</p>
           </div>
-          <p>
-            <Link href={`${base}/work`}>{c.home.work.link}</Link>
-          </p>
-        </Section>
+        ) : null}
 
-        <Section marker={c.home.contact.marker}>
-          <h2>{c.home.contact.title}</h2>
-          <p className="lead">{c.home.contact.lead}</p>
-          <div className="cta">
-            <Link className="button" href={`${base}/contact`}>
-              {c.common.sendBrief}
-            </Link>
-          </div>
-        </Section>
-      </main>
-      <Footer content={c} locale={locale} />
-    </>
+        <div className="deck-cta">
+          <Link className="pill" href={`/${locale}/contact`}>
+            {c.common.sendBrief} →
+          </Link>
+          <Link className="pill ghost" href={`/${locale}/work`}>
+            {c.common.seeWork}
+          </Link>
+        </div>
+      </Band>
+    </PageShell>
   );
 }

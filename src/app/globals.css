@@ -808,11 +808,11 @@ body:has(.deck){overflow:hidden}
   border:1px solid var(--fg);border-radius:999px;padding:.65rem 1.3rem;cursor:pointer;
   text-decoration:none;display:inline-block;
 }
-.pill:hover{background:var(--fn);border-color:var(--fn);color:var(--paper)}
+.pill:hover{background:var(--num);border-color:var(--num);color:var(--paper)}
 .pill.ghost{color:var(--fg);background:transparent;border-color:var(--line-hi)}
 .pill.ghost:hover{border-color:var(--fg);color:var(--fg);background:transparent}
 .pill.invert{background:var(--paper);color:var(--fg);border-color:var(--paper)}
-.pill.invert:hover{background:var(--paper);color:var(--fn)}
+.pill.invert:hover{background:var(--paper);color:var(--num)}
 .pill.ghost-invert{background:transparent;color:var(--paper);border-color:var(--fg-faint)}
 .pill.ghost-invert:hover{background:transparent;color:var(--paper);border-color:var(--paper)}
 
@@ -1294,4 +1294,102 @@ body:has(.deck){overflow:hidden}
   margin:0;font-family:var(--f-mono);font-size:.7rem;font-weight:400;
   letter-spacing:.1em;text-transform:uppercase;
   color:color-mix(in oklab,var(--close-on) 62%,transparent);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   The pages under the deck
+
+   Same bar, same height, same gutter as .screen-inner. The deck sizes in
+   container units because a screen is a fixed box; a page scrolls, so the
+   same values are expressed in viewport units here.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.page-top{
+  position:sticky;top:0;z-index:45;height:3.8rem;
+  background:var(--paper);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:clamp(.8rem,2.4vw,2.4rem);
+  padding:0 clamp(1rem,3vw,2.4rem);
+}
+.page-top .top-mark{text-decoration:none;flex-shrink:0}
+
+.page-nav{
+  flex:1;display:flex;align-items:center;gap:clamp(.1rem,.8vw,.6rem);
+  min-width:0;overflow-x:auto;scrollbar-width:none;
+}
+.page-nav::-webkit-scrollbar{display:none}
+.page-nav .top-pill{text-decoration:none}
+.page-nav .top-pill:hover{background:var(--panel-2)}
+.page-nav .top-pill.is-on{background:var(--panel-2);color:var(--fg)}
+
+.page-top-right{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
+.page-top-right .locale-switch{font-size:.72rem}
+
+.page{display:block;background:var(--paper);min-height:calc(100dvh - 3.8rem)}
+
+.band{padding:clamp(2rem,6vh,4rem) 0;border-top:1px solid var(--line)}
+.band-head{border-top:0;padding-top:clamp(2.4rem,8vh,5rem)}
+.band-inner{
+  width:100%;max-width:1280px;margin:0 auto;
+  padding:0 clamp(1.2rem,5vw,4rem);
+  display:flex;flex-direction:column;gap:clamp(.8rem,2vh,1.4rem);
+}
+
+.band-head h1{
+  margin:0;font-family:var(--f-disp);font-weight:800;letter-spacing:-.065em;
+  font-size:clamp(2rem,5.6vw,4rem);line-height:1;max-width:18ch;color:var(--fg);
+}
+.page-lede{
+  margin:0;font-family:var(--f-disp);font-weight:600;letter-spacing:-.035em;
+  font-size:clamp(1rem,2vw,1.4rem);line-height:1.35;max-width:34ch;color:var(--fg);
+}
+.band h2{
+  margin:0;font-family:var(--f-disp);font-weight:800;letter-spacing:-.055em;
+  font-size:clamp(1.35rem,3.2vw,2.2rem);line-height:1.05;max-width:22ch;color:var(--fg);
+}
+.band-lead{margin:0;font-size:clamp(.84rem,1.25vw,.94rem);line-height:1.75;max-width:62ch;color:var(--fg-dim)}
+.eyebrow.hue{color:var(--hue,var(--kw))}
+
+/* The deck's grids, re-expressed for a scrolling page. */
+.band .results,
+.band .method-steps{gap:clamp(1rem,3vh,2rem) clamp(1.2rem,3vw,2.6rem)}
+.band .result-body b{font-size:clamp(.9rem,1.3vw,1.05rem)}
+.band .result-body > span{font-size:clamp(.76rem,1.1vw,.85rem);line-height:1.6}
+.band .ticks li{font-size:clamp(.82rem,1.2vw,.9rem)}
+
+/* ─── a case, laid flat ─────────────────────────────────────────────────── */
+
+.case-band{display:grid;gap:clamp(1.2rem,4vw,3rem);grid-template-columns:1fr}
+@media (min-width:880px){.case-band{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}}
+.case-side{display:flex;flex-direction:column;gap:1rem;min-width:0}
+/* The deck caps this by column width over character count; a page has no
+   size container, so the viewport clamp is capped the same way with cqi.
+   Without it "Kafka · Kubernetes" renders at 70px and the page scrolls. */
+.case-band .case-metric b{
+  font-size:min(clamp(1.8rem,6vw,4.4rem),calc(100cqi / (var(--chars,8) * 0.62)));
+  line-height:.92;
+}
+.case-band .case-metric span{font-size:clamp(.76rem,1.1vw,.88rem)}
+.case-tagline{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem}
+.case-tagline .muted{font-size:.74rem;color:var(--fg-faint);font-variant-numeric:tabular-nums}
+.case-tagline .chip{
+  font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--hue);
+  border:1px solid color-mix(in oklab,var(--hue) 40%,transparent);
+  border-radius:999px;padding:.1rem .6rem;
+}
+
+/* ─── /contact uses the same chrome, on the close's ground ──────────────── */
+
+.contact-body{
+  display:flex;flex-direction:column;gap:clamp(.8rem,2.4vh,1.4rem);
+  min-height:calc(100dvh - 3.8rem);justify-content:center;
+  width:100%;max-width:1280px;margin:0 auto;
+  padding:clamp(2rem,8vh,5rem) clamp(1.2rem,5vw,4rem);
+}
+.contact-body .eyebrow{color:var(--close-accent)}
+.contact-body .closing-title{font-size:clamp(1.9rem,5.4vw,3.8rem);color:var(--close-on)}
+.contact-body .closing-lede{color:color-mix(in oklab,var(--close-on) 82%,transparent);max-width:46ch}
+
+@media (max-width:719px){
+  .page-top{gap:.5rem;padding:0 1.1rem}
+  .page-top-right .locale-switch{display:none}
 }

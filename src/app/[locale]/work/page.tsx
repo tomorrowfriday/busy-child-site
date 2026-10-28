@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Footer, Masthead } from '@/components/Chrome';
+import { Band, PageShell } from '@/components/PageShell';
 import { Link } from '@/components/Link';
-import { Note, Section } from '@/components/Primitives';
 import { getContent, isLocale, LOCALES } from '@/content';
 
 export function generateStaticParams() {
@@ -20,74 +19,88 @@ export async function generateMetadata({
   return { title: c.workPage.metaTitle, description: c.workPage.metaDescription };
 }
 
+/** One hue per case, in the deck's order, so a project keeps its colour. */
+const HUES = ['var(--num)', 'var(--fn)', 'var(--kw)', 'var(--str)', 'var(--com)'] as const;
+
 export default async function WorkPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
   const c = getContent(locale);
   const w = c.workPage;
-  const base = `/${locale}`;
+  const total = String(c.projects.length).padStart(2, '0');
 
   return (
-    <>
-      <Masthead content={c} locale={locale} current="/work" />
-      <main id="main">
-        <Section hero marker={w.hero.marker}>
-          <h1>{w.hero.title}</h1>
-          <p className="sub">{w.hero.lead}</p>
-        </Section>
+    <PageShell content={c} locale={locale} current="/work">
+      <Band head eyebrow={w.hero.marker} title={w.hero.title} lead={w.hero.lead} />
 
-        {c.projects.map((project) => (
-          <Section key={project.slug} id={project.slug}>
-            <div className="case">
-              <div className="case-head">
-                <span className="domain">{project.domain}</span>
-                <h2>{project.title}</h2>
-                <div className="figure">
-                  {project.metric.value}
-                  <small>{project.metric.caption}</small>
-                </div>
-              </div>
+      {c.projects.map((project, index) => (
+        <Band key={project.slug} id={project.slug} hue={HUES[index % HUES.length]}>
+          <div className="case-band">
+            <div className="case-side">
+              <span className="case-tagline">
+                <span className="muted">
+                  {String(index + 1).padStart(2, '0')} / {total}
+                </span>
+                <span className="chip">{project.domain}</span>
+              </span>
+              <h2>{project.title}</h2>
+              <p className="band-lead">{project.context}</p>
 
-              <p>{project.context}</p>
-
-              <h3>{w.shippedHeading}</h3>
-              <ul className="shipped">
-                {project.shipped.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-
-              {project.outcome ? <Note tag={w.outcomeTag} text={project.outcome} /> : null}
-
-              <div className="stack">
+              <div className="case-stack">
                 {project.stack.map((tech) => (
                   <span key={tech}>{tech}</span>
                 ))}
               </div>
 
               {project.externalUrl ? (
-                <div className="cta">
-                  <a className="button ghost" href={project.externalUrl}>
+                <div>
+                  <a className="pill hue" href={project.externalUrl}>
                     {project.externalLabel}
                   </a>
                 </div>
               ) : null}
             </div>
-          </Section>
-        ))}
 
-        <Section marker={w.next.marker}>
-          <h2>{w.next.title}</h2>
-          <p className="lead">{w.next.lead}</p>
-          <div className="cta">
-            <Link className="button" href={`${base}/contact`}>
-              {c.common.sendBrief}
-            </Link>
+            <div className="case-side">
+              <div
+                className="case-metric"
+                style={{ '--chars': String(project.metric.value.length) } as React.CSSProperties}
+              >
+                <b>{project.metric.value}</b>
+                <span>{project.metric.caption}</span>
+              </div>
+
+              <div className="sheet-block">
+                <h3>{w.shippedHeading}</h3>
+                <ul className="ticks">
+                  {project.shipped.map((item) => (
+                    <li key={item}>
+                      <span aria-hidden="true">✓</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {project.outcome ? (
+                <div className="sheet-outcome">
+                  <span className="tag">{w.outcomeTag}</span>
+                  <p>{project.outcome}</p>
+                </div>
+              ) : null}
+            </div>
           </div>
-        </Section>
-      </main>
-      <Footer content={c} locale={locale} />
-    </>
+        </Band>
+      ))}
+
+      <Band eyebrow={w.next.marker} title={w.next.title} lead={w.next.lead} hue="var(--num)">
+        <div className="deck-cta">
+          <Link className="pill" href={`/${locale}/contact`}>
+            {c.common.sendBrief} →
+          </Link>
+        </div>
+      </Band>
+    </PageShell>
   );
 }

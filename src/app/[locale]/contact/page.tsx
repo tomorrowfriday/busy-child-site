@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Link } from '@/components/Link';
-import { LocaleSwitch } from '@/components/LocaleSwitch';
+import { PageShell } from '@/components/PageShell';
 import { getContent, isLocale, site, LOCALES } from '@/content';
 
 export function generateStaticParams() {
@@ -20,13 +19,9 @@ export async function generateMetadata({
 }
 
 /**
- * The only page the deck links out to.
- *
- * It is built as one more screen rather than a document: the deck's closing
- * screen is a full-bleed colour, and arriving here should feel like stepping
- * through it, not leaving for an older site. Everything a visitor needs is
- * above the fold — the address, three lines on what to include, and the way
- * back.
+ * The page behind "send a brief", and the deck's last screen, read from the
+ * same copy — so the two cannot drift. Everything a visitor needs is above
+ * the fold: the address, three lines on what is worth including, nothing else.
  */
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -37,16 +32,8 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const mailto = `mailto:${site.email}?subject=${encodeURIComponent(p.mailSubject)}`;
 
   return (
-    <main id="main" className="contact">
-      <div className="contact-inner">
-        <header className="contact-top">
-          <Link className="top-mark" href={`/${locale}`}>
-            {site.wordmark}
-            <span className="dot">.</span>
-          </Link>
-          <LocaleSwitch locale={locale} current="/contact" label={c.common.switchLanguage} />
-        </header>
-
+    <PageShell content={c} locale={locale} current="/contact">
+      <div className="contact">
         <div className="contact-body">
           <span className="eyebrow">{p.hero.marker}</span>
           <h1 className="closing-title">{p.hero.title}</h1>
@@ -70,12 +57,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
             </ul>
           </div>
         </div>
-
-        <footer className="contact-foot">
-          <Link href={`/${locale}`}>← {p.back}</Link>
-          <span>© {site.name}</span>
-        </footer>
       </div>
-    </main>
+    </PageShell>
   );
 }
