@@ -15,11 +15,6 @@ const en: Content = validate(
       sectors: ['Fund administration', 'Healthcare', 'Insurance', 'Consumer mobile'],
     },
 
-    nav: [
-      { href: '/what-you-get', label: 'What you get' },
-      { href: '/work', label: 'Work' },
-      { href: '/contact', label: 'Contact' },
-    ],
 
     common: {
       sendBrief: 'Send a brief',
@@ -28,7 +23,6 @@ const en: Content = validate(
       upworkAlt: 'Or invite us on Upwork',
       skipToContent: 'Skip to content',
       switchLanguage: 'Мова',
-      more: 'Read more',
       foldHint: 'Every line opens. Unfold the ones that matter to you.',
       liveBadge: 'live',
     },
@@ -290,52 +284,6 @@ const en: Content = validate(
     ],
 
     home: {
-      outcomes: {
-        marker: 'what you get',
-        title: 'Software that does the work your people are doing by hand.',
-        lead: 'Most businesses we meet are running on spreadsheets, email threads and someone who remembers how it all fits together. That works until it does not. Here is what changes.',
-        items: [
-          {
-            title: 'The repetitive work stops being work.',
-            detail:
-              'Re-typing the same details into three different places. Chasing the same signature every week. Sending the same reminder. The system does all of it, on time, without being asked.',
-          },
-          {
-            title: 'You can see everything, right now.',
-            detail:
-              'One screen showing where every order, claim, client or job actually stands. No ringing round for an update, no waiting until Friday for a report that is already out of date.',
-            proof: '$1M / yr',
-            proofCaption: 'saved by one client after we replaced their spreadsheets',
-          },
-          {
-            title: 'Money moves without anyone chasing it.',
-            detail:
-              'Invoices, payments, payouts and the paperwork around them run on their own, and reconcile themselves. You find out when something needs you — not when it has already gone wrong.',
-            proof: '$4M+ / mo',
-            proofCaption: 'moves through one platform we built',
-          },
-          {
-            title: 'Mistakes stop being expensive.',
-            detail:
-              'Your rules are built into the system, so the wrong thing cannot quietly be filed, approved or paid. Every change is recorded, so when someone asks what happened, there is an answer.',
-          },
-          {
-            title: 'It fits how you already work.',
-            detail:
-              'Not an off-the-shelf tool your team has to bend around. We build what your business actually does, and connect it to the things you already use — your bank, your accounting, your email, your documents.',
-          },
-          {
-            title: 'It grows without needing more people.',
-            detail:
-              'Twice the volume should not mean twice the admin staff. The system takes the extra load, and your team stays on the work that needs a person.',
-          },
-        ],
-        note: {
-          tag: 'In plain terms',
-          text: 'People often call this "a CRM" or "an internal system". What it really is: the part of your business that currently lives in people\'s heads and spreadsheets, turned into something that runs itself and tells you the truth.',
-        },
-        link: 'What this looks like in practice →',
-      },
 
       specimen: {
         marker: 'how we know it works',
@@ -510,18 +458,6 @@ const en: Content = validate(
 
     },
 
-    workPage: {
-      metaTitle: 'Work',
-      metaDescription:
-        'Four production platforms in fund administration, healthcare scheduling and insurance claims — plus a consumer iOS product. Client names withheld; architecture and numbers published.',
-      hero: {
-        marker: 'selected work',
-        title: 'Four platforms in production, and one product of our own.',
-        lead: "We don't publish client names. What we can publish is the domain, the architecture, what shipped, and the numbers — which is most of what tells you whether we've built your shape of system before.",
-      },
-      shippedHeading: 'What we shipped',
-      outcomeTag: 'Outcome',
-    },
 
 
 

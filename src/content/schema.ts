@@ -136,7 +136,6 @@ export const contentSchema = z.object({
     sectors: z.array(nonEmpty).min(3),
   }),
 
-  nav: z.array(z.object({ href: nonEmpty, label: nonEmpty })).length(3),
 
   common: z.object({
     sendBrief: nonEmpty,
@@ -145,7 +144,6 @@ export const contentSchema = z.object({
     upworkAlt: nonEmpty,
     skipToContent: nonEmpty,
     switchLanguage: nonEmpty,
-    more: nonEmpty,
     /** Tells the reader the page folds, once, instead of a tooltip per row. */
     foldHint: nonEmpty,
     /** Marks a fold whose body is a running demo rather than prose. */
@@ -160,7 +158,6 @@ export const contentSchema = z.object({
   projects: z.array(projectSchema).min(4),
 
   home: z.object({
-    outcomes: sectionSchema.extend({ items: z.array(outcomeSchema).min(5) }),
     specimen: sectionSchema,
     work: sectionSchema,
     gates: sectionSchema,
@@ -237,13 +234,6 @@ export const contentSchema = z.object({
     }),
   }),
 
-  workPage: z.object({
-    metaTitle: nonEmpty,
-    metaDescription: nonEmpty,
-    hero: sectionSchema,
-    shippedHeading: nonEmpty,
-    outcomeTag: nonEmpty,
-  }),
 
 
 

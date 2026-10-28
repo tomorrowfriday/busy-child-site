@@ -32,7 +32,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const mailto = `mailto:${site.email}?subject=${encodeURIComponent(p.mailSubject)}`;
 
   return (
-    <PageShell content={c} locale={locale} current="/contact">
+    <PageShell content={c} locale={locale}>
       <div className="contact">
         <div className="contact-body">
           <span className="eyebrow">{p.hero.marker}</span>

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { getContent, site, LANG, LOCALES } from '@/content';
+import { site, LANG, LOCALES } from '@/content';
 
 export const dynamic = 'force-static';
 
@@ -8,8 +8,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
 
   for (const locale of LOCALES) {
-    const content = getContent(locale);
-    const paths = ['', ...content.nav.map((item) => item.href)];
+    // Everything else the site says is a deck screen, so each locale is two
+    // URLs: the deck and the page behind "send a brief".
+    const paths = ['', '/contact'];
 
     for (const path of paths) {
       entries.push({

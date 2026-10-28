@@ -91,7 +91,6 @@ describe('the two languages stay in step', () => {
     expect(ua.engagement).toHaveLength(en.engagement.length);
     expect(ua.projects).toHaveLength(en.projects.length);
     expect(ua.scenarios).toHaveLength(en.scenarios.length);
-    expect(ua.home.outcomes.items).toHaveLength(en.home.outcomes.items.length);
     expect(ua.home.anchors).toHaveLength(en.home.anchors.length);
     expect(ua.home.results.items).toHaveLength(en.home.results.items.length);
     expect(ua.home.proof.steps).toHaveLength(en.home.proof.steps.length);
@@ -105,9 +104,6 @@ describe('the two languages stay in step', () => {
     expect(ua.projects.map((p) => p.slug)).toEqual(en.projects.map((p) => p.slug));
   });
 
-  it('keep nav hrefs identical, so the language switch stays on the same page', () => {
-    expect(ua.nav.map((n) => n.href)).toEqual(en.nav.map((n) => n.href));
-  });
 
   it('keep the same project named/anonymous split', () => {
     expect(clientProjects(ua).map((p) => p.slug)).toEqual(clientProjects(en).map((p) => p.slug));
@@ -140,7 +136,7 @@ describe('the Ukrainian copy is actually translated', () => {
   it('uses Cyrillic in its long-form copy', () => {
     const cyrillic = /[Ѐ-ӿ]/;
     expect(cyrillic.test(ua.site.statement)).toBe(true);
-    expect(cyrillic.test(ua.home.outcomes.title)).toBe(true);
+    expect(cyrillic.test(ua.home.results.title)).toBe(true);
     expect(cyrillic.test(ua.home.proof.title)).toBe(true);
   });
 });
@@ -240,46 +236,3 @@ describe('the anonymity rule', () => {
   });
 });
 
-describe('the outcomes section speaks to an owner, not an engineer', () => {
-  // This section exists for a reader who does not know what an API is. If
-  // jargon creeps back in, it stops doing its job.
-  const JARGON = [
-    'api',
-    'schema',
-    'compiler',
-    'typescript',
-    'kubernetes',
-    'kafka',
-    'serverless',
-    'endpoint',
-    'repository',
-    'deployment',
-  ];
-
-  for (const locale of LOCALES) {
-    const content = getContent(locale);
-    const haystack = JSON.stringify(content.home.outcomes).toLowerCase();
-
-    it.each(JARGON)(`[${locale}] avoids the word "%s"`, (word) => {
-      expect(haystack).not.toContain(word);
-    });
-  }
-
-  it('leads with a plain-language explanation in both languages', () => {
-    for (const locale of LOCALES) {
-      const outcomes = getContent(locale).home.outcomes;
-      expect(outcomes.note?.text.length).toBeGreaterThan(60);
-      expect(outcomes.items.length).toBeGreaterThanOrEqual(5);
-    }
-  });
-
-  it('backs at least two outcomes with a real figure, in both languages', () => {
-    for (const locale of LOCALES) {
-      const withProof = getContent(locale).home.outcomes.items.filter((i) => i.proof);
-      expect(withProof.length).toBeGreaterThanOrEqual(2);
-      for (const item of withProof) {
-        expect(item.proofCaption).toBeTruthy();
-      }
-    }
-  });
-});

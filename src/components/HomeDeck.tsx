@@ -206,11 +206,6 @@ export function HomeDeck({
 
   /** The top bar shows four entries; the four cases hide behind "our work". */
   const TOP_ENTRIES = [1, 6, 7, 8] as const;
-  // Screen 1 is the work list and screen 6 is the results — the same two
-  // subjects /work and /what-you-get cover in full. One entry each: the label
-  // opens the page, and for the cases the chips beside it still jump into the
-  // deck.
-  const PAGE_FOR: Record<number, string | undefined> = { 1: '/work', 6: '/what-you-get' };
 
   return (
     <div
@@ -230,20 +225,14 @@ export function HomeDeck({
         <nav className="top-nav" aria-label={deck.menuLabel}>
           {TOP_ENTRIES.map((index) => (
             <div className="top-group" key={index}>
-              {PAGE_FOR[index] ? (
-                <Link className="top-pill is-page" href={`/${locale}${PAGE_FOR[index]}`}>
-                  {deck.screens[index]?.label}
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  className={`top-pill${groupOf(current) === index ? ' is-on' : ''}`}
-                  aria-current={groupOf(current) === index ? 'true' : undefined}
-                  onClick={() => go(index)}
-                >
-                  {deck.screens[index]?.label}
-                </button>
-              )}
+              <button
+                type="button"
+                className={`top-pill${groupOf(current) === index ? ' is-on' : ''}`}
+                aria-current={groupOf(current) === index ? 'true' : undefined}
+                onClick={() => go(index)}
+              >
+                {deck.screens[index]?.label}
+              </button>
               {index === 1 ? (
                 <span className="top-chips">
                   {projects.map((project, i) => (
