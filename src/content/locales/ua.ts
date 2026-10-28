@@ -521,10 +521,6 @@ const uk: Content = validate(
       },
       shippedHeading: 'Що ми зробили',
       outcomeTag: 'Результат',
-      next: {
-        marker: 'далі',
-        title: 'Ми можемо збудувати систему, яка дасть вам час.',
-      },
     },
 
 

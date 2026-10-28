@@ -521,10 +521,6 @@ const en: Content = validate(
       },
       shippedHeading: 'What we shipped',
       outcomeTag: 'Outcome',
-      next: {
-        marker: 'next',
-        title: 'We can build a system that gives you back your time.',
-      },
     },
 
 

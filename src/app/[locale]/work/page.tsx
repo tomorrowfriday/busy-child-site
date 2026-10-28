@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Band, PageShell } from '@/components/PageShell';
-import { Link } from '@/components/Link';
 import { getContent, isLocale, LOCALES } from '@/content';
 
 export function generateStaticParams() {
@@ -93,14 +92,6 @@ export default async function WorkPage({ params }: { params: Promise<{ locale: s
           </div>
         </Band>
       ))}
-
-      <Band eyebrow={w.next.marker} title={w.next.title} lead={w.next.lead} hue="var(--num)">
-        <div className="deck-cta">
-          <Link className="pill" href={`/${locale}/contact`}>
-            {c.common.sendBrief} →
-          </Link>
-        </div>
-      </Band>
     </PageShell>
   );
 }

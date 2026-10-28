@@ -243,7 +243,6 @@ export const contentSchema = z.object({
     hero: sectionSchema,
     shippedHeading: nonEmpty,
     outcomeTag: nonEmpty,
-    next: sectionSchema,
   }),
 
 
