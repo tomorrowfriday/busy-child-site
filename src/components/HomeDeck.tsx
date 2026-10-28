@@ -67,6 +67,9 @@ export function HomeDeck({
   locale: Locale;
 }) {
   const t = content.home;
+  // The last screen is the contact page, so it reads from the same copy.
+  const contact = content.contactPage;
+  const mailto = `mailto:${site.email}?subject=${encodeURIComponent(contact.mailSubject)}`;
   /** The page's own nav label, so these read in the visitor's language. */
   const navLabel = (href: string) =>
     content.nav.find((item) => item.href === href)?.label ?? href;
@@ -457,15 +460,24 @@ export function HomeDeck({
         </Screen>
 
         <Screen index={9} label={deck.screens[9]?.label} style={styleFor(9)} invert>
-          <h2 className="closing-title">{t.closing.title}</h2>
-          <p className="closing-lede">{t.closing.lead}</p>
+          <span className="eyebrow">{contact.hero.marker}</span>
+          <h2 className="closing-title">{contact.hero.title}</h2>
+          <p className="closing-lede">{contact.hero.lead}</p>
           <div className="deck-cta">
-            <Link className="pill invert" href={`/${locale}/contact`}>
-              {content.common.sendBrief} →
-            </Link>
+            <a className="pill invert" href={mailto}>
+              {site.email}
+            </a>
             <a className="pill ghost-invert" href={site.upwork}>
               {content.common.upworkAlt}
             </a>
+          </div>
+          <div className="contact-include">
+            <h3>{contact.includeLabel}</h3>
+            <ul>
+              {contact.include.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </div>
           <nav className="closing-more" aria-label={content.common.more}>
             {content.nav

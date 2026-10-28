@@ -136,7 +136,7 @@ export const contentSchema = z.object({
     sectors: z.array(nonEmpty).min(3),
   }),
 
-  nav: z.array(z.object({ href: nonEmpty, label: nonEmpty })).length(4),
+  nav: z.array(z.object({ href: nonEmpty, label: nonEmpty })).length(3),
 
   common: z.object({
     sendBrief: nonEmpty,
@@ -199,7 +199,6 @@ export const contentSchema = z.object({
       items: z.array(nonEmpty).length(6),
     }),
 
-    closing: z.object({ title: nonEmpty, lead: nonEmpty }),
 
     /**
      * The deck. Ten screens, advanced by wheel, swipe, keys or the menu.
@@ -248,14 +247,6 @@ export const contentSchema = z.object({
   }),
 
 
-  workingPage: z.object({
-    metaTitle: nonEmpty,
-    metaDescription: nonEmpty,
-    hero: sectionSchema,
-    engagement: sectionSchema,
-    bar: sectionSchema,
-    team: sectionSchema,
-  }),
 
   /**
    * One screen. A visitor arrives here having already read the pitch, so the

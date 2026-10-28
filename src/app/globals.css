@@ -1273,3 +1273,25 @@ body:has(.deck){overflow:hidden}
 }
 .screen.is-invert .pill.ghost-invert:hover,
 .contact .pill.ghost-invert:hover{background:transparent;color:var(--close-on);border-color:var(--close-on)}
+
+/* The way into the pages, on the last screen. Added with the links in
+   "Give the deck a way into the pages under it"; its rules were not, so the
+   labels ran together. */
+.closing-more{
+  display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;font-size:.78rem;margin-top:.2rem;
+}
+.closing-more a{
+  color:color-mix(in oklab,var(--close-on) 66%,transparent);text-decoration:none;
+  border-bottom:1px solid color-mix(in oklab,var(--close-on) 24%,transparent);
+  padding-bottom:1px;
+}
+.closing-more a:hover{color:var(--close-on);border-color:var(--close-on)}
+
+/* The contact block sits on the last screen too, so it tracks the deck's
+   scale rather than the page's. */
+.screen.is-invert .contact-include{margin-top:clamp(.4rem,2cqh,1.2rem);gap:.4rem}
+.screen.is-invert .contact-include h3{
+  margin:0;font-family:var(--f-mono);font-size:.7rem;font-weight:400;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:color-mix(in oklab,var(--close-on) 62%,transparent);
+}

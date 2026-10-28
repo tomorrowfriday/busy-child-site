@@ -18,7 +18,6 @@ const en: Content = validate(
     nav: [
       { href: '/what-you-get', label: 'What you get' },
       { href: '/work', label: 'Work' },
-      { href: '/working-with-us', label: 'Working with us' },
       { href: '/contact', label: 'Contact' },
     ],
 
@@ -467,10 +466,6 @@ const en: Content = validate(
         ],
       },
 
-      closing: {
-        title: "Tell us what's on your mind.",
-        lead: "One paragraph is enough, and it reaches the people who would build it."
-      },
 
       deck: {
         screens: [
@@ -534,61 +529,6 @@ const en: Content = validate(
     },
 
 
-    workingPage: {
-      metaTitle: 'Working with us',
-      metaDescription:
-        'Six promises that keep clients with us, what an engagement looks like, and the quality bar every service ships against.',
-      hero: {
-        marker: 'how we work',
-        title: 'Six promises that keep clients with us.',
-        lead: "Every one of them is a refusal. That's deliberate — a promise about what we won't do is harder to fake than a claim about what we will.",
-      },
-      engagement: {
-        marker: 'a sensible way to start',
-        title: 'One service, end to end, in a short fixed window.',
-        lead: 'Rather than a long discovery phase or an open-ended retainer, the first engagement is scoped so you get a real answer quickly — and a working system either way.',
-      },
-      bar: {
-        marker: 'the quality bar',
-        title: 'These are build failures, not review comments.',
-        bullets: [
-          { text: 'Two test suites: unit, and end-to-end integration against a real database.' },
-          { text: '100% coverage enforced on both — statements, branches, functions and lines.' },
-          { text: 'Every operation must be exercised by at least one end-to-end scenario, checked by the compiler.' },
-          { text: "Response schemas enforced at runtime, so the published API description can't drift from what the service actually returns." },
-        ],
-        note: {
-          tag: 'Why we can hold the line at 100%',
-          text: "Because most of the code is generated and its tests are generated with it. Full coverage isn't a heroic effort by the team — it's the default state of a compiled service, and it stays there as the service grows.",
-        },
-        link: 'The method in full →',
-      },
-      team: {
-        marker: 'what it means for your team',
-        title: 'Leverage, not headcount reduction.',
-        body: [
-          "Backend teams usually grow because volume outpaces the people who can absorb it — more endpoints, more validation, more tests, more review, more knowledge stuck in one person's head.",
-        ],
-        bullets: [
-          {
-            strong: 'Engineers work at the level they were hired for.',
-            text: 'Specs and judgment calls, rather than writing a fifth CRUD endpoint by hand and reviewing a sixth.',
-          },
-          {
-            strong: 'Standards stop depending on seniority.',
-            text: 'Conventions, security rules and quality bars are encoded in a generator applied to every service.',
-          },
-          {
-            strong: 'New hires ramp on the spec, not the codebase.',
-            text: 'A readable document instead of reconstructing intent from five thousand lines of handlers.',
-          },
-          {
-            strong: 'Agent capacity turns into parallel work, not review burden.',
-            text: 'Which is the usual failure mode of adding AI to a team.',
-          },
-        ],
-      },
-    },
 
     contactPage: {
       metaTitle: 'Contact',
