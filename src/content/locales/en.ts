@@ -333,7 +333,7 @@ const en: Content = validate(
 
       results: {
         title: 'What changes for you',
-        lead: 'The spreadsheets, email threads and "ask Maria, she knows" become one system that runs itself.',
+        lead: 'The spreadsheets, email threads and the routine become one system that runs itself.',
         items: [
           {
             title: 'No more re-typing',
