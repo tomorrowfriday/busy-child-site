@@ -454,11 +454,6 @@ export function HomeDeck({
               </div>
             ))}
           </div>
-          <div>
-            <Link className="pill ghost" href={`/${locale}/working-with-us`}>
-              {navLabel('/working-with-us')} →
-            </Link>
-          </div>
         </Screen>
 
         <Screen index={9} label={deck.screens[9]?.label} style={styleFor(9)} invert>
