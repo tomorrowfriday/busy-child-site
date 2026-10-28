@@ -70,9 +70,6 @@ export function HomeDeck({
   // The last screen is the contact page, so it reads from the same copy.
   const contact = content.contactPage;
   const mailto = `mailto:${site.email}?subject=${encodeURIComponent(contact.mailSubject)}`;
-  /** The page's own nav label, so these read in the visitor's language. */
-  const navLabel = (href: string) =>
-    content.nav.find((item) => item.href === href)?.label ?? href;
   const deck = t.deck;
 
   const [current, setCurrent] = useState(0);
@@ -209,6 +206,11 @@ export function HomeDeck({
 
   /** The top bar shows four entries; the four cases hide behind "our work". */
   const TOP_ENTRIES = [1, 6, 7, 8] as const;
+  // Screen 1 is the work list and screen 6 is the results — the same two
+  // subjects /work and /what-you-get cover in full. One entry each: the label
+  // opens the page, and for the cases the chips beside it still jump into the
+  // deck.
+  const PAGE_FOR: Record<number, string | undefined> = { 1: '/work', 6: '/what-you-get' };
 
   return (
     <div
@@ -228,14 +230,20 @@ export function HomeDeck({
         <nav className="top-nav" aria-label={deck.menuLabel}>
           {TOP_ENTRIES.map((index) => (
             <div className="top-group" key={index}>
-              <button
-                type="button"
-                className={`top-pill${groupOf(current) === index ? ' is-on' : ''}`}
-                aria-current={groupOf(current) === index ? 'true' : undefined}
-                onClick={() => go(index)}
-              >
-                {deck.screens[index]?.label}
-              </button>
+              {PAGE_FOR[index] ? (
+                <Link className="top-pill is-page" href={`/${locale}${PAGE_FOR[index]}`}>
+                  {deck.screens[index]?.label}
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  className={`top-pill${groupOf(current) === index ? ' is-on' : ''}`}
+                  aria-current={groupOf(current) === index ? 'true' : undefined}
+                  onClick={() => go(index)}
+                >
+                  {deck.screens[index]?.label}
+                </button>
+              )}
               {index === 1 ? (
                 <span className="top-chips">
                   {projects.map((project, i) => (
@@ -334,11 +342,6 @@ export function HomeDeck({
               </button>
             ))}
           </div>
-          <div>
-            <Link className="pill ghost" href={`/${locale}/work`}>
-              {navLabel('/work')} →
-            </Link>
-          </div>
         </Screen>
 
         {projects.map((project, index) => (
@@ -408,11 +411,6 @@ export function HomeDeck({
               </div>
             ))}
           </div>
-          <div>
-            <Link className="pill ghost" href={`/${locale}/what-you-get`}>
-              {navLabel('/what-you-get')} →
-            </Link>
-          </div>
         </Screen>
 
         <Screen index={7} label={deck.screens[7]?.label} style={styleFor(7)}>
@@ -479,15 +477,6 @@ export function HomeDeck({
               ))}
             </ul>
           </div>
-          <nav className="closing-more" aria-label={content.common.more}>
-            {content.nav
-              .filter((item) => item.href !== '/contact')
-              .map((item) => (
-                <Link key={item.href} href={`/${locale}${item.href}`}>
-                  {item.label}
-                </Link>
-              ))}
-          </nav>
           <div className="closing-foot">
             <LocaleSwitch locale={locale} label={content.common.switchLanguage} />
             <span>© {site.name}</span>

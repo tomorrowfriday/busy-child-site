@@ -1393,3 +1393,11 @@ body:has(.deck){overflow:hidden}
   .page-top{gap:.5rem;padding:0 1.1rem}
   .page-top-right .locale-switch{display:none}
 }
+
+/* Two of the top pills open a page rather than moving to a screen. They keep
+   the pill's shape — it is the same bar doing the same job — and the arrow
+   says the click leaves the deck. */
+.top-pill.is-page{text-decoration:none;display:inline-flex;align-items:center;gap:.3rem}
+.top-pill.is-page::after{content:"\2197";font-size:.85em;opacity:.55}
+.top-pill.is-page:hover{background:var(--panel-2);color:var(--num)}
+.top-pill.is-page:hover::after{opacity:1}
